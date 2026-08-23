@@ -1,0 +1,244 @@
+.footer {
+  position: relative;
+  background: var(--color-black);
+  color: var(--color-white);
+  overflow: hidden;
+}
+
+.watermark {
+  position: absolute;
+  left: -8%;
+  top: -10%;
+  width: 520px;
+  max-width: 48vw;
+  opacity: 0.05;
+  pointer-events: none;
+  filter: brightness(0) invert(1);
+}
+
+.ctaBand {
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ctaInner {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 72px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.ctaTitle {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+}
+
+.ctaButton {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
+  background: var(--color-bordeaux);
+  padding: 16px 30px;
+  border-radius: 2px;
+  transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+
+.ctaButton svg {
+  transition: transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ctaButton:hover {
+    background: var(--color-bordeaux-light);
+  }
+
+  .ctaButton:hover svg {
+    transform: translateX(3px);
+  }
+}
+
+.ctaButton:active {
+  transform: scale(0.97);
+}
+
+.main {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 64px 32px 56px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1.2fr;
+  gap: 48px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.logoMark {
+  height: 38px;
+  width: auto;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 0.09em;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 10.5px;
+  letter-spacing: 0.28em;
+  color: #d99aa2;
+  margin-top: 3px;
+}
+
+.tagline {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 340px;
+}
+
+.colTitle {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 22px;
+}
+
+.linkList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.link {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    color: var(--color-white);
+  }
+}
+
+.contactLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.85);
+  transition: color 160ms var(--ease-out);
+}
+
+.contactLink svg {
+  color: #d99aa2;
+  flex-shrink: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.contactLink:hover {
+    color: var(--color-white);
+  }
+}
+
+.bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 26px 32px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.legal {
+  cursor: pointer;
+  transition: color 160ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .legal:hover {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+@media (max-width: 860px) {
+  .main {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 40px;
+  }
+
+  .brandCol {
+    grid-column: 1 / -1;
+  }
+
+  .ctaInner {
+    padding: 56px 32px;
+  }
+}
+
+@media (max-width: 560px) {
+  .ctaInner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 48px 24px;
+    gap: 24px;
+  }
+
+  .ctaButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .main {
+    grid-template-columns: 1fr;
+    padding: 48px 24px 40px;
+    gap: 36px;
+  }
+
+  .bottom {
+    padding: 22px 24px 28px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

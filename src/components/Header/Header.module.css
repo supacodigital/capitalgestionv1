@@ -1,0 +1,291 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  transition: background-color 240ms var(--ease-out), border-color 240ms var(--ease-out),
+    box-shadow 240ms var(--ease-out);
+}
+
+.header.scrolled {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom-color: rgba(26, 26, 26, 0.08);
+  box-shadow: 0 4px 24px rgba(26, 26, 26, 0.04);
+}
+
+.inner {
+  position: relative;
+  z-index: 101;
+  height: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logoMark {
+  height: 40px;
+  width: auto;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: 0.09em;
+  color: var(--color-black);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--color-bordeaux);
+  margin-top: 3px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin: 0 auto;
+}
+
+.navLink {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-black);
+  position: relative;
+  padding: 4px 0;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1.5px;
+  background: var(--color-bordeaux);
+  transition: right 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navLink:hover::after {
+    right: 0;
+  }
+}
+
+.cta {
+  flex-shrink: 0;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+  background: var(--color-black);
+  padding: 12px 26px;
+  border-radius: 2px;
+  transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out);
+  white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    background: var(--color-bordeaux-dark);
+  }
+}
+
+.cta:active {
+  transform: scale(0.97);
+}
+
+.menuButton {
+  display: none;
+  position: relative;
+  z-index: 101;
+  width: 32px;
+  height: 32px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: transform 160ms var(--ease-out);
+}
+
+.menuButton:active {
+  transform: scale(0.92);
+}
+
+.burgerBar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--color-black);
+  border-radius: 1px;
+  transition: transform 320ms var(--ease-in-out), opacity 200ms var(--ease-out),
+    background-color 320ms var(--ease-in-out);
+}
+
+.menuButtonOpen .burgerBar {
+  background: var(--color-white);
+}
+
+.menuButtonOpen .burgerBar:nth-child(1) {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menuButtonOpen .burgerBar:nth-child(2) {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+.mobileMenu {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .nav,
+  .cta {
+    display: none;
+  }
+
+  .menuButton {
+    display: flex;
+  }
+
+  .header.scrolled,
+  .header {
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(10px);
+    border-bottom-color: rgba(26, 26, 26, 0.08);
+  }
+
+  .header.menuOpen {
+    background: var(--color-black);
+    border-bottom-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .header.menuOpen .brandCapital {
+    color: var(--color-white);
+  }
+
+  .header.menuOpen .brandGestion {
+    color: #d99aa2;
+  }
+
+  .mobileMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+    background: var(--color-black);
+    overflow: hidden;
+  }
+
+  .mobileWatermark {
+    position: absolute;
+    right: -14%;
+    bottom: -10%;
+    width: 460px;
+    max-width: 70vw;
+    opacity: 0.06;
+    filter: brightness(0) invert(1);
+    pointer-events: none;
+  }
+
+  .mobileNav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 40px;
+  }
+
+  .mobileNavLink {
+    font-family: var(--font-serif);
+    font-weight: 600;
+    font-size: 34px;
+    color: var(--color-white);
+    padding: 10px 0;
+    letter-spacing: 0.01em;
+  }
+
+  .mobileCta {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-black);
+    background: var(--color-white);
+    padding: 16px 40px;
+    border-radius: 2px;
+    transition: transform 160ms var(--ease-out);
+  }
+
+  .mobileCta:active {
+    transform: scale(0.97);
+  }
+
+  .mobileContact {
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12.5px;
+    letter-spacing: 0.03em;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    padding: 0 20px;
+  }
+
+  .brandCapital {
+    font-size: 16px;
+  }
+
+  .logoMark {
+    height: 34px;
+  }
+
+  .mobileNavLink {
+    font-size: 28px;
+  }
+}

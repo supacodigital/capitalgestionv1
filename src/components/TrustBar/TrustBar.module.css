@@ -1,0 +1,143 @@
+.trustBar {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-offwhite);
+  border-bottom: 1px solid var(--color-grey-light);
+  padding: 26px 0;
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    black 64px,
+    black calc(100% - 64px),
+    transparent 100%
+  );
+}
+
+.watermark {
+  position: absolute;
+  top: 50%;
+  left: 6%;
+  height: 260%;
+  width: auto;
+  transform: translateY(-50%);
+  opacity: 0.05;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+.track {
+  position: relative;
+  display: flex;
+  width: max-content;
+  animation: scroll 36s linear infinite;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  flex-shrink: 0;
+}
+
+.item {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  white-space: nowrap;
+  padding: 0 36px 0 0;
+}
+
+.value {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+}
+
+.label {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.plainLabel {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-black);
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-bordeaux);
+  opacity: 0.55;
+  flex-shrink: 0;
+  margin-left: 36px;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .trustBar:hover .track {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .trustBar {
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      black 32px,
+      black calc(100% - 32px),
+      transparent 100%
+    );
+  }
+
+  .value {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  .label {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  .plainLabel {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  .item {
+    gap: 10px;
+    padding-right: 24px;
+  }
+
+  .dot {
+    margin-left: 24px;
+  }
+
+  .track {
+    animation-duration: 24s;
+  }
+}

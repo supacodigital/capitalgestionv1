@@ -1,0 +1,223 @@
+.hero {
+  position: relative;
+  min-height: min(92vh, 820px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--color-white);
+  padding-top: var(--header-height);
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 160px;
+  background: linear-gradient(to bottom, transparent, var(--color-white));
+  pointer-events: none;
+}
+
+.watermark {
+  position: absolute;
+  right: -6%;
+  bottom: -12%;
+  width: 620px;
+  max-width: 60vw;
+  opacity: 0.05;
+  pointer-events: none;
+  filter: grayscale(1);
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 760px;
+  margin-left: max(32px, calc((100vw - 1240px) / 2));
+  padding: 48px 32px 64px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+  margin-bottom: 28px;
+}
+
+.eyebrowLine {
+  width: 32px;
+  height: 1.5px;
+  background: var(--color-bordeaux);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2.5rem, 4.8vw, 4rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--color-black);
+  margin-bottom: 30px;
+}
+
+.titleLine {
+  display: block;
+}
+
+.titleLine:first-child {
+  font-weight: 400;
+  color: #4a4a4a;
+}
+
+.titleLine em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-bordeaux);
+}
+
+.subtitle {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #565656;
+  max-width: 540px;
+  margin-bottom: 44px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.primaryCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
+  background: var(--color-bordeaux);
+  padding: 16px 30px;
+  border-radius: 2px;
+  transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out);
+}
+
+.primaryCta svg {
+  transition: transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primaryCta:hover {
+    background: var(--color-bordeaux-dark);
+  }
+
+  .primaryCta:hover svg {
+    transform: translateX(3px);
+  }
+}
+
+.primaryCta:active {
+  transform: scale(0.97);
+}
+
+.secondaryCta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-black);
+  padding: 16px 30px;
+  border: 1.5px solid #d8d5d3;
+  border-radius: 2px;
+  overflow: hidden;
+  transition: border-color 200ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.secondaryCta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--color-black);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 240ms var(--ease-out);
+}
+
+.secondaryCtaLabel {
+  position: relative;
+  z-index: 1;
+  transition: color 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .secondaryCta:hover {
+    border-color: var(--color-black);
+  }
+
+  .secondaryCta:hover::before {
+    transform: scaleX(1);
+  }
+
+  .secondaryCta:hover .secondaryCtaLabel {
+    color: var(--color-white);
+  }
+}
+
+.secondaryCta:active {
+  transform: scale(0.97);
+}
+
+.locations {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--color-grey-mid);
+}
+
+.locations svg {
+  color: var(--color-bordeaux);
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: auto;
+  }
+
+  .content {
+    padding: 64px 24px 80px;
+  }
+
+  .watermark {
+    width: 380px;
+    opacity: 0.05;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .primaryCta,
+  .secondaryCta {
+    width: 100%;
+    justify-content: center;
+  }
+}
