@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import logoMonogram from "../../assets/logo-monogram.png";
 import styles from "./TrustBar.module.css";
 
@@ -12,11 +13,26 @@ const ITEMS = [
 ];
 
 export default function TrustBar() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(([entry]) => setIsVisible(entry.isIntersecting), {
+      rootMargin: "200px 0px",
+    });
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={styles.trustBar} role="marquee" aria-label="Repères clés">
+    <div className={styles.trustBar} role="marquee" aria-label="Repères clés" ref={containerRef}>
       <img src={logoMonogram} alt="" className={styles.watermark} aria-hidden="true" />
 
-      <div className={styles.track}>
+      <div className={`${styles.track} ${isVisible ? styles.trackRunning : ""}`}>
         {[0, 1].map((rep) => (
           <ul className={styles.list} key={rep} aria-hidden={rep === 1}>
             {ITEMS.map(({ value, label }, i) => (

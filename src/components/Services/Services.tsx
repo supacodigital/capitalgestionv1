@@ -3,7 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LineChart, PiggyBank, ShieldCheck, Landmark } from "lucide-react";
-import serviceImage from "../../assets/serviceportrait.png";
+import serviceImage from "../../assets/serviceportrait.jpg";
 import styles from "./Services.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
