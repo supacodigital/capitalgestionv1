@@ -84,7 +84,7 @@ export default function Method() {
         </div>
 
         <div className={styles.grid}>
-          {STEPS.map(({ number, title, description }, i) => (
+          {STEPS.map(({ number, title, description }) => (
             <div className={styles.step} key={number}>
               <span className={styles.connector} aria-hidden="true" />
               <span className={styles.number}>{number}</span>
