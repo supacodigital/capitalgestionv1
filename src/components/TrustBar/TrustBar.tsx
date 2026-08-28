@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import logoMonogram from "../../assets/logo-monogram.png";
+import logoMonogram from "../../assets/logo-monogram-lg.webp";
 import styles from "./TrustBar.module.css";
 
 const ITEMS = [

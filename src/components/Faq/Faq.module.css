@@ -1,0 +1,188 @@
+.faq {
+  position: relative;
+  background: var(--color-offwhite);
+  padding: 120px 0;
+}
+
+.inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.header {
+  margin-bottom: 56px;
+}
+
+/* Deux colonnes : accordéon à gauche, image à droite */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 72px;
+  align-items: start;
+}
+
+.figure {
+  position: sticky;
+  top: calc(var(--header-height) + 32px);
+  overflow: hidden;
+  border-radius: 3px;
+  background: var(--color-grey-light);
+}
+
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+  margin-bottom: 20px;
+}
+
+.eyebrowLine {
+  width: 32px;
+  height: 1.5px;
+  background: var(--color-bordeaux);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--color-black);
+  white-space: nowrap;
+}
+
+.list {
+  border-top: 1px solid var(--color-grey-light);
+}
+
+.item {
+  border-bottom: 1px solid var(--color-grey-light);
+}
+
+.questionHeading {
+  margin: 0;
+}
+
+.question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 26px 0;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.4;
+  color: var(--color-black);
+  transition: color 180ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .question:hover {
+    color: var(--color-bordeaux);
+  }
+}
+
+.iconWrap {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 1px solid var(--color-grey-light);
+  color: var(--color-bordeaux);
+  transition: transform 280ms var(--ease-out), background-color 200ms var(--ease-out),
+    color 200ms var(--ease-out);
+}
+
+.itemOpen .iconWrap {
+  transform: rotate(45deg);
+  background: var(--color-bordeaux);
+  color: var(--color-white);
+  border-color: var(--color-bordeaux);
+}
+
+.answerWrap {
+  overflow: hidden;
+}
+
+.answer {
+  padding: 0 52px 30px 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #565656;
+  text-wrap: pretty;
+}
+
+/* ---------- Tablette : image en dessous, plus large ---------- */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .figure {
+    position: static;
+    max-width: 420px;
+  }
+
+  .figure img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 640px) {
+  /* En dessous, le titre sur une ligne déborderait : on relâche */
+  .title {
+    white-space: normal;
+    font-size: clamp(1.6rem, 7vw, 2rem);
+  }
+}
+
+@media (max-width: 600px) {
+  .faq {
+    padding: 80px 0;
+  }
+
+  .header {
+    margin-bottom: 40px;
+  }
+
+  .question {
+    gap: 16px;
+    padding: 22px 0;
+  }
+
+  .answer {
+    padding: 0 0 26px 0;
+  }
+
+  /* Sur mobile, l'image décorative n'apporte rien : on la masque */
+  .figure {
+    display: none;
+  }
+}
