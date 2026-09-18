@@ -13,6 +13,7 @@ const ITEMS = [
 
 export default function TrustBar() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -27,15 +28,48 @@ export default function TrustBar() {
     return () => observer.disconnect();
   }, []);
 
+  // Mesure la largeur d'un exemplaire pour que la boucle retombe au pixel :
+  // une translation de -50% dérive d'un demi-pixel sur une largeur impaire.
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const measure = () => {
+      const first = track.firstElementChild as HTMLElement | null;
+      if (!first) return;
+      track.style.setProperty("--loop-width", `${first.getBoundingClientRect().width}px`);
+    };
+
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
+    // Les polices changent la largeur des libellés une fois chargées
+    document.fonts?.ready.then(measure).catch(() => {});
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className={styles.trustBar} role="marquee" aria-label="Repères clés" ref={containerRef}>
+    // Pas de role="marquee" : il déclare une région live que les lecteurs
+    // d'écran peuvent réannoncer en boucle. Le contenu est une simple liste.
+    <div className={styles.trustBar} ref={containerRef}>
       <img src={logoMonogram} alt="" className={styles.watermark} aria-hidden="true" />
 
-      <div className={`${styles.track} ${isVisible ? styles.trackRunning : ""}`}>
+      <div
+        className={`${styles.track} ${isVisible ? styles.trackRunning : ""}`}
+        ref={trackRef}
+      >
         {[0, 1].map((rep) => (
-          <ul className={styles.list} key={rep} aria-hidden={rep === 1}>
-            {ITEMS.map(({ label }, i) => (
-              <li className={styles.item} key={i}>
+          <ul
+            className={styles.list}
+            key={rep}
+            aria-label={rep === 0 ? "Repères clés" : undefined}
+            // Le second exemplaire n'existe que pour boucler visuellement
+            aria-hidden={rep === 1 || undefined}
+          >
+            {ITEMS.map(({ label }) => (
+              <li className={styles.item} key={label}>
                 <span className={styles.plainLabel}>{label}</span>
                 <span className={styles.dot} aria-hidden="true" />
               </li>
