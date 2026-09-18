@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -34,9 +34,40 @@ const ROW_TWO = PARTNERS.slice(MID);
 type Partner = { src: string; label: string };
 
 function MarqueeRow({ items, reverse }: { items: Partner[]; reverse?: boolean }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  // Largeur exacte d'une séquence, gap compris : sans elle, la boucle
+  // saute d'un gap à chaque cycle (translateX(-50%) tombe à côté).
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const measure = () => {
+      const children = [...track.children] as HTMLElement[];
+      if (children.length < 2) return;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const half = children.length / 2;
+      const width = children
+        .slice(0, half)
+        .reduce((total, el) => total + el.getBoundingClientRect().width + gap, 0);
+      track.style.setProperty("--seq-width", `${width}px`);
+    };
+
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(track);
+    document.fonts?.ready.then(measure).catch(() => {});
+
+    return () => observer.disconnect();
+  }, [items]);
+
   return (
     <div className={styles.marqueeRow}>
-      <div className={`${styles.marqueeTrack} ${reverse ? styles.marqueeReverse : ""}`}>
+      <div
+        className={`${styles.marqueeTrack} ${reverse ? styles.marqueeReverse : ""}`}
+        ref={trackRef}
+      >
         {[...items, ...items].map(({ src, label }, index) => (
           <div
             className={styles.marqueeLogo}

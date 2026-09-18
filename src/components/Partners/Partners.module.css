@@ -62,8 +62,9 @@
   gap: 1px;
   background: var(--color-grey-light);
   border: 1px solid var(--color-grey-light);
-  /* Replié : ~2 rangées visibles (5 col × ~132px + bordures) */
-  max-height: 268px;
+  /* Replié : deux rangées complètes (2 × 132px + la bordure intermédiaire).
+     Une hauteur intermédiaire tranchait les logos par le milieu. */
+  max-height: 265px;
   overflow: hidden;
   transition: max-height 420ms var(--ease-out);
 }
@@ -78,8 +79,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 120px;
-  background: linear-gradient(to bottom, transparent, var(--color-offwhite));
+  /* 40px : le fondu signale qu'il y a une suite sans voiler les logos
+     de la dernière rangée visible */
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    rgba(250, 248, 247, 0),
+    rgba(250, 248, 247, 0.85)
+  );
   pointer-events: none;
 }
 
@@ -100,7 +107,8 @@
   border: 1.5px solid #d8d5d3;
   border-radius: 2px;
   cursor: pointer;
-  transition: border-color 180ms var(--ease-out), color 180ms var(--ease-out);
+  transition: border-color 180ms var(--ease-out), color 180ms var(--ease-out),
+    transform 160ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -113,6 +121,11 @@
 .toggle:focus-visible {
   outline: 2px solid var(--color-bordeaux);
   outline-offset: 3px;
+}
+
+.toggle:active {
+  transform: scale(0.97);
+  transition-duration: 100ms;
 }
 
 .toggleIcon {
@@ -139,12 +152,20 @@
 
 .logo img {
   max-width: 100%;
-  max-height: 56px;
+  max-height: 52px;
   width: auto;
   height: auto;
   object-fit: contain;
-  filter: grayscale(1) opacity(0.55);
-  transition: filter 260ms var(--ease-out);
+  /* 0.55 rendait les marques difficiles à reconnaître, alors que c'est
+     leur notoriété qui porte la réassurance de la section */
+  filter: grayscale(1) opacity(0.72);
+  transition: filter 280ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .logo:hover img {
+    filter: grayscale(0) opacity(1);
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -211,6 +232,7 @@
     display: flex;
     width: max-content;
     gap: 12px;
+    will-change: transform;
     animation: partners-scroll 26s linear infinite;
   }
 
@@ -237,7 +259,9 @@
     width: auto;
     height: auto;
     object-fit: contain;
-    filter: grayscale(0) opacity(0.85);
+    /* Même traitement que la grille : les deux affichages montrent les
+       mêmes marques, ils ne doivent pas avoir deux apparences */
+    filter: grayscale(1) opacity(0.72);
   }
 }
 
@@ -246,8 +270,9 @@
     transform: translateX(0);
   }
   to {
-    /* -50% car la liste est dupliquée */
-    transform: translateX(-50%);
+    /* Largeur d'une séquence, gap compris, mesurée au montage : -50 % du
+       rail laisse un écart d'un gap, la boucle sautant à chaque cycle. */
+    transform: translate3d(calc(var(--seq-width, 50%) * -1), 0, 0);
   }
 }
 
