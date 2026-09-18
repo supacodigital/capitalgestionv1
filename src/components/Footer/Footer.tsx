@@ -14,8 +14,8 @@ const CERTIFICATIONS = [
 
 const NAV_LINKS = [
   { label: "Accueil", href: "/#accueil" },
+  { label: "À propos", href: "/#a-propos" },
   { label: "Services", href: "/#services" },
-  { label: "Solutions", href: "/#solutions" },
   { label: "Devenir conseiller", href: "/devenir-conseiller" },
   { label: "Contact", href: "/#contact" },
 ];

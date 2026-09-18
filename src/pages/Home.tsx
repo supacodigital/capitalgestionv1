@@ -4,10 +4,12 @@ import Hero from "../components/Hero/Hero";
 import TrustBar from "../components/TrustBar/TrustBar";
 import Vision from "../components/Vision/Vision";
 import Objectives from "../components/Objectives/Objectives";
+import About from "../components/About/About";
 import Services from "../components/Services/Services";
 import Solutions from "../components/Solutions/Solutions";
 import Partners from "../components/Partners/Partners";
 import Method from "../components/Method/Method";
+import Credentials from "../components/Credentials/Credentials";
 import Faq from "../components/Faq/Faq";
 import Contact from "../components/Contact/Contact";
 import StructuredData from "../components/StructuredData/StructuredData";
@@ -43,11 +45,13 @@ export default function Home() {
       <Hero />
       <TrustBar />
       <Vision />
+      <About />
       <Services />
       <Objectives />
       <Solutions />
       <Partners />
       <Method />
+      <Credentials />
       <Faq />
       <Contact />
     </>
