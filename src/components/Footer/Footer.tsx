@@ -13,8 +13,8 @@ const CERTIFICATIONS = [
 ];
 
 const NAV_LINKS = [
-  { label: "Services", href: "/#services" },
   { label: "À propos", href: "/#a-propos" },
+  { label: "Services", href: "/#services" },
   { label: "Solutions", href: "/#solutions" },
   { label: "Méthode", href: "/#methode" },
   { label: "FAQ", href: "/#faq" },
