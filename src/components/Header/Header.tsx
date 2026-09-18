@@ -18,7 +18,11 @@ const NAV_LINKS = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [observedId, setObservedId] = useState<string | null>(null);
   const { pathname } = useLocation();
+
+  // Le repère de section ne vaut que sur la home
+  const activeId = pathname === "/" ? observedId : null;
 
   // Sur la home, on intercepte les liens d'ancre pour un défilement doux
   function handleAnchorClick(event: React.MouseEvent<HTMLAnchorElement>, href: string) {
@@ -39,6 +43,55 @@ export default function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Repère de lecture : met en avant la section en cours sur une page longue
+  useEffect(() => {
+    if (pathname !== "/") return;
+
+    const ids = NAV_LINKS.map((l) => l.href.split("#")[1]).filter(Boolean) as string[];
+
+    let frame = 0;
+    const update = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        // La section active est la dernière dont le haut est passé sous
+        // la ligne de lecture, située juste sous le header
+        const ligne = window.innerHeight * 0.4;
+        let courante: string | null = null;
+
+        for (const id of ids) {
+          const el = document.getElementById(id);
+          if (!el) continue;
+          const { top, bottom } = el.getBoundingClientRect();
+          if (top <= ligne && bottom > ligne) {
+            courante = id;
+            break;
+          }
+        }
+
+        setObservedId(courante);
+      });
+    };
+
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
+
+  // Échap ferme le menu : attendu de tout overlay plein écran
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isMenuOpen]);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
@@ -67,22 +120,34 @@ export default function Header() {
         </a>
 
         <nav className={styles.nav}>
-          {NAV_LINKS.map((link) =>
-            link.href.includes("#") ? (
+          {NAV_LINKS.map((link) => {
+            const sectionId = link.href.split("#")[1];
+            const isActive = sectionId
+              ? activeId === sectionId
+              : pathname === link.href;
+            const className = `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`;
+
+            return link.href.includes("#") ? (
               <a
                 key={link.href}
                 href={link.href}
-                className={styles.navLink}
+                className={className}
+                aria-current={isActive ? "true" : undefined}
                 onClick={(e) => handleAnchorClick(e, link.href)}
               >
                 {link.label}
               </a>
             ) : (
-              <Link key={link.href} to={link.href} className={styles.navLink}>
+              <Link
+                key={link.href}
+                to={link.href}
+                className={className}
+                aria-current={isActive ? "page" : undefined}
+              >
                 {link.label}
               </Link>
-            )
-          )}
+            );
+          })}
         </nav>
 
         <a
