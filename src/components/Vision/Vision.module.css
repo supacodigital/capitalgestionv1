@@ -272,9 +272,13 @@
 
   /* En colonne unique, le filet passe du côté gauche au-dessus de
      chaque bloc : un trait vertical n'a plus de sens entre deux items
-     empilés. */
+     empilés. Le retrait haut dégage le numéro, qui chevauche le filet. */
   .conviction {
-    padding: 32px 0 0;
+    padding: 46px 0 28px;
+  }
+
+  .conviction:last-child {
+    padding-bottom: 8px;
   }
 
   .conviction + .conviction {
