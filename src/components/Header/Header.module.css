@@ -64,6 +64,32 @@
   flex-shrink: 0;
 }
 
+/* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
 .logoMark {
   height: 42px;
   width: auto;
@@ -72,7 +98,33 @@
   transition: height 320ms var(--ease-out), opacity 200ms var(--ease-out);
 }
 
-.scrolled .logoMark {
+.scrolled /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
   height: 36px;
 }
 
@@ -86,7 +138,33 @@
   }
 }
 
-.brand:active .logoMark {
+.brand:active /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
   opacity: 0.6;
 }
 
@@ -288,7 +366,33 @@
     opacity: 0;
   }
 
-  .menuOpen .logoMark {
+  .menuOpen /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
     height: 42px;
   }
 
@@ -394,7 +498,33 @@
     padding: 0 20px;
   }
 
-  .logoMark {
+  /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
     height: 36px;
   }
 
@@ -415,7 +545,33 @@
     height: var(--header-height);
   }
 
-  .scrolled .logoMark {
+  .scrolled /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
     height: 42px;
   }
 

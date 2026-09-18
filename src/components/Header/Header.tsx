@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import logoFull from "../../assets/logo-full.webp";
-import logoFullWhite from "../../assets/logo-full-white.webp";
 import logoMonogramLg from "../../assets/logo-monogram-lg.webp";
 import styles from "./Header.module.css";
 
@@ -112,11 +111,16 @@ export default function Header() {
           className={styles.brand}
           onClick={(e) => handleAnchorClick(e, "/#accueil")}
         >
-          <img
-            src={isMenuOpen ? logoFullWhite : logoFull}
-            alt="Capital Gestion"
-            className={styles.logoMark}
-          />
+          {/* Menu ouvert : le logo couleur a « CAPITAL » en noir, illisible sur
+              le fond sombre. On reprend le lettrage du pied de page. */}
+          {isMenuOpen ? (
+            <span className={styles.brandText}>
+              <span className={styles.brandCapital}>Capital</span>
+              <span className={styles.brandGestion}>Gestion</span>
+            </span>
+          ) : (
+            <img src={logoFull} alt="Capital Gestion" className={styles.logoMark} />
+          )}
         </a>
 
         <nav className={styles.nav}>
