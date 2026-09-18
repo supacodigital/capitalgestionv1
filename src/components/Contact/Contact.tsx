@@ -2,7 +2,18 @@ import { useId, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Phone, Mail, MapPin, ArrowRight, Check, Clock, Video, BadgeEuro } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  ArrowRight,
+  Check,
+  Clock,
+  Video,
+  BadgeEuro,
+  AlertTriangle,
+} from "lucide-react";
+import { sendContact } from "../../lib/sendContact";
 import styles from "./Contact.module.css";
 
 // Logos de marque (non fournis par cette version de lucide-react)
@@ -33,8 +44,6 @@ function LinkedinIcon() {
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Clé publique Web3Forms — l'envoi arrive sur contact@sbc-capitalgestion.com
-const WEB3FORMS_KEY = "b62d561b-906c-4f35-8bbf-e495c429ce72";
 const CONTACT_EMAIL = "contact@sbc-capitalgestion.com";
 
 type Status = "idle" | "sending" | "success" | "error";
@@ -162,32 +171,23 @@ export default function Contact() {
       return;
     }
 
-    const data = new FormData(form);
-    data.append("access_key", WEB3FORMS_KEY);
-    data.append("from_name", "Site S Capital Gestion");
-    // Le sujet choisi sert d'objet à l'e-mail reçu (set, pour ne pas dupliquer le champ)
-    data.set("subject", `Nouvelle demande — ${values.subject}`);
-
     setStatus("sending");
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: data,
+      await sendContact({
+        name: values.name,
+        email: values.email,
+        phone: values.phone,
+        subject: values.subject,
+        message: values.message,
       });
-      const result = await response.json();
 
-      if (result.success) {
-        setStatus("success");
-        form.reset();
-        setErrors({});
-        setSubmitAttempted(false);
-        // Déplace le focus sur la confirmation pour les lecteurs d'écran
-        requestAnimationFrame(() => statusRef.current?.focus());
-      } else {
-        setStatus("error");
-        requestAnimationFrame(() => statusRef.current?.focus());
-      }
+      setStatus("success");
+      form.reset();
+      setErrors({});
+      setSubmitAttempted(false);
+      // Déplace le focus sur la confirmation pour les lecteurs d'écran
+      requestAnimationFrame(() => statusRef.current?.focus());
     } catch {
       setStatus("error");
       requestAnimationFrame(() => statusRef.current?.focus());
@@ -222,7 +222,7 @@ export default function Contact() {
               <span className={styles.expectationIcon} aria-hidden="true">
                 <Clock size={16} strokeWidth={1.7} />
               </span>
-              Environ 1 h 30
+              Environ 30 minutes
             </li>
             <li className={styles.expectation}>
               <span className={styles.expectationIcon} aria-hidden="true">
@@ -279,6 +279,13 @@ export default function Contact() {
               </li>
             </ul>
 
+            {/* Rappel du format, à l'endroit où la colonne restait vide */}
+            <p className={styles.infoNote}>
+              <strong>Le premier rendez-vous</strong>
+              Environ 30 minutes, en visioconférence ou par téléphone. Gratuit et sans engagement :
+              il sert à comprendre votre situation, pas à vous vendre quoi que ce soit.
+            </p>
+
             <div className={styles.social}>
               <span className={styles.infoLabel} id={id("social")}>
                 Suivez-nous
@@ -324,6 +331,21 @@ export default function Contact() {
                   <h3 className={styles.successTitle}>Message envoyé</h3>
                   <p className={styles.successText}>
                     Merci pour votre message. Je reviens vers vous dans les meilleurs délais.
+                  </p>
+                </div>
+              )}
+              {/* L'échec d'envoi n'affichait rien : le visiteur pouvait croire
+                  sa demande partie alors qu'elle était perdue. */}
+              {status === "error" && (
+                <div className={styles.errorBox} role="alert">
+                  <span className={styles.errorIcon} aria-hidden="true">
+                    <AlertTriangle size={18} strokeWidth={1.9} />
+                  </span>
+                  <p className={styles.errorText}>
+                    L'envoi n'a pas abouti. Vous pouvez réessayer, ou joindre directement
+                    Béatrice Sem au{" "}
+                    <a href="tel:+33743669193">07 43 66 91 93</a> ou à{" "}
+                    <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
                   </p>
                 </div>
               )}

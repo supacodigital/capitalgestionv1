@@ -67,8 +67,28 @@
 .infoPanel {
   display: flex;
   flex-direction: column;
-  padding: 48px 40px;
+  padding: 44px 40px 40px;
   background: var(--color-offwhite);
+}
+
+/* Rappel du format du rendez-vous, là où la colonne restait vide */
+.infoNote {
+  margin-top: 32px;
+  padding-top: 26px;
+  border-top: 1px solid #e8e1de;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #6a6a6a;
+  text-wrap: pretty;
+}
+
+.infoNote strong {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-black);
 }
 
 .infoIntro {
@@ -150,12 +170,13 @@ a.infoValue:focus-visible {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  /* 44px et carré : zone tactile conforme et même vocabulaire d'icône
+     que le reste de la page */
+  width: 44px;
+  height: 44px;
   background: var(--color-white);
-  border: 1px solid var(--color-grey-light);
-  color: var(--color-black);
+  border: 1px solid #e8e3e1;
+  color: #3d3d3d;
   transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out),
     border-color 180ms var(--ease-out);
 }
@@ -564,4 +585,35 @@ fieldset.field {
     flex-direction: column;
     gap: 12px;
   }
+}
+
+/* ── Échec d'envoi ───────────────────────────────────────── */
+.errorBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 26px;
+  padding: 18px 20px;
+  border-left: 2px solid var(--color-bordeaux);
+  background: rgba(122, 20, 32, 0.045);
+}
+
+.errorIcon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--color-bordeaux);
+}
+
+.errorText {
+  font-size: 14px;
+  line-height: 1.65;
+  color: #4d4d4d;
+  text-wrap: pretty;
+}
+
+.errorText a {
+  color: var(--color-bordeaux);
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
 }
