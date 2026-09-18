@@ -3,8 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus } from "lucide-react";
-import faqImage from "../../assets/faq.webp";
+import { Plus, Phone, Mail, ArrowRight } from "lucide-react";
 import { FAQ_ENTRIES } from "../../data/faq";
 import styles from "./Faq.module.css";
 
@@ -39,10 +38,10 @@ export default function Faq() {
         },
       });
 
-      gsap.from(`.${styles.figure}`, {
+      gsap.from(`.${styles.aside}`, {
         opacity: 0,
-        scale: 0.97,
-        duration: 0.9,
+        y: 24,
+        duration: 0.8,
         ease: "power3.out",
         scrollTrigger: {
           trigger: `.${styles.layout}`,
@@ -102,9 +101,35 @@ export default function Faq() {
             })}
           </div>
 
-          <div className={styles.figure} aria-hidden="true">
-            <img src={faqImage} alt="" loading="lazy" />
-          </div>
+          {/* Une question hors liste trouve ici sa réponse directe */}
+          <aside className={styles.aside}>
+            <span className={styles.asideRule} aria-hidden="true" />
+            <h3 className={styles.asideTitle}>Une autre question ?</h3>
+            <p className={styles.asideText}>
+              Toutes les situations ne se ressemblent pas. Le plus simple reste d'en parler
+              quelques minutes.
+            </p>
+
+            <ul className={styles.asideList}>
+              <li>
+                <a href="tel:+33743669193" className={styles.asideLink}>
+                  <Phone size={16} strokeWidth={1.7} aria-hidden="true" />
+                  07 43 66 91 93
+                </a>
+              </li>
+              <li>
+                <a href="mailto:contact@sbc-capitalgestion.com" className={styles.asideLink}>
+                  <Mail size={16} strokeWidth={1.7} aria-hidden="true" />
+                  contact@sbc-capitalgestion.com
+                </a>
+              </li>
+            </ul>
+
+            <a href="#contact" className={styles.asideCta}>
+              Prendre rendez-vous
+              <ArrowRight size={17} />
+            </a>
+          </aside>
         </div>
       </div>
     </section>

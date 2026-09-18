@@ -22,20 +22,124 @@
   align-items: start;
 }
 
-.figure {
+/* ── Encart de contact, en vis-à-vis des questions ── */
+.aside {
   position: sticky;
   top: calc(var(--header-height) + 32px);
-  overflow: hidden;
+  padding: 36px 32px 34px;
+  background: var(--color-white);
+  border: 1px solid #ece7e5;
   border-radius: 3px;
-  background: var(--color-grey-light);
 }
 
-.figure img {
+.asideRule {
   display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
+  width: 36px;
+  height: 2px;
+  background: var(--color-bordeaux);
+  margin-bottom: 22px;
+}
+
+.asideTitle {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.32rem;
+  line-height: 1.25;
+  letter-spacing: -0.005em;
+  color: var(--color-black);
+  margin-bottom: 14px;
+}
+
+.asideText {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #5a5a5a;
+  margin-bottom: 26px;
+  text-wrap: pretty;
+}
+
+.asideList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 26px;
+  padding-top: 22px;
+  border-top: 1px solid #f0ebe9;
+}
+
+.asideLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  font-size: 14px;
+  color: #3d3d3d;
+  transition: color 200ms var(--ease-out);
+}
+
+.asideLink svg {
+  color: var(--color-bordeaux);
+  flex-shrink: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .asideLink:hover {
+    color: var(--color-bordeaux);
+  }
+}
+
+.asideCta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+  padding-bottom: 7px;
+  transition: color 280ms var(--ease-out);
+}
+
+.asideCta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out);
+}
+
+.asideCta svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .asideCta:hover {
+    color: var(--color-bordeaux-dark);
+  }
+
+  .asideCta:hover svg {
+    transform: translateX(4px);
+  }
+
+  .asideCta:hover::after {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+.asideCta:focus-visible,
+.asideLink:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .eyebrow {
@@ -72,7 +176,27 @@
 }
 
 .item {
-  border-bottom: 1px solid var(--color-grey-light);
+  position: relative;
+  border-bottom: 1px solid #ece7e5;
+}
+
+/* Filet bordeaux à gauche de la question ouverte : repère discret,
+   plus juste qu'une pastille pleine sur une FAQ sobre */
+.item::before {
+  content: "";
+  position: absolute;
+  left: -20px;
+  top: 22px;
+  width: 2px;
+  height: 26px;
+  background: var(--color-bordeaux);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform 300ms var(--ease-out);
+}
+
+.itemOpen::before {
+  transform: scaleY(1);
 }
 
 .questionHeading {
@@ -109,20 +233,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  background: var(--color-white);
-  border: 1px solid var(--color-grey-light);
+  background: transparent;
+  border: 1px solid #e3ddda;
   color: var(--color-bordeaux);
-  transition: transform 280ms var(--ease-out), background-color 200ms var(--ease-out),
-    color 200ms var(--ease-out);
+  transition: transform 300ms var(--ease-out), border-color 220ms var(--ease-out);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .question:hover .iconWrap {
+    border-color: var(--color-bordeaux);
+  }
+}
+
+/* Le signe pivote pour former une croix, sans pastille pleine */
 .itemOpen .iconWrap {
-  transform: rotate(45deg);
-  background: var(--color-bordeaux);
-  color: var(--color-white);
+  transform: rotate(135deg);
   border-color: var(--color-bordeaux);
 }
 
@@ -145,13 +273,15 @@
     gap: 48px;
   }
 
-  .figure {
+  /* L'encart passe sous les questions : il n'a plus à rester collé */
+  .aside {
     position: static;
-    max-width: 420px;
+    max-width: 480px;
   }
 
-  .figure img {
-    aspect-ratio: 4 / 3;
+  /* Le filet d'état sortirait de la colonne sur écran étroit */
+  .item::before {
+    left: -14px;
   }
 }
 
@@ -181,8 +311,14 @@
     padding: 0 0 26px 0;
   }
 
-  /* Sur mobile, l'image décorative n'apporte rien : on la masque */
-  .figure {
-    display: none;
+  /* L'encart reste affiché sur mobile : contrairement à l'image qu'il
+     remplace, il porte les coordonnées et le lien de rendez-vous */
+  .aside {
+    max-width: none;
+    padding: 30px 24px 28px;
+  }
+
+  .asideTitle {
+    font-size: 1.22rem;
   }
 }
