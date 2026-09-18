@@ -43,104 +43,94 @@
   color: var(--color-black);
 }
 
-/* ---------- Liste des étapes ---------- */
+/* ---------- Parcours vertical ---------- */
 .steps {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 72px;
+  max-width: 720px;
 }
 
 .step {
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: 48px;
-  align-items: center;
+  grid-template-columns: 52px 1fr;
+  gap: 28px;
+  padding-bottom: 44px;
 }
 
-/* alternance : photo à droite pour les étapes paires */
-.step:nth-child(even) {
-  grid-template-columns: 1fr 340px;
+.step:last-child {
+  padding-bottom: 0;
 }
 
-.step:nth-child(even) .figure {
-  order: 2;
-}
-
-.figure {
+/* Colonne de gauche : pastille + segment de liaison */
+.marker {
   position: relative;
-  aspect-ratio: 3 / 2;
-  overflow: hidden;
-  background: var(--color-grey-light);
-  border-radius: 3px;
+  display: flex;
+  justify-content: center;
 }
 
-.figure img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: saturate(0.72) contrast(1.02);
+/* Le fil relie une pastille à la suivante, jamais au-delà de la dernière */
+.step:not(:last-child) .marker::after {
+  content: "";
+  position: absolute;
+  top: 52px;
+  bottom: -44px;
+  left: 50%;
+  width: 1px;
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    rgba(122, 20, 32, 0.28),
+    rgba(122, 20, 32, 0.1)
+  );
+}
+
+.dot {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(122, 20, 32, 0.22);
+  background: var(--color-white);
+  color: var(--color-bordeaux);
 }
 
 .body {
-  max-width: 440px;
+  padding-top: 2px;
 }
 
+/* Numéro discret, aligné sur le titre plutôt qu'en gros contour */
 .number {
   display: block;
   font-family: var(--font-serif);
-  font-weight: 500;
-  font-style: italic;
-  font-size: 44px;
-  line-height: 1;
-  color: var(--color-grey-light);
-  -webkit-text-stroke: 1px var(--color-bordeaux);
-  margin-bottom: 18px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--color-bordeaux);
+  opacity: 0.6;
+  margin-bottom: 8px;
 }
 
 .stepTitle {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: clamp(20px, 2.2vw, 26px);
-  line-height: 1.2;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
   color: var(--color-black);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .stepText {
   font-size: 15px;
-  line-height: 1.7;
-  color: #5c5c5c;
+  line-height: 1.72;
+  color: #5a5a5a;
   text-wrap: pretty;
-}
-
-/* ---------- Tablette ---------- */
-@media (max-width: 860px) {
-  .inner {
-    max-width: 620px;
-  }
-
-  .steps {
-    gap: 56px;
-  }
-
-  .step,
-  .step:nth-child(even) {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .step:nth-child(even) .figure {
-    order: 0;
-  }
-
-  .figure {
-    aspect-ratio: 3 / 2;
-  }
-
-  .body {
-    max-width: none;
-  }
 }
 
 /* ---------- Mobile ---------- */
@@ -149,12 +139,31 @@
     padding: 80px 0;
   }
 
+  .inner {
+    padding: 0 20px;
+  }
+
   .header {
     margin-bottom: 48px;
   }
 
-  .number {
-    font-size: 36px;
-    margin-bottom: 14px;
+  .step {
+    grid-template-columns: 44px 1fr;
+    gap: 20px;
+    padding-bottom: 36px;
+  }
+
+  .step:not(:last-child) .marker::after {
+    top: 44px;
+    bottom: -36px;
+  }
+
+  .dot {
+    width: 38px;
+    height: 38px;
+  }
+
+  .stepText {
+    font-size: 14.5px;
   }
 }

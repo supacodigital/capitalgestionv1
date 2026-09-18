@@ -2,10 +2,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import stepEchange from "../../assets/method/echange.webp";
-import stepAnalyse from "../../assets/method/analyse.webp";
-import stepStrategie from "../../assets/method/strategie.webp";
-import stepSuivi from "../../assets/method/suivi.webp";
+import { MessageCircle, Search, Compass, LineChart } from "lucide-react";
 import styles from "./Method.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,31 +10,31 @@ gsap.registerPlugin(ScrollTrigger);
 const STEPS = [
   {
     number: "01",
+    icon: MessageCircle,
     title: "Échange",
     description:
       "Comprendre votre situation, vos objectifs et vos projets, lors d'un premier rendez-vous sans engagement.",
-    image: stepEchange,
   },
   {
     number: "02",
+    icon: Search,
     title: "Analyse",
     description:
       "Étudier votre patrimoine dans son ensemble — actifs, fiscalité, protection — et identifier les leviers d'optimisation.",
-    image: stepAnalyse,
   },
   {
     number: "03",
+    icon: Compass,
     title: "Stratégie",
     description:
       "Construire une feuille de route personnalisée, claire et hiérarchisée, avec des recommandations concrètes.",
-    image: stepStrategie,
   },
   {
     number: "04",
+    icon: LineChart,
     title: "Suivi",
     description:
       "Accompagner la mise en œuvre et faire évoluer la stratégie dans le temps, au rythme de votre vie.",
-    image: stepSuivi,
   },
 ];
 
@@ -78,10 +75,12 @@ export default function Method() {
         </div>
 
         <ol className={styles.steps}>
-          {STEPS.map(({ number, title, description, image }) => (
+          {STEPS.map(({ number, icon: Icon, title, description }) => (
             <li className={styles.step} key={number}>
-              <div className={styles.figure}>
-                <img src={image} alt="" loading="lazy" />
+              <div className={styles.marker} aria-hidden="true">
+                <span className={styles.dot}>
+                  <Icon size={17} strokeWidth={1.7} />
+                </span>
               </div>
               <div className={styles.body}>
                 <span className={styles.number} aria-hidden="true">
