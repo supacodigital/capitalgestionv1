@@ -64,47 +64,47 @@
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
+  /* Grille à trois rangées : icône, titre, texte. Les titres sur deux
+     lignes ne décalent plus le texte des cartes voisines. */
+  display: grid;
+  /* Rangée du titre figée à deux lignes (2 × 1.06rem × 1.32) : les textes
+     démarrent alors à la même hauteur, que le titre tienne sur une ligne
+     ou deux. */
+  grid-template-rows: auto 2.8rem 1fr;
+  gap: 18px 0;
   background: var(--color-white);
-  padding: 34px 28px 32px;
-  transition: background 0.4s var(--ease-out);
-}
-
-.card:hover {
-  background: var(--color-offwhite);
+  padding: 34px 28px 34px;
 }
 
 .iconWrap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
-  margin-bottom: 20px;
-  border: 1px solid #e5e0de;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e8e3e1;
   color: var(--color-bordeaux);
-  transition: border-color 0.4s var(--ease-out);
-}
-
-.card:hover .iconWrap {
-  border-color: var(--color-bordeaux);
+  /* Le fond très légèrement teinté détache l'icône du blanc de la carte */
+  background: rgba(122, 20, 32, 0.025);
 }
 
 .cardTitle {
+  align-self: end;
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 1.05rem;
-  line-height: 1.35;
+  font-size: 1.06rem;
+  line-height: 1.32;
+  letter-spacing: -0.005em;
   color: var(--color-black);
-  margin-bottom: 12px;
+  margin: 0;
   text-wrap: balance;
 }
 
 .cardText {
   font-size: 14.5px;
   line-height: 1.7;
-  color: #565656;
+  color: #5a5a5a;
+  margin: 0;
   text-wrap: pretty;
 }
 
@@ -139,23 +139,42 @@
 .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 44px;
+  gap: 0;
   list-style: none;
   margin-bottom: 56px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .step {
+  position: relative;
   display: flex;
   flex-direction: column;
+  padding: 32px 44px 0 0;
+}
+
+.step + .step {
+  padding-left: 44px;
+}
+
+/* Filet vertical entre colonnes, comme dans la section Vision */
+.step + .step::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 32px;
+  bottom: 4px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.14);
 }
 
 .stepNumber {
   display: block;
   font-family: var(--font-serif);
-  font-size: 1.6rem;
+  font-size: 1.05rem;
   font-weight: 500;
+  letter-spacing: 0.08em;
   color: var(--color-bordeaux-light);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .stepTitle {
@@ -174,6 +193,7 @@
 }
 
 .cta {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -182,14 +202,40 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-white);
-  padding-bottom: 6px;
-  border-bottom: 1.5px solid var(--color-bordeaux-light);
-  transition: gap 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+  padding-bottom: 8px;
 }
 
-.cta:hover {
-  gap: 16px;
-  border-bottom-color: var(--color-white);
+.cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: var(--color-bordeaux-light);
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out), background-color 300ms var(--ease-out);
+}
+
+.cta svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover svg {
+    transform: translateX(5px);
+  }
+
+  .cta:hover::after {
+    background: var(--color-white);
+  }
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-bordeaux-light);
+  outline-offset: 6px;
+  border-radius: 2px;
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
@@ -207,7 +253,29 @@
 
   .steps {
     grid-template-columns: 1fr;
-    gap: 34px;
+    gap: 0;
+  }
+
+  /* En colonne unique, le filet vertical passe à l'horizontale */
+  .step {
+    padding: 30px 0 26px;
+  }
+
+  .step:last-child {
+    padding-bottom: 6px;
+  }
+
+  .step + .step {
+    padding-left: 0;
+  }
+
+  .step + .step::before {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: auto;
+    width: auto;
+    height: 1px;
   }
 }
 
