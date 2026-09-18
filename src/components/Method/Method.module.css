@@ -5,7 +5,7 @@
 }
 
 .inner {
-  max-width: 1080px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 0 32px;
 }
@@ -43,12 +43,81 @@
   color: var(--color-black);
 }
 
+/* ---------- Deux colonnes : bloc graphique / parcours ---------- */
+.layout {
+  display: grid;
+  grid-template-columns: 0.72fr 1fr;
+  gap: 72px;
+  align-items: stretch;
+}
+
+/* Colonne de gauche : composition maison plutôt qu'une photographie,
+   dans la lignée du verso de la carte de visite */
+.visual {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  background:
+    radial-gradient(120% 90% at 18% 12%, rgba(122, 20, 32, 0.07), transparent 60%),
+    linear-gradient(155deg, #f7f4f3 0%, #efe9e7 55%, #e9e2df 100%);
+}
+
+/* Filets diagonaux très discrets, rappel du motif de la carte */
+.visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    118deg,
+    rgba(26, 26, 26, 0.035) 0 1px,
+    transparent 1px 22px
+  );
+  pointer-events: none;
+}
+
+.visualInner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 44px 40px;
+}
+
+.visualMark {
+  position: absolute;
+  /* Cadrage plus serré : la boucle du monogramme reste lisible au lieu
+     de sortir du cadre par la droite */
+  top: 6%;
+  right: -6%;
+  width: 66%;
+  opacity: 0.14;
+  pointer-events: none;
+  user-select: none;
+}
+
+.visualRule {
+  width: 44px;
+  height: 2px;
+  background: var(--color-bordeaux);
+  margin-bottom: 20px;
+}
+
+.visualQuote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+  line-height: 1.45;
+  color: #3a3a3a;
+}
+
 /* ---------- Parcours vertical ---------- */
 .steps {
   list-style: none;
   display: flex;
   flex-direction: column;
-  max-width: 720px;
 }
 
 .step {
@@ -133,6 +202,76 @@
   text-wrap: pretty;
 }
 
+.cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 56px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+  padding-bottom: 8px;
+  transition: color 300ms var(--ease-out);
+}
+
+.cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out);
+}
+
+.cta svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    color: var(--color-bordeaux-dark);
+  }
+
+  .cta:hover svg {
+    transform: translateX(5px);
+  }
+
+  .cta:hover::after {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 6px;
+  border-radius: 2px;
+}
+
+/* ---------- Tablette : le bloc graphique passe au-dessus ---------- */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 44px;
+  }
+
+  .visual {
+    min-height: 200px;
+    max-width: 480px;
+  }
+
+  .visualInner {
+    padding: 36px 32px;
+  }
+}
+
 /* ---------- Mobile ---------- */
 @media (max-width: 600px) {
   .method {
@@ -165,5 +304,20 @@
 
   .stepText {
     font-size: 14.5px;
+  }
+
+  .visual {
+    max-width: none;
+    min-height: 168px;
+  }
+
+  .visualInner {
+    padding: 30px 26px;
+  }
+
+  .cta {
+    margin-top: 44px;
+    min-height: 44px;
+    align-items: center;
   }
 }

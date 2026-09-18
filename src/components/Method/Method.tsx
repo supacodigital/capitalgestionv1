@@ -2,7 +2,8 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MessageCircle, Search, Compass, LineChart } from "lucide-react";
+import { MessageCircle, Search, Compass, LineChart, ArrowRight } from "lucide-react";
+import logoMonogram from "../../assets/logo-monogram-lg.webp";
 import styles from "./Method.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -74,24 +75,44 @@ export default function Method() {
           <h2 className={styles.title}>Une approche en quatre temps</h2>
         </div>
 
-        <ol className={styles.steps}>
-          {STEPS.map(({ number, icon: Icon, title, description }) => (
-            <li className={styles.step} key={number}>
-              <div className={styles.marker} aria-hidden="true">
-                <span className={styles.dot}>
-                  <Icon size={17} strokeWidth={1.7} />
-                </span>
-              </div>
-              <div className={styles.body}>
-                <span className={styles.number} aria-hidden="true">
-                  {number}
-                </span>
-                <h3 className={styles.stepTitle}>{title}</h3>
-                <p className={styles.stepText}>{description}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <div className={styles.layout}>
+          {/* Colonne graphique : monogramme et filets, sans photographie */}
+          <aside className={styles.visual} aria-hidden="true">
+            <div className={styles.visualInner}>
+              <img src={logoMonogram} alt="" className={styles.visualMark} />
+              <span className={styles.visualRule} />
+              <p className={styles.visualQuote}>
+                Une méthode, quatre temps,
+                <br />
+                et le temps qu'il faut.
+              </p>
+            </div>
+          </aside>
+
+          <ol className={styles.steps}>
+            {STEPS.map(({ number, icon: Icon, title, description }) => (
+              <li className={styles.step} key={number}>
+                <div className={styles.marker} aria-hidden="true">
+                  <span className={styles.dot}>
+                    <Icon size={17} strokeWidth={1.7} />
+                  </span>
+                </div>
+                <div className={styles.body}>
+                  <span className={styles.number} aria-hidden="true">
+                    {number}
+                  </span>
+                  <h3 className={styles.stepTitle}>{title}</h3>
+                  <p className={styles.stepText}>{description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <a href="#contact" className={styles.cta}>
+          Prendre rendez-vous
+          <ArrowRight size={18} />
+        </a>
       </div>
     </section>
   );
