@@ -27,3 +27,8 @@ dist-ssr
 
 # Sources d'images non optimisées
 photo/
+
+# Documents commerciaux et sources de travail
+*.pdf
+docs/
+logocapitalgestion-removebg-preview.png
