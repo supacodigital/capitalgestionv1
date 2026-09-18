@@ -7,8 +7,8 @@ import logoMonogramLg from "../../assets/logo-monogram-lg.webp";
 import styles from "./Header.module.css";
 
 const NAV_LINKS = [
-  { label: "À propos", href: "/#a-propos" },
   { label: "Services", href: "/#services" },
+  { label: "À propos", href: "/#a-propos" },
   { label: "Solutions", href: "/#solutions" },
   { label: "Méthode", href: "/#methode" },
   { label: "FAQ", href: "/#faq" },
