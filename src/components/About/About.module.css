@@ -1,9 +1,12 @@
 .about {
-  background: var(--color-white);
-  padding: 120px 0;
+  position: relative;
+  background: var(--color-offwhite);
+  padding: 118px 0 96px;
+  overflow: hidden;
 }
 
 .inner {
+  position: relative;
   max-width: 1240px;
   margin: 0 auto;
   padding: 0 32px;
@@ -11,37 +14,69 @@
 
 .layout {
   display: grid;
-  grid-template-columns: 0.85fr 1fr;
+  grid-template-columns: 0.78fr 1fr;
   gap: 72px;
-  align-items: center;
+  align-items: start;
+  margin-bottom: 76px;
 }
 
 /* ── Portrait ─────────────────────────────────────────────── */
 
 .figure {
   position: relative;
-  overflow: hidden;
-}
-
-.figure::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(26, 26, 26, 0.08);
-  pointer-events: none;
 }
 
 .portrait {
   width: 100%;
+  height: auto;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 18%;
+  border-radius: 3px;
+  /* Léger apaisement des couleurs : le portrait s'accorde à une palette
+     bordeaux / anthracite sans être dénaturé */
+  filter: saturate(0.88) contrast(1.02);
+}
+
+/* Repères de parcours, posés sous le portrait */
+.milestones {
+  display: grid;
+  grid-template-columns: 1fr;
+  list-style: none;
+  margin-top: 1px;
+  background: #ece7e5;
+  gap: 1px;
+}
+
+.milestone {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: var(--color-white);
+  padding: 16px 20px;
+}
+
+.milestoneLabel {
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-grey-mid);
+}
+
+.milestoneValue {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.3;
+  color: var(--color-black);
 }
 
 /* ── Texte ────────────────────────────────────────────────── */
 
 .body {
-  max-width: 600px;
+  max-width: 620px;
+  padding-top: 4px;
 }
 
 .eyebrow {
@@ -66,20 +101,12 @@
 .title {
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: clamp(1.9rem, 3.2vw, 2.6rem);
-  line-height: 1.15;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--color-black);
-  margin-bottom: 8px;
-}
-
-.role {
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--color-grey-mid);
-  margin-bottom: 28px;
+  margin-bottom: 24px;
+  text-wrap: balance;
 }
 
 .text {
@@ -93,57 +120,60 @@
   margin-top: 18px;
 }
 
+/* ── Citation ─────────────────────────────────────────────── */
+
 .quote {
-  margin: 32px 0;
-  padding-left: 26px;
-  border-left: 2px solid var(--color-bordeaux);
+  position: relative;
+  margin: 32px 0 34px;
+  padding-left: 30px;
+}
+
+.quote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 26px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-bordeaux), rgba(122, 20, 32, 0.15));
+}
+
+.quoteText {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-  line-height: 1.55;
-  color: var(--color-black);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.9vw, 1.4rem);
+  line-height: 1.45;
+  color: #2a2a2a;
+  margin-bottom: 14px;
   text-wrap: pretty;
 }
 
-/* ── Repères ──────────────────────────────────────────────── */
-
-.milestones {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--color-grey-light);
-  border: 1px solid var(--color-grey-light);
-  list-style: none;
-  margin-bottom: 36px;
-}
-
-.milestone {
+.quoteAuthor {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background: var(--color-white);
-  padding: 22px 20px;
-}
-
-.milestoneLabel {
-  font-size: 11px;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  font-style: normal;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-grey-mid);
+  color: #8a8683;
 }
 
-.milestoneValue {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 0.98rem;
-  line-height: 1.35;
-  color: var(--color-black);
+.quoteAuthor::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+  flex-shrink: 0;
 }
 
-/* ── CTA ──────────────────────────────────────────────────── */
+/* ── Lien ─────────────────────────────────────────────────── */
 
 .cta {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -152,14 +182,118 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-bordeaux);
-  padding-bottom: 6px;
-  border-bottom: 1.5px solid currentColor;
-  transition: gap 0.35s var(--ease-out), color 0.35s var(--ease-out);
+  padding-bottom: 8px;
+  transition: color 300ms var(--ease-out);
 }
 
-.cta:hover {
-  gap: 16px;
-  color: var(--color-bordeaux-dark);
+.cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out);
+}
+
+.cta svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    color: var(--color-bordeaux-dark);
+  }
+
+  .cta:hover svg {
+    transform: translateX(5px);
+  }
+
+  .cta:hover::after {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 6px;
+  border-radius: 2px;
+}
+
+/* ── Convictions ──────────────────────────────────────────── */
+
+.convictions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid #e3ddda;
+  counter-reset: conviction;
+}
+
+.conviction {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  counter-increment: conviction;
+  padding: 34px 44px 0 0;
+}
+
+.conviction + .conviction {
+  padding-left: 44px;
+}
+
+.conviction + .conviction::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 34px;
+  bottom: 4px;
+  width: 1px;
+  background: #e3ddda;
+}
+
+.conviction::after {
+  content: "0" counter(conviction);
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-bordeaux);
+  opacity: 0.45;
+  transform: translateY(-50%);
+  background: var(--color-offwhite);
+  padding-right: 10px;
+}
+
+.conviction + .conviction::after {
+  left: 44px;
+  padding-left: 10px;
+  transform: translate(-10px, -50%);
+}
+
+.convictionTitle {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.16rem;
+  line-height: 1.32;
+  letter-spacing: -0.005em;
+  color: var(--color-black);
+  margin-bottom: 13px;
+  text-wrap: balance;
+}
+
+.convictionText {
+  font-size: 14.8px;
+  line-height: 1.72;
+  color: #5a5a5a;
+  text-wrap: pretty;
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
@@ -168,6 +302,7 @@
   .layout {
     grid-template-columns: 1fr;
     gap: 44px;
+    margin-bottom: 60px;
   }
 
   .figure {
@@ -176,6 +311,38 @@
 
   .body {
     max-width: none;
+  }
+
+  .convictions {
+    grid-template-columns: 1fr;
+  }
+
+  .conviction {
+    padding: 46px 0 28px;
+  }
+
+  .conviction:last-child {
+    padding-bottom: 8px;
+  }
+
+  .conviction + .conviction {
+    padding-left: 0;
+  }
+
+  .conviction + .conviction::before {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+
+  .conviction + .conviction::after {
+    left: 0;
+    padding-left: 0;
+    padding-right: 10px;
+    transform: translateY(-50%);
   }
 }
 
@@ -192,22 +359,15 @@
     max-width: none;
   }
 
-  .portrait {
-    aspect-ratio: 3 / 4;
-  }
-
   .milestones {
     grid-template-columns: 1fr;
   }
 
   .quote {
-    margin: 26px 0;
-    padding-left: 20px;
+    margin: 26px 0 30px;
+    padding-left: 22px;
   }
-}
 
-/* Zone tactile confortable sur mobile (WCAG 2.5.5) */
-@media (max-width: 900px) {
   .cta {
     min-height: 44px;
     align-items: center;

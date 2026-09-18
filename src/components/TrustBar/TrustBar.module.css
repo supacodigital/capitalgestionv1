@@ -2,11 +2,9 @@
   position: relative;
   overflow: hidden;
   background: var(--color-offwhite);
-  /* Filets haut et bas plutôt qu'une seule bordure basse : la bande se
-     lit comme un bandeau posé entre deux sections, pas comme le bord
-     inférieur du hero */
+  /* Seul le filet haut subsiste : la bande s'enchaîne directement sur la
+     section suivante, sans trait de séparation */
   border-top: 1px solid rgba(26, 26, 26, 0.06);
-  border-bottom: 1px solid rgba(26, 26, 26, 0.06);
   padding: 22px 0;
 }
 
@@ -50,8 +48,24 @@
   height: 260%;
   width: auto;
   transform: translateY(-50%);
-  opacity: 0.05;
+  opacity: 0.07;
   pointer-events: none;
+  /* Le monogramme dépasse volontairement la bande : un masque dégradé
+     l'éteint en haut et en bas plutôt que de le laisser trancher net */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 26%,
+    #000 74%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 26%,
+    #000 74%,
+    transparent 100%
+  );
 }
 
 .track {

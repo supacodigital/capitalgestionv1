@@ -2,9 +2,8 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Hero from "../components/Hero/Hero";
 import TrustBar from "../components/TrustBar/TrustBar";
-import Vision from "../components/Vision/Vision";
-import Objectives from "../components/Objectives/Objectives";
 import About from "../components/About/About";
+import Objectives from "../components/Objectives/Objectives";
 import Services from "../components/Services/Services";
 import Solutions from "../components/Solutions/Solutions";
 import Partners from "../components/Partners/Partners";
@@ -44,10 +43,9 @@ export default function Home() {
       <StructuredData id="faq-schema" data={FAQ_SCHEMA} />
       <Hero />
       <TrustBar />
-      <Vision />
+      <About />
       <Objectives />
       <Services />
-      <About />
       <Solutions />
       <Partners />
       <Method />

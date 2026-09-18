@@ -3,23 +3,29 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
-import portrait from "../../assets/serviceportrait.jpg";
+import portrait from "../../assets/beatrice.webp";
 import styles from "./About.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const MILESTONES = [
+  { label: "Expérience", value: "10 ans en banque" },
+  { label: "Clientèle", value: "Particuliers et professionnels" },
+  { label: "Formation", value: "Master en finance" },
+];
+
+const CONVICTIONS = [
   {
-    label: "Formation",
-    value: "Master en finance",
+    title: "L'indépendance avant tout",
+    text: "Aucune obligation de placer les produits d'un groupe. Le conseil part de votre situation, jamais d'un catalogue à écouler.",
   },
   {
-    label: "Expérience",
-    value: "15 ans en banque",
+    title: "La pédagogie comme méthode",
+    text: "Vous ne signez rien que vous ne compreniez. Chaque recommandation est expliquée : son intérêt, son coût, ses risques.",
   },
   {
-    label: "Clientèle",
-    value: "Particuliers et professionnels",
+    title: "La durée plutôt que l'opération",
+    text: "Un patrimoine se construit sur des années. L'accompagnement se poursuit bien après la mise en place des solutions.",
   },
 ];
 
@@ -30,7 +36,7 @@ export default function About() {
     () => {
       gsap.from(`.${styles.figure}`, {
         opacity: 0,
-        scale: 0.97,
+        y: 24,
         duration: 0.9,
         ease: "power3.out",
         scrollTrigger: { trigger: containerRef.current, start: "top 78%" },
@@ -41,17 +47,17 @@ export default function About() {
         y: 22,
         duration: 0.7,
         ease: "power3.out",
-        stagger: 0.08,
+        stagger: 0.07,
         scrollTrigger: { trigger: containerRef.current, start: "top 76%" },
       });
 
-      gsap.from(`.${styles.milestone}`, {
+      gsap.from(`.${styles.conviction}`, {
         opacity: 0,
-        y: 18,
+        y: 20,
         duration: 0.6,
         ease: "power3.out",
         stagger: 0.09,
-        scrollTrigger: { trigger: `.${styles.milestones}`, start: "top 88%" },
+        scrollTrigger: { trigger: `.${styles.convictions}`, start: "top 86%" },
       });
     },
     { scope: containerRef }
@@ -61,47 +67,15 @@ export default function About() {
     <section id="a-propos" className={styles.about} ref={containerRef}>
       <div className={styles.inner}>
         <div className={styles.layout}>
-          {/* TODO cliente : remplacer par un vrai portrait de Béatrice Sem.
-              L'image actuelle est une illustration patrimoniale générique,
-              également utilisée dans la section Services. */}
           <div className={styles.figure}>
             <img
               src={portrait}
-              alt=""
+              alt="Béatrice Sem, conseillère en gestion de patrimoine"
               className={styles.portrait}
               loading="lazy"
-              aria-hidden="true"
+              width={880}
+              height={1100}
             />
-          </div>
-
-          <div className={styles.body}>
-            <p className={styles.eyebrow}>
-              <span className={styles.eyebrowLine} aria-hidden="true" />
-              À propos
-            </p>
-
-            <h2 className={styles.title}>Béatrice Sem</h2>
-            <p className={styles.role}>Conseillère en gestion de patrimoine</p>
-
-            <p className={styles.text}>
-              Titulaire d'un Master en finance, j'ai exercé quinze années en banque, d'abord auprès
-              d'une clientèle de particuliers puis de professionnels. Ce parcours m'a appris à lire
-              une situation patrimoniale dans son ensemble — les revenus, la fiscalité, les
-              contraintes d'une activité indépendante, les projets de famille — et à mesurer ce qui
-              distingue un placement adapté d'un produit simplement disponible.
-            </p>
-
-            <p className={styles.text}>
-              J'ai choisi d'exercer en indépendante pour retrouver cette liberté de recommandation.
-              Au sein du réseau Inovea, je m'appuie sur une architecture ouverte et sur un collectif
-              de conseillers, tout en gardant la maîtrise complète de la relation avec mes clients.
-            </p>
-
-            <blockquote className={styles.quote}>
-              Quinze ans passés de l'autre côté du guichet m'ont convaincue d'une chose : le bon
-              conseil commence par écouter, pas par proposer.
-            </blockquote>
-
             <ul className={styles.milestones}>
               {MILESTONES.map(({ label, value }) => (
                 <li className={styles.milestone} key={label}>
@@ -110,12 +84,60 @@ export default function About() {
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className={styles.body}>
+            <p className={styles.eyebrow}>
+              <span className={styles.eyebrowLine} aria-hidden="true" />
+              Qui vous accompagne
+            </p>
+
+            <h2 className={styles.title}>
+              Personne ne nous apprend à gérer son patrimoine
+            </h2>
+
+            <p className={styles.text}>
+              On nous enseigne un métier, rarement ce qu'il faut faire de ce qu'il rapporte.
+              Épargne, fiscalité, retraite, transmission : autant de décisions lourdes de
+              conséquences, prises le plus souvent sans repères.
+            </p>
+
+            <p className={styles.text}>
+              Dix années en banque m'ont fait voir passer des centaines de situations
+              patrimoniales — celles de particuliers d'abord, de chefs d'entreprise et
+              d'indépendants ensuite. On y apprend à lire un bilan autant qu'une histoire de
+              famille, à repérer ce qui coince dans un montage, et à distinguer un placement
+              réellement adapté d'un produit simplement disponible.
+            </p>
+
+            <p className={styles.text}>
+              J'ai choisi l'indépendance pour retrouver ma liberté de recommandation. Au sein du
+              réseau Inovea, je m'appuie sur une architecture ouverte et sur un collectif de
+              conseillers, tout en gardant la maîtrise complète de la relation avec mes clients.
+            </p>
+
+            <blockquote className={styles.quote}>
+              <p className={styles.quoteText}>
+                Dix ans passés de l'autre côté du guichet m'ont convaincue d'une chose : le bon
+                conseil commence par écouter, pas par proposer.
+              </p>
+              <cite className={styles.quoteAuthor}>Béatrice Sem</cite>
+            </blockquote>
 
             <a href="#contact" className={styles.cta}>
               Faire connaissance
               <ArrowRight size={18} />
             </a>
           </div>
+        </div>
+
+        <div className={styles.convictions}>
+          {CONVICTIONS.map(({ title, text }) => (
+            <article className={styles.conviction} key={title}>
+              <h3 className={styles.convictionTitle}>{title}</h3>
+              <p className={styles.convictionText}>{text}</p>
+            </article>
+          ))}
         </div>
       </div>
     </section>

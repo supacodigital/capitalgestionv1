@@ -24,3 +24,6 @@ dist-ssr
 *.sln
 *.sw?
 .sources/
+
+# Sources d'images non optimisées
+photo/

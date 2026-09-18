@@ -3,6 +3,7 @@ import logoMonogram from "../../assets/logo-monogram-lg.webp";
 import styles from "./TrustBar.module.css";
 
 const ITEMS = [
+  { label: "10 ans d'expérience bancaire" },
   { label: "Conseil indépendant" },
   { label: "Accompagnement dans la durée" },
   { label: "Approche globale du patrimoine" },
