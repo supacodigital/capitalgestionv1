@@ -111,6 +111,12 @@ export default function Footer() {
           <Link to="/mentions-legales" className={styles.legal}>
             Mentions légales
           </Link>
+          <Link to="/mentions-legales#confidentialite" className={styles.legal}>
+            Confidentialité
+          </Link>
+          <Link to="/mentions-legales#cookies" className={styles.legal}>
+            Cookies
+          </Link>
         </div>
       </div>
     </footer>

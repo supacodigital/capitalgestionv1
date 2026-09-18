@@ -99,7 +99,7 @@ export default function LegalNotice() {
             </p>
           </section>
 
-          <section className={styles.block}>
+          <section className={styles.block} id="confidentialite">
             <h2>5. Données personnelles (RGPD)</h2>
             <p>
               <strong>Responsable de traitement :</strong> S Capital Gestion (voir coordonnées au
@@ -141,7 +141,7 @@ export default function LegalNotice() {
             </p>
           </section>
 
-          <section className={styles.block}>
+          <section className={styles.block} id="cookies">
             <h2>6. Cookies</h2>
             <p>
               Ce site ne dépose aucun cookie publicitaire ni traceur de mesure d'audience. Seuls des
