@@ -2,7 +2,7 @@ import { useId, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Phone, Mail, MapPin, ArrowRight, Check } from "lucide-react";
+import { Phone, Mail, MapPin, ArrowRight, Check, Clock, Video, BadgeEuro } from "lucide-react";
 import styles from "./Contact.module.css";
 
 // Logos de marque (non fournis par cette version de lucide-react)
@@ -38,10 +38,22 @@ const WEB3FORMS_KEY = "b62d561b-906c-4f35-8bbf-e495c429ce72";
 const CONTACT_EMAIL = "contact@sbc-capitalgestion.com";
 
 type Status = "idle" | "sending" | "success" | "error";
-type FieldName = "name" | "email" | "phone" | "message" | "consent";
+type FieldName = "name" | "email" | "phone" | "subject" | "message" | "consent";
 type Errors = Partial<Record<FieldName, string>>;
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Sujets proposés : évite au visiteur d'avoir à formuler sa demande de zéro
+const SUBJECTS = [
+  "Préparer ma retraite",
+  "Investir mon épargne",
+  "Investir dans l'immobilier",
+  "Réduire mes impôts",
+  "Protéger mes proches",
+  "Organiser ma transmission",
+  "Ma situation de frontalier",
+  "Autre / je ne sais pas encore",
+];
 
 function validate(values: Record<FieldName, string>, consent: boolean): Errors {
   const errors: Errors = {};
@@ -60,10 +72,8 @@ function validate(values: Record<FieldName, string>, consent: boolean): Errors {
     errors.phone = "Ce numéro de téléphone ne semble pas valide.";
   }
 
-  if (!values.message.trim()) {
-    errors.message = "Veuillez saisir votre message.";
-  } else if (values.message.trim().length < 10) {
-    errors.message = "Votre message est un peu court (10 caractères minimum).";
+  if (!values.subject.trim()) {
+    errors.subject = "Veuillez indiquer le sujet de votre demande.";
   }
 
   if (!consent) {
@@ -117,6 +127,7 @@ export default function Contact() {
         name: String(fd.get("name") ?? ""),
         email: String(fd.get("email") ?? ""),
         phone: String(fd.get("phone") ?? ""),
+        subject: String(fd.get("subject") ?? ""),
         message: String(fd.get("message") ?? ""),
         consent: fd.get("consent") ? "on" : "",
       } as Record<FieldName, string>,
@@ -144,7 +155,7 @@ export default function Contact() {
     setErrors(nextErrors);
 
     // S'il y a des erreurs : focus sur le premier champ fautif
-    const order: FieldName[] = ["name", "email", "phone", "message", "consent"];
+    const order: FieldName[] = ["name", "email", "phone", "subject", "message", "consent"];
     const firstError = order.find((f) => nextErrors[f]);
     if (firstError) {
       fieldRefs.current[firstError]?.focus();
@@ -153,8 +164,9 @@ export default function Contact() {
 
     const data = new FormData(form);
     data.append("access_key", WEB3FORMS_KEY);
-    data.append("subject", "Nouvelle demande — sbc-capitalgestion.com");
     data.append("from_name", "Site S Capital Gestion");
+    // Le sujet choisi sert d'objet à l'e-mail reçu (set, pour ne pas dupliquer le champ)
+    data.set("subject", `Nouvelle demande — ${values.subject}`);
 
     setStatus("sending");
 
@@ -203,6 +215,28 @@ export default function Contact() {
             Un premier échange sans engagement pour faire le point sur votre situation et vos
             objectifs. Je vous réponds sous 48 heures.
           </p>
+
+          {/* Lever les incertitudes sur le premier rendez-vous avant le formulaire */}
+          <ul className={styles.expectations}>
+            <li className={styles.expectation}>
+              <span className={styles.expectationIcon} aria-hidden="true">
+                <Clock size={16} strokeWidth={1.7} />
+              </span>
+              Environ 1 h 30
+            </li>
+            <li className={styles.expectation}>
+              <span className={styles.expectationIcon} aria-hidden="true">
+                <Video size={16} strokeWidth={1.7} />
+              </span>
+              En visioconférence, par téléphone ou sur rendez-vous
+            </li>
+            <li className={styles.expectation}>
+              <span className={styles.expectationIcon} aria-hidden="true">
+                <BadgeEuro size={16} strokeWidth={1.7} />
+              </span>
+              Gratuit et sans engagement
+            </li>
+          </ul>
         </div>
 
         <div className={styles.layout}>
@@ -400,12 +434,43 @@ export default function Contact() {
                   )}
                 </div>
 
-                <div className={styles.field}>
-                  <label htmlFor={id("message")} className={styles.label}>
-                    Votre message{" "}
+                <fieldset className={styles.field}>
+                  <legend className={styles.label}>
+                    Votre demande porte sur{" "}
                     <span className={styles.requiredMark} aria-hidden="true">
                       *
                     </span>
+                  </legend>
+                  <div
+                    className={styles.subjectGrid}
+                    ref={(el) => {
+                      fieldRefs.current.subject = el?.querySelector("input") ?? null;
+                    }}
+                    aria-describedby={describedBy("subject")}
+                  >
+                    {SUBJECTS.map((subject) => (
+                      <label key={subject} className={styles.subjectOption}>
+                        <input
+                          type="radio"
+                          name="subject"
+                          value={subject}
+                          className={styles.subjectInput}
+                          onChange={() => revalidateField("subject")}
+                        />
+                        <span className={styles.subjectLabel}>{subject}</span>
+                      </label>
+                    ))}
+                  </div>
+                  {errors.subject && (
+                    <p id={errId("subject")} className={styles.fieldError}>
+                      {errors.subject}
+                    </p>
+                  )}
+                </fieldset>
+
+                <div className={styles.field}>
+                  <label htmlFor={id("message")} className={styles.label}>
+                    Précisions <span className={styles.optionalMark}>(facultatif)</span>
                   </label>
                   <textarea
                     ref={(el) => {
@@ -413,19 +478,10 @@ export default function Contact() {
                     }}
                     id={id("message")}
                     name="message"
-                    rows={5}
+                    rows={4}
                     className={styles.textarea}
-                    required
-                    aria-required="true"
-                    aria-invalid={errors.message ? "true" : undefined}
-                    aria-describedby={describedBy("message")}
-                    onBlur={() => revalidateField("message")}
+                    placeholder="Quelques mots sur votre situation, si vous le souhaitez."
                   />
-                  {errors.message && (
-                    <p id={errId("message")} className={styles.fieldError}>
-                      {errors.message}
-                    </p>
-                  )}
                 </div>
 
                 {/* Anti-spam : honeypot Web3Forms, retiré du parcours clavier et des AT */}

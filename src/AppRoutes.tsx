@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import MobileCta from "./components/MobileCta/MobileCta";
 import Home from "./pages/Home";
 import LegalNotice from "./pages/LegalNotice";
 import Recruitment from "./pages/Recruitment";
@@ -23,6 +24,7 @@ export default function AppRoutes() {
         </Routes>
       </main>
       <Footer />
+      <MobileCta />
     </>
   );
 }

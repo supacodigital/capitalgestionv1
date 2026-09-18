@@ -462,3 +462,106 @@ a.infoValue:focus-visible {
     justify-content: center;
   }
 }
+
+/* ── Sujet de la demande ──────────────────────────────────── */
+
+.field fieldset,
+fieldset.field {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.subjectGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.subjectOption {
+  display: block;
+  cursor: pointer;
+}
+
+/* Le radio reste accessible au clavier mais n'est pas affiché tel quel */
+.subjectInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.subjectLabel {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 12px 16px;
+  border: 1px solid #ddd6d3;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #4d4d4d;
+  transition: border-color 0.25s var(--ease-out), background-color 0.25s var(--ease-out),
+    color 0.25s var(--ease-out);
+}
+
+.subjectOption:hover .subjectLabel {
+  border-color: var(--color-bordeaux);
+  color: var(--color-black);
+}
+
+.subjectInput:checked + .subjectLabel {
+  border-color: var(--color-bordeaux);
+  background: var(--color-bordeaux);
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+.subjectInput:focus-visible + .subjectLabel {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 2px;
+}
+
+.optionalMark {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--color-grey-mid);
+}
+
+/* ── Format du premier rendez-vous ────────────────────────── */
+
+.expectations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid #e5e0de;
+}
+
+.expectation {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13.5px;
+  color: #4d4d4d;
+}
+
+.expectationIcon {
+  display: inline-flex;
+  color: var(--color-bordeaux);
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .subjectGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .expectations {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

@@ -188,3 +188,11 @@
     margin-bottom: 44px;
   }
 }
+
+/* Zone tactile confortable sur mobile (WCAG 2.5.5) */
+@media (max-width: 900px) {
+  .cta {
+    min-height: 44px;
+    align-items: center;
+  }
+}

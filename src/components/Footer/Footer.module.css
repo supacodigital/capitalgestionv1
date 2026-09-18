@@ -292,3 +292,19 @@
     align-items: flex-start;
   }
 }
+
+/* Zones tactiles confortables sur mobile (WCAG 2.5.5) */
+@media (max-width: 900px) {
+  .link,
+  .contactLink,
+  .legal,
+  .credit {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .linkList li + li {
+    margin-top: 0;
+  }
+}

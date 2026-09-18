@@ -207,11 +207,13 @@
   .dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
+    /* Écart suffisant pour que les zones tactiles de 44px ne se chevauchent pas */
+    gap: 44px;
     margin-top: 22px;
   }
 
   .dot {
+    position: relative;
     width: 7px;
     height: 7px;
     padding: 0;
@@ -222,9 +224,28 @@
     transition: background-color 200ms var(--ease-out), width 200ms var(--ease-out);
   }
 
+  /* Étend la zone tactile à 44px sans modifier l'aspect du point */
+  .dot::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+
   .dotActive {
     width: 22px;
     border-radius: 4px;
     background: var(--color-bordeaux);
+  }
+}
+
+/* Zone tactile confortable sur mobile (WCAG 2.5.5) */
+@media (max-width: 900px) {
+  .cardLink {
+    min-height: 44px;
+    align-items: center;
   }
 }

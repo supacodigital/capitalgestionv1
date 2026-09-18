@@ -139,7 +139,7 @@ export default function Solutions() {
                 ))}
               </ul>
               <a href="#contact" className={styles.cardLink}>
-                En savoir plus
+                Être conseillé sur ce point
                 <ArrowRight size={16} />
               </a>
             </article>

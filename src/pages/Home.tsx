@@ -45,9 +45,9 @@ export default function Home() {
       <Hero />
       <TrustBar />
       <Vision />
-      <About />
-      <Services />
       <Objectives />
+      <Services />
+      <About />
       <Solutions />
       <Partners />
       <Method />
