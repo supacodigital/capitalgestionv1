@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import logoFull from "../../assets/logo-full.webp";
 import logoFullWhite from "../../assets/logo-full-white.webp";
@@ -9,7 +9,8 @@ import styles from "./Header.module.css";
 const NAV_LINKS = [
   { label: "Accueil", href: "/#accueil" },
   { label: "Services", href: "/#services" },
-  { label: "À propos", href: "/#a-propos" },
+  { label: "Solutions", href: "/#solutions" },
+  { label: "Devenir conseiller", href: "/devenir-conseiller" },
   { label: "Contact", href: "/#contact" },
 ];
 
@@ -65,16 +66,22 @@ export default function Header() {
         </a>
 
         <nav className={styles.nav}>
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={styles.navLink}
-              onClick={(e) => handleAnchorClick(e, link.href)}
-            >
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) =>
+            link.href.includes("#") ? (
+              <a
+                key={link.href}
+                href={link.href}
+                className={styles.navLink}
+                onClick={(e) => handleAnchorClick(e, link.href)}
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link key={link.href} to={link.href} className={styles.navLink}>
+                {link.label}
+              </Link>
+            )
+          )}
         </nav>
 
         <a
@@ -109,19 +116,36 @@ export default function Header() {
             <img src={logoMonogramLg} alt="" className={styles.mobileWatermark} aria-hidden="true" />
 
             <nav className={styles.mobileNav}>
-              {NAV_LINKS.map((link, i) => (
-                <motion.a
-                  key={link.href}
-                  href={link.href}
-                  className={styles.mobileNavLink}
-                  onClick={(e) => handleAnchorClick(e, link.href)}
-                  initial={{ opacity: 0, transform: "translateY(16px)" }}
-                  animate={{ opacity: 1, transform: "translateY(0px)" }}
-                  transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1], delay: 0.08 + i * 0.05 }}
-                >
-                  {link.label}
-                </motion.a>
-              ))}
+              {NAV_LINKS.map((link, i) => {
+                const motionProps = {
+                  initial: { opacity: 0, transform: "translateY(16px)" },
+                  animate: { opacity: 1, transform: "translateY(0px)" },
+                  transition: {
+                    duration: 0.45,
+                    ease: [0.23, 1, 0.32, 1] as const,
+                    delay: 0.08 + i * 0.05,
+                  },
+                  className: styles.mobileNavLink,
+                };
+
+                // Les routes passent par Link (navigation SPA), les ancres par <a>
+                return link.href.includes("#") ? (
+                  <motion.a
+                    key={link.href}
+                    href={link.href}
+                    onClick={(e) => handleAnchorClick(e, link.href)}
+                    {...motionProps}
+                  >
+                    {link.label}
+                  </motion.a>
+                ) : (
+                  <motion.div key={link.href} {...motionProps}>
+                    <Link to={link.href} onClick={() => setIsMenuOpen(false)}>
+                      {link.label}
+                    </Link>
+                  </motion.div>
+                );
+              })}
             </nav>
 
             <motion.a

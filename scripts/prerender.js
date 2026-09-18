@@ -12,7 +12,7 @@ const distDir = path.join(root, "dist");
 const ssrDir = path.join(root, "node_modules/.prerender");
 
 // Routes à prérendre — à compléter si de nouvelles pages sont ajoutées
-const ROUTES = ["/", "/mentions-legales"];
+const ROUTES = ["/", "/devenir-conseiller", "/mentions-legales"];
 
 async function main() {
   // 1. Compiler l'entrée serveur dans un bundle Node isolé
