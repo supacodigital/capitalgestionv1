@@ -1,20 +1,25 @@
 .vision {
   position: relative;
   background: var(--color-offwhite);
-  padding: 120px 0;
+  /* Moins de retrait en bas : le CTA fermait la section sur un vide */
+  padding: 118px 0 96px;
   overflow: hidden;
 }
 
 /* Monogramme en filigrane, à la manière du verso de la carte de visite */
 .watermark {
   position: absolute;
-  top: 50%;
-  right: -120px;
-  width: 520px;
+  top: 46%;
+  right: -80px;
+  width: 560px;
   transform: translateY(-50%);
-  opacity: 0.035;
+  opacity: 0.055;
   pointer-events: none;
   user-select: none;
+  /* Le monogramme s'éteint vers la droite au lieu d'être tranché net
+     par le bord de la section */
+  -webkit-mask-image: linear-gradient(to right, #000 55%, transparent 96%);
+  mask-image: linear-gradient(to right, #000 55%, transparent 96%);
 }
 
 .inner {
@@ -70,31 +75,59 @@
 
 .quote {
   position: relative;
-  max-width: 780px;
-  margin: 0 0 72px;
-  padding: 8px 0 8px 36px;
-  border-left: 2px solid var(--color-bordeaux);
+  max-width: 800px;
+  margin: 0 0 76px;
+  padding: 4px 0 4px 40px;
+}
+
+/* Filet dégradé plutôt qu'une barre pleine : il s'ancre au premier mot
+   et s'estompe vers le bas, sans concurrencer le texte */
+.quote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 30px;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-bordeaux),
+    rgba(122, 20, 32, 0.15)
+  );
 }
 
 .quoteText {
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(1.25rem, 2.2vw, 1.7rem);
-  line-height: 1.45;
-  color: var(--color-black);
-  margin-bottom: 18px;
+  font-size: clamp(1.3rem, 2.3vw, 1.75rem);
+  line-height: 1.42;
+  letter-spacing: -0.005em;
+  color: #2a2a2a;
+  margin-bottom: 20px;
   text-wrap: pretty;
 }
 
 .quoteAuthor {
-  display: block;
-  font-size: 12.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
   font-style: normal;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--color-grey-mid);
+  color: #8a8683;
+}
+
+/* Tiret cadratin remplacé par un filet, plus net à cette taille */
+.quoteAuthor::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
+  flex-shrink: 0;
 }
 
 /* ── Convictions ──────────────────────────────────────────── */
@@ -102,36 +135,81 @@
 .convictions {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
-  padding-top: 56px;
-  border-top: 1px solid #e5e0de;
-  margin-bottom: 56px;
+  gap: 0;
+  padding-top: 0;
+  border-top: 1px solid #e3ddda;
+  margin-bottom: 52px;
+  counter-reset: conviction;
 }
 
 .conviction {
+  position: relative;
   display: flex;
   flex-direction: column;
+  counter-increment: conviction;
+  padding: 34px 44px 0 0;
+}
+
+/* Filet vertical entre colonnes : structure la lecture sans encadrer */
+.conviction + .conviction {
+  padding-left: 44px;
+}
+
+.conviction + .conviction::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 34px;
+  bottom: 4px;
+  width: 1px;
+  background: #e3ddda;
+}
+
+/* Numéro discret : donne un ordre de lecture aux trois convictions */
+.conviction::after {
+  content: "0" counter(conviction);
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--font-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-bordeaux);
+  opacity: 0.45;
+  transform: translateY(-50%);
+  background: var(--color-offwhite);
+  padding-right: 10px;
+}
+
+.conviction + .conviction::after {
+  left: 44px;
+  padding-left: 10px;
+  transform: translate(-10px, -50%);
 }
 
 .convictionTitle {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 1.15rem;
-  line-height: 1.35;
+  font-size: 1.16rem;
+  line-height: 1.32;
+  letter-spacing: -0.005em;
   color: var(--color-black);
-  margin-bottom: 14px;
+  margin-bottom: 13px;
+  text-wrap: balance;
 }
 
 .convictionText {
-  font-size: 15px;
-  line-height: 1.7;
-  color: #565656;
+  font-size: 14.8px;
+  line-height: 1.72;
+  color: #5a5a5a;
   text-wrap: pretty;
 }
 
 /* ── CTA ──────────────────────────────────────────────────── */
 
 .cta {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -140,14 +218,48 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-bordeaux);
-  padding-bottom: 6px;
-  border-bottom: 1.5px solid currentColor;
-  transition: gap 0.35s var(--ease-out), color 0.35s var(--ease-out);
+  padding-bottom: 8px;
+  transition: color 300ms var(--ease-out);
 }
 
-.cta:hover {
-  gap: 16px;
-  color: var(--color-bordeaux-dark);
+/* Soulignement en scaleX : reste sur le GPU, et le trait se retire
+   vers la droite quand la souris quitte le lien */
+.cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out);
+}
+
+.cta svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    color: var(--color-bordeaux-dark);
+  }
+
+  .cta:hover svg {
+    transform: translateX(5px);
+  }
+
+  .cta:hover::after {
+    transform: scaleX(0);
+    transform-origin: right center;
+  }
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 6px;
+  border-radius: 2px;
 }
 
 /* ── Responsive ───────────────────────────────────────────── */
@@ -155,7 +267,34 @@
 @media (max-width: 900px) {
   .convictions {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 0;
+  }
+
+  /* En colonne unique, le filet passe du côté gauche au-dessus de
+     chaque bloc : un trait vertical n'a plus de sens entre deux items
+     empilés. */
+  .conviction {
+    padding: 32px 0 0;
+  }
+
+  .conviction + .conviction {
+    padding-left: 0;
+  }
+
+  .conviction + .conviction::before {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+
+  .conviction + .conviction::after {
+    left: 0;
+    padding-left: 0;
+    padding-right: 10px;
+    transform: translateY(-50%);
   }
 }
 

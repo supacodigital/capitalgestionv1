@@ -82,7 +82,7 @@ export default function Vision() {
             Mon rôle n'est pas de vendre un produit, mais de vous rendre capable de décider en
             connaissance de cause.
           </p>
-          <cite className={styles.quoteAuthor}>Béatrice Sem — Capital Gestion</cite>
+          <cite className={styles.quoteAuthor}>Béatrice Sem, Capital Gestion</cite>
         </blockquote>
 
         <div className={styles.convictions}>
