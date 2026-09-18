@@ -1,0 +1,190 @@
+.vision {
+  position: relative;
+  background: var(--color-offwhite);
+  padding: 120px 0;
+  overflow: hidden;
+}
+
+/* Monogramme en filigrane, à la manière du verso de la carte de visite */
+.watermark {
+  position: absolute;
+  top: 50%;
+  right: -120px;
+  width: 520px;
+  transform: translateY(-50%);
+  opacity: 0.035;
+  pointer-events: none;
+  user-select: none;
+}
+
+.inner {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.header {
+  max-width: 680px;
+  margin-bottom: 64px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+  margin-bottom: 20px;
+}
+
+.eyebrowLine {
+  width: 32px;
+  height: 1.5px;
+  background: var(--color-bordeaux);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-black);
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+.intro {
+  font-size: clamp(15.5px, 1.4vw, 17px);
+  line-height: 1.75;
+  color: #565656;
+  text-wrap: pretty;
+}
+
+/* ── Citation ─────────────────────────────────────────────── */
+
+.quote {
+  position: relative;
+  max-width: 780px;
+  margin: 0 0 72px;
+  padding: 8px 0 8px 36px;
+  border-left: 2px solid var(--color-bordeaux);
+}
+
+.quoteText {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+  line-height: 1.45;
+  color: var(--color-black);
+  margin-bottom: 18px;
+  text-wrap: pretty;
+}
+
+.quoteAuthor {
+  display: block;
+  font-size: 12.5px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-grey-mid);
+}
+
+/* ── Convictions ──────────────────────────────────────────── */
+
+.convictions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  padding-top: 56px;
+  border-top: 1px solid #e5e0de;
+  margin-bottom: 56px;
+}
+
+.conviction {
+  display: flex;
+  flex-direction: column;
+}
+
+.convictionTitle {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: var(--color-black);
+  margin-bottom: 14px;
+}
+
+.convictionText {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #565656;
+  text-wrap: pretty;
+}
+
+/* ── CTA ──────────────────────────────────────────────────── */
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid currentColor;
+  transition: gap 0.35s var(--ease-out), color 0.35s var(--ease-out);
+}
+
+.cta:hover {
+  gap: 16px;
+  color: var(--color-bordeaux-dark);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .convictions {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .vision {
+    padding: 80px 0;
+  }
+
+  .inner {
+    padding: 0 20px;
+  }
+
+  .header {
+    margin-bottom: 44px;
+  }
+
+  .watermark {
+    width: 320px;
+    right: -100px;
+    opacity: 0.03;
+  }
+
+  .quote {
+    margin-bottom: 52px;
+    padding-left: 24px;
+  }
+
+  .convictions {
+    padding-top: 44px;
+    margin-bottom: 44px;
+  }
+}

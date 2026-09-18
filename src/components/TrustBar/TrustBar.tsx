@@ -3,13 +3,12 @@ import logoMonogram from "../../assets/logo-monogram-lg.webp";
 import styles from "./TrustBar.module.css";
 
 const ITEMS = [
-  { value: "10 ans", label: "d'expérience" },
-  { value: "5 000", label: "clients accompagnés" },
-  { value: "3 M€", label: "de patrimoine accompagné" },
-  { label: "Conseil personnalisé" },
+  { label: "Conseil indépendant" },
   { label: "Accompagnement dans la durée" },
-  { label: "Approche globale" },
+  { label: "Approche globale du patrimoine" },
   { label: "Solutions adaptées à chaque profil" },
+  { label: "Pays de Gex · Lyon · Genève" },
+  { label: "Expertise frontalière" },
 ];
 
 export default function TrustBar() {
@@ -35,10 +34,9 @@ export default function TrustBar() {
       <div className={`${styles.track} ${isVisible ? styles.trackRunning : ""}`}>
         {[0, 1].map((rep) => (
           <ul className={styles.list} key={rep} aria-hidden={rep === 1}>
-            {ITEMS.map(({ value, label }, i) => (
+            {ITEMS.map(({ label }, i) => (
               <li className={styles.item} key={i}>
-                {value && <span className={styles.value}>{value}</span>}
-                <span className={value ? styles.label : styles.plainLabel}>{label}</span>
+                <span className={styles.plainLabel}>{label}</span>
                 <span className={styles.dot} aria-hidden="true" />
               </li>
             ))}
