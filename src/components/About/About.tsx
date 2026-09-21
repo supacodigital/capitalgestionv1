@@ -3,7 +3,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
-import portrait from "../../assets/beatrice.webp";
+import portrait from "../../assets/beatrice-portrait.webp";
 import styles from "./About.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -60,7 +60,7 @@ export default function About() {
         scrollTrigger: { trigger: `.${styles.convictions}`, start: "top 86%" },
       });
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (
@@ -73,8 +73,8 @@ export default function About() {
               alt="Béatrice Sem, conseillère en gestion de patrimoine"
               className={styles.portrait}
               loading="lazy"
-              width={880}
-              height={1100}
+              width={1254}
+              height={1254}
             />
             <ul className={styles.milestones}>
               {MILESTONES.map(({ label, value }) => (
@@ -97,29 +97,32 @@ export default function About() {
             </h2>
 
             <p className={styles.text}>
-              On nous enseigne un métier, rarement ce qu'il faut faire de ce qu'il rapporte.
-              Épargne, fiscalité, retraite, transmission : autant de décisions lourdes de
-              conséquences, prises le plus souvent sans repères.
+              On nous enseigne un métier, rarement ce qu'il faut faire de ce
+              qu'il rapporte. Épargne, fiscalité, retraite, transmission :
+              autant de décisions lourdes de conséquences, prises le plus
+              souvent sans repères.
             </p>
 
             <p className={styles.text}>
-              Dix années en banque m'ont fait voir passer des centaines de situations
-              patrimoniales — celles de particuliers d'abord, de chefs d'entreprise et
-              d'indépendants ensuite. On y apprend à lire un bilan autant qu'une histoire de
-              famille, à repérer ce qui coince dans un montage, et à distinguer un placement
-              réellement adapté d'un produit simplement disponible.
+              Dix années en banque m'ont fait voir passer des centaines de
+              situations patrimoniales — celles de particuliers d'abord, de
+              chefs d'entreprise et d'indépendants ensuite. On y apprend à lire
+              un bilan autant qu'une histoire de famille, à repérer ce qui
+              coince dans un montage, et à distinguer un placement réellement
+              adapté d'un produit simplement disponible.
             </p>
 
             <p className={styles.text}>
-              J'ai choisi l'indépendance pour retrouver ma liberté de recommandation. Au sein du
-              réseau Inovea, je m'appuie sur une architecture ouverte et sur un collectif de
-              conseillers, tout en gardant la maîtrise complète de la relation avec mes clients.
+              J'ai choisi l'indépendance pour retrouver ma liberté de
+              recommandation. Au sein du réseau Inovea, je m'appuie sur une
+              architecture ouverte et sur un collectif de conseillers, tout en
+              gardant la maîtrise complète de la relation avec mes clients.
             </p>
 
             <blockquote className={styles.quote}>
               <p className={styles.quoteText}>
-                Dix ans passés de l'autre côté du guichet m'ont convaincue d'une chose : le bon
-                conseil commence par écouter, pas par proposer.
+                Dix ans passés de l'autre côté du guichet m'ont convaincue d'une
+                chose : le bon conseil commence par écouter, pas par proposer.
               </p>
               <cite className={styles.quoteAuthor}>Béatrice Sem</cite>
             </blockquote>
