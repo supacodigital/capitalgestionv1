@@ -28,7 +28,7 @@ export default function LegalNotice() {
           Informations légales
         </p>
         <h1 className={styles.title}>Mentions légales</h1>
-        <p className={styles.updated}>Dernière mise à jour : [À COMPLÉTER]</p>
+        <p className={styles.updated}>Dernière mise à jour : 22 septembre 2026</p>
 
         <div className={styles.content}>
           <section className={styles.block}>
@@ -107,8 +107,9 @@ export default function LegalNotice() {
             </p>
             <p>
               <strong>Données collectées :</strong> via le formulaire de contact — nom, prénom,
-              adresse e-mail, numéro de téléphone et contenu du message. Aucune donnée n'est
-              collectée à votre insu ni cédée à des tiers à des fins commerciales.
+              adresse e-mail, numéro de téléphone, objet de la demande (retraite, investissement,
+              fiscalité, transmission, situation de frontalier…) et contenu du message. Aucune
+              donnée n'est collectée à votre insu ni cédée à des tiers à des fins commerciales.
             </p>
             <p>
               <strong>Finalité :</strong> répondre à votre demande de contact et, le cas échéant,
@@ -120,13 +121,18 @@ export default function LegalNotice() {
             </p>
             <p>
               <strong>Sous-traitant :</strong> l'acheminement des messages du formulaire est assuré
-              par le service Web3Forms (Web3Forms, hébergé dans l'Union européenne). Les e-mails sont
-              ensuite reçus sur la messagerie professionnelle de l'éditeur (Google Workspace).
+              par le service Web3Forms (Web3Creative), qui agit en qualité de sous-traitant dans le
+              cadre d'un accord de traitement des données. Ce prestataire opère depuis l'Inde et
+              s'appuie sur une infrastructure pouvant traiter les données hors de l'Union européenne.
+              Ces transferts sont encadrés par les clauses contractuelles types de la Commission
+              européenne. Les e-mails sont ensuite reçus sur la messagerie professionnelle de
+              l'éditeur (Google Workspace).
             </p>
             <p>
               <strong>Durée de conservation :</strong> les demandes de contact sont conservées
-              [À COMPLÉTER — recommandé : 3 ans à compter du dernier contact], puis supprimées ou
-              archivées.
+              trois ans à compter du dernier échange, puis supprimées. Côté sous-traitant, les
+              messages transmis par le formulaire sont automatiquement effacés au plus tard trois
+              ans après leur envoi.
             </p>
             <p>
               <strong>Vos droits :</strong> vous disposez d'un droit d'accès, de rectification,
@@ -144,10 +150,9 @@ export default function LegalNotice() {
           <section className={styles.block} id="cookies">
             <h2>6. Cookies</h2>
             <p>
-              Ce site ne dépose aucun cookie publicitaire ni traceur de mesure d'audience. Seuls des
-              cookies strictement nécessaires à son fonctionnement peuvent être utilisés ; ils ne
-              requièrent pas de consentement préalable. [À COMPLÉTER si un outil de statistiques est
-              ajouté ultérieurement.]
+              Ce site ne dépose aucun cookie : ni publicitaire, ni de mesure d'audience, ni de
+              fonctionnement. Aucun traceur n'est utilisé et aucune donnée de navigation n'est
+              conservée sur votre appareil. Aucun bandeau de consentement n'est donc nécessaire.
             </p>
           </section>
 
