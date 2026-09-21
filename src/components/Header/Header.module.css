@@ -228,6 +228,22 @@
   transform-origin: left center;
 }
 
+/* « Devenir conseiller » : seul lien en bordeaux, il s'adresse à une
+   autre audience que le reste de la navigation */
+.navLinkAccent {
+  color: var(--color-bordeaux);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navLinkAccent:hover {
+    color: var(--color-bordeaux-dark);
+  }
+}
+
+.navLinkAccent.navLinkActive {
+  color: var(--color-bordeaux);
+}
+
 .cta {
   flex-shrink: 0;
   font-size: 13.5px;
@@ -460,6 +476,12 @@
 
   .mobileNavLink:active::after {
     transform: scaleX(1);
+  }
+
+  /* Sur le fond noir de l'overlay, la teinte claire reste lisible */
+  .mobileNavLinkAccent,
+  .mobileNavLinkAccent a {
+    color: var(--color-bordeaux-light);
   }
 
   .mobileCta {

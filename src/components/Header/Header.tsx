@@ -5,13 +5,14 @@ import logoFull from "../../assets/logo-full.webp";
 import logoMonogramLg from "../../assets/logo-monogram-lg.webp";
 import styles from "./Header.module.css";
 
-const NAV_LINKS = [
+// accent : le lien se détache du reste de la navigation (bordeaux)
+const NAV_LINKS: { label: string; href: string; accent?: boolean }[] = [
   { label: "À propos", href: "/#a-propos" },
   { label: "Services", href: "/#services" },
   { label: "Solutions", href: "/#solutions" },
   { label: "Méthode", href: "/#methode" },
   { label: "FAQ", href: "/#faq" },
-  { label: "Devenir conseiller", href: "/devenir-conseiller" },
+  { label: "Devenir conseiller", href: "/devenir-conseiller", accent: true },
 ];
 
 export default function Header() {
@@ -129,7 +130,9 @@ export default function Header() {
             const isActive = sectionId
               ? activeId === sectionId
               : pathname === link.href;
-            const className = `${styles.navLink} ${isActive ? styles.navLinkActive : ""}`;
+            const className = `${styles.navLink} ${
+              link.accent ? styles.navLinkAccent : ""
+            } ${isActive ? styles.navLinkActive : ""}`;
 
             return link.href.includes("#") ? (
               <a
@@ -195,7 +198,9 @@ export default function Header() {
                     ease: [0.23, 1, 0.32, 1] as const,
                     delay: 0.08 + i * 0.05,
                   },
-                  className: styles.mobileNavLink,
+                  className: `${styles.mobileNavLink} ${
+                    link.accent ? styles.mobileNavLinkAccent : ""
+                  }`,
                 };
 
                 // Les routes passent par Link (navigation SPA), les ancres par <a>
