@@ -1,6 +1,6 @@
 .about {
   position: relative;
-  background: var(--color-offwhite);
+  background: var(--color-white);
   padding: 118px 0 96px;
   overflow: hidden;
 }
@@ -268,7 +268,7 @@
   color: var(--color-bordeaux);
   opacity: 0.45;
   transform: translateY(-50%);
-  background: var(--color-offwhite);
+  background: var(--color-white);
   padding-right: 10px;
 }
 

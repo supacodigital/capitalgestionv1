@@ -1,9 +1,18 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, LineChart, PiggyBank, ShieldCheck, Landmark } from "lucide-react";
 import logoMonogram from "../../assets/logo-monogram-lg.webp";
 import styles from "./Hero.module.css";
+
+// Les quatre métiers, annoncés dès le premier écran : le visiteur doit
+// savoir ce qui lui est proposé sans avoir à faire défiler la page.
+const PILLARS = [
+  { icon: LineChart, label: "Investissement", href: "#services" },
+  { icon: PiggyBank, label: "Retraite", href: "#services" },
+  { icon: ShieldCheck, label: "Prévoyance", href: "#services" },
+  { icon: Landmark, label: "Fiscalité", href: "#services" },
+];
 
 export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -34,7 +43,7 @@ export default function Hero() {
         .from(`.${styles.subtitle}`, { opacity: 0, y: 14, duration: 0.55 }, 0.36)
         // Les actions arrivent ensemble : décaler l'accès au CTA n'apporte rien
         .from(`.${styles.actions}`, { opacity: 0, y: 12, duration: 0.5 }, 0.48)
-        .from(`.${styles.scrollHint}`, { opacity: 0, duration: 0.5 }, 0.7);
+        .from(`.${styles.pillar}`, { opacity: 0, y: 10, duration: 0.45, stagger: 0.05 }, 0.58);
     },
     { scope: containerRef }
   );
@@ -57,9 +66,8 @@ export default function Hero() {
         </h1>
 
         <p className={styles.subtitle}>
-          Capital Gestion met son indépendance au service de vos décisions : un accompagnement
-          clair et discret pour investir, préparer votre retraite, protéger vos proches et alléger
-          votre fiscalité.
+          Béatrice Sem, conseillère indépendante, vous accompagne sur quatre domaines :
+          investir, préparer votre retraite, protéger vos proches, alléger votre fiscalité.
         </p>
 
         <div className={styles.actions}>
@@ -71,12 +79,19 @@ export default function Hero() {
             <span className={styles.secondaryCtaLabel}>Découvrir les expertises</span>
           </a>
         </div>
+
+        <ul className={styles.pillars} aria-label="Domaines d'expertise">
+          {PILLARS.map(({ icon: Icon, label, href }) => (
+            <li className={styles.pillar} key={label}>
+              <a href={href} className={styles.pillarLink}>
+                <Icon size={17} strokeWidth={1.6} aria-hidden="true" />
+                <span className={styles.pillarLabel}>{label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      {/* Indice de défilement : le hero occupe presque toute la hauteur d'écran */}
-      <span className={styles.scrollHint} aria-hidden="true">
-        <span className={styles.scrollHintLine} />
-      </span>
     </section>
   );
 }

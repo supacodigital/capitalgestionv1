@@ -43,10 +43,12 @@ export default function Home() {
       <StructuredData id="faq-schema" data={FAQ_SCHEMA} />
       <Hero />
       <TrustBar />
-      <About />
-      <Objectives />
+      {/* L'offre d'abord, la conseillère ensuite : le visiteur doit savoir
+          ce qui lui est proposé avant de lire une biographie. */}
       <Services />
+      <Objectives />
       <Solutions />
+      <About />
       <Partners />
       <Method />
       <Credentials />

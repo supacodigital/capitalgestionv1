@@ -214,38 +214,71 @@
   transition-duration: 100ms;
 }
 
-/* ── Indice de défilement ─────────────────────────────────────
-   Le hero occupe presque toute la hauteur : un repère discret
-   signale qu'il y a du contenu en dessous. */
-.scrollHint {
-  position: absolute;
-  left: 50%;
-  bottom: 34px;
-  z-index: 1;
-  width: 1px;
-  height: 46px;
-  overflow: hidden;
-  transform: translateX(-50%);
-  background: rgba(26, 26, 26, 0.1);
-  pointer-events: none;
-}
-
-.scrollHintLine {
-  display: block;
+/* ── Barre des quatre domaines ────────────────────────────────
+   Annonce l'offre dès le premier écran : le visiteur n'a plus
+   à faire défiler cinq sections pour savoir ce qui est proposé. */
+.pillars {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0;
+  list-style: none;
+  margin-top: 52px;
+  padding-top: 32px;
+  border-top: 1px solid #ebe7e5;
   width: 100%;
-  height: 40%;
-  background: var(--color-bordeaux);
-  animation: scrollHintRun 2.4s var(--ease-in-out) infinite;
+  max-width: 660px;
 }
 
-@keyframes scrollHintRun {
-  0% {
-    transform: translateY(-100%);
+.pillar {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+}
+
+/* Filets de séparation entre les domaines, sans bordure aux extrémités */
+.pillar + .pillar {
+  border-left: 1px solid #ebe7e5;
+}
+
+.pillarLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 6px 10px;
+  color: var(--color-black);
+  transition: color 180ms var(--ease-out);
+}
+
+.pillarLink svg {
+  color: var(--color-bordeaux);
+  transition: transform 220ms var(--ease-out);
+}
+
+.pillarLabel {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pillarLink:hover {
+    color: var(--color-bordeaux);
   }
-  55%,
-  100% {
-    transform: translateY(250%);
+
+  .pillarLink:hover svg {
+    transform: translateY(-2px);
   }
+}
+
+.pillarLink:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 3px;
 }
 
 /* ---------- Tablette ---------- */
@@ -266,6 +299,11 @@
 
   .subtitle {
     margin-bottom: 36px;
+  }
+
+  .pillars {
+    margin-top: 44px;
+    padding-top: 28px;
   }
 }
 
@@ -330,9 +368,36 @@
     margin-bottom: 30px;
   }
 
-  /* Le hero n'occupe plus toute la hauteur : l'indice n'a plus d'objet */
-  .scrollHint {
-    display: none;
+  /* Quatre libellés en ligne ne tiennent pas : deux colonnes,
+     et les filets se redessinent en grille */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 4px;
+    padding-top: 0;
+    border-top: 1px solid #ebe7e5;
+    border-left: 1px solid #ebe7e5;
+  }
+
+  .pillar {
+    border-right: 1px solid #ebe7e5;
+    border-bottom: 1px solid #ebe7e5;
+  }
+
+  .pillar + .pillar {
+    border-left: none;
+  }
+
+  .pillarLink {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 10px;
+  }
+
+  .pillarLabel {
+    font-size: 11.5px;
+    letter-spacing: 0.07em;
   }
 
   .primaryCta,
@@ -345,13 +410,8 @@
 
 /* ── Mouvement réduit ───────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  .scrollHintLine {
-    animation: none;
-    height: 100%;
-    opacity: 0.4;
-  }
-
-  .primaryCta:hover svg {
+  .primaryCta:hover svg,
+  .pillarLink:hover svg {
     transform: none;
   }
 

@@ -1,6 +1,8 @@
 .services {
   position: relative;
-  background: linear-gradient(to bottom, var(--color-white), var(--color-offwhite) 220px);
+  /* Prolonge la bande de repères (offwhite) puis revient au blanc :
+     l'enchaînement depuis le hero reste continu */
+  background: linear-gradient(to bottom, var(--color-offwhite), var(--color-white) 260px);
   padding: 120px 0;
 }
 
@@ -105,7 +107,7 @@
   display: grid;
   grid-template-rows: auto 1.6rem auto 1fr;
   gap: 20px 0;
-  background: var(--color-offwhite);
+  background: var(--color-white);
   padding: 38px 32px;
 }
 

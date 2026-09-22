@@ -7,9 +7,9 @@ import styles from "./Header.module.css";
 
 // accent : le lien se détache du reste de la navigation (bordeaux)
 const NAV_LINKS: { label: string; href: string; accent?: boolean }[] = [
-  { label: "À propos", href: "/#a-propos" },
   { label: "Services", href: "/#services" },
   { label: "Solutions", href: "/#solutions" },
+  { label: "À propos", href: "/#a-propos" },
   { label: "Méthode", href: "/#methode" },
   { label: "FAQ", href: "/#faq" },
   { label: "Devenir conseiller", href: "/devenir-conseiller", accent: true },
