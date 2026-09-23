@@ -1,10 +1,15 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MessageCircle, Search, Compass, LineChart, ArrowRight } from "lucide-react";
 import logoMonogram from "../../assets/logo-monogram-lg.webp";
 import styles from "./Method.module.css";
+
+// Vidéo d'ambiance de la colonne de gauche. Déposer le fichier dans
+// src/assets/video/ puis décommenter l'import et l'affectation ci-dessous.
+// import methodVideo from "../../assets/video/methode.mp4";
+const METHOD_VIDEO: string | null = null;
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -41,6 +46,24 @@ const STEPS = [
 
 export default function Method() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Mouvement réduit : la boucle est un mouvement permanent, on fige la
+  // vidéo sur sa première image plutôt que de la retirer du cadre.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const apply = () => {
+      if (query.matches) video.pause();
+      else void video.play().catch(() => {});
+    };
+
+    apply();
+    query.addEventListener("change", apply);
+    return () => query.removeEventListener("change", apply);
+  }, []);
 
   useGSAP(
     () => {
@@ -76,10 +99,25 @@ export default function Method() {
         </div>
 
         <div className={styles.layout}>
-          {/* Colonne graphique : monogramme et filets, sans photographie */}
+          {/* Colonne d'ambiance : vidéo muette en boucle une fois le fichier
+              fourni, motif graphique en attendant */}
           <aside className={styles.visual} aria-hidden="true">
-            <div className={styles.visualInner}>
+            {METHOD_VIDEO ? (
+              <video
+                ref={videoRef}
+                className={styles.visualVideo}
+                src={METHOD_VIDEO}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+              />
+            ) : (
               <img src={logoMonogram} alt="" className={styles.visualMark} />
+            )}
+
+            <div className={styles.visualInner}>
               <span className={styles.visualRule} />
               <p className={styles.visualQuote}>
                 Une méthode, quatre temps,
