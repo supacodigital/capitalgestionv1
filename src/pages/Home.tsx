@@ -49,10 +49,10 @@ export default function Home() {
       <Objectives />
       <Solutions />
       <About />
-      <Partners />
       <Method />
       <Credentials />
       <Faq />
+      <Partners />
       <Contact />
     </>
   );
