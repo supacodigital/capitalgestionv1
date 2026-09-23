@@ -16,8 +16,9 @@ const CREDENTIALS = [
     name: "ORIAS",
     title: "Immatriculation au registre unique",
     text: "L'inscription à l'ORIAS est obligatoire et vérifiable publiquement. Elle est contrôlée et renouvelée chaque année.",
-    // Numéro à renseigner une fois communiqué par la cliente
-    reference: "N° [À COMPLÉTER]",
+    // Numéro masqué tant qu'il n'a pas été communiqué par la cliente :
+    // afficher un libellé d'attente en production décrédibilise la preuve
+    reference: null,
   },
   {
     logo: logoAmf,
