@@ -50,9 +50,9 @@ export default function Home() {
       <Solutions />
       <About />
       <Method />
+      <Partners />
       <Credentials />
       <Faq />
-      <Partners />
       <Contact />
     </>
   );
