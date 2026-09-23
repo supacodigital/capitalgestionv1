@@ -3,6 +3,7 @@
   min-height: min(92vh, 820px);
   display: flex;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
   background: var(--color-white);
   padding-top: var(--header-height);
@@ -30,46 +31,60 @@
   filter: grayscale(1);
 }
 
+/* Colonne centrée, contenu aligné au centre */
 .content {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   width: 100%;
   max-width: 760px;
-  margin-left: max(32px, calc((100vw - 1240px) / 2));
   padding: 48px 32px 64px;
 }
 
 .eyebrow {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--color-bordeaux);
-  margin-bottom: 28px;
+  margin-bottom: 30px;
+  text-wrap: balance;
+}
+
+/* Traits décoratifs de part et d'autre (version centrée) */
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  width: 28px;
+  height: 1.5px;
+  background: currentColor;
+  flex-shrink: 0;
 }
 
 .eyebrowLine {
-  width: 32px;
-  height: 1.5px;
-  background: var(--color-bordeaux);
-  flex-shrink: 0;
+  display: none;
 }
 
 .title {
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: clamp(2.5rem, 4.8vw, 4rem);
+  font-size: clamp(2.4rem, 5.4vw, 4.4rem);
   line-height: 1.12;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
   color: var(--color-black);
-  margin-bottom: 30px;
+  margin-bottom: 26px;
 }
 
+/* H1 sur deux lignes maîtrisées : chaque span = une ligne, pas de wrap interne */
 .titleLine {
   display: block;
+  white-space: nowrap;
 }
 
 .titleLine:first-child {
@@ -77,26 +92,27 @@
   color: #4a4a4a;
 }
 
-.titleLine em {
+.title em {
   font-style: italic;
   font-weight: 600;
   color: var(--color-bordeaux);
 }
 
 .subtitle {
-  font-size: 17px;
+  font-size: clamp(15.5px, 1.4vw, 17px);
   line-height: 1.75;
   color: #565656;
-  max-width: 540px;
-  margin-bottom: 44px;
+  max-width: 54ch;
+  margin-bottom: 40px;
+  text-wrap: pretty;
 }
 
 .actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  justify-content: center;
+  gap: 18px;
   flex-wrap: wrap;
-  margin-bottom: 48px;
 }
 
 .primaryCta {
@@ -109,26 +125,40 @@
   color: var(--color-white);
   background: var(--color-bordeaux);
   padding: 16px 30px;
+  /* Bordure transparente : aligne la hauteur sur le bouton secondaire,
+     qui porte une bordure visible de même épaisseur */
+  border: 1.5px solid transparent;
   border-radius: 2px;
-  transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out);
+  box-shadow: 0 2px 8px -4px rgba(122, 20, 32, 0.4);
+  transition: transform 160ms var(--ease-out), background-color 200ms var(--ease-out),
+    box-shadow 240ms var(--ease-out);
 }
 
 .primaryCta svg {
-  transition: transform 200ms var(--ease-out);
+  transition: transform 240ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .primaryCta:hover {
     background: var(--color-bordeaux-dark);
+    box-shadow: 0 8px 22px -8px rgba(122, 20, 32, 0.55);
   }
 
   .primaryCta:hover svg {
-    transform: translateX(3px);
+    transform: translateX(4px);
   }
 }
 
 .primaryCta:active {
   transform: scale(0.97);
+  box-shadow: 0 1px 4px -2px rgba(122, 20, 32, 0.4);
+  transition-duration: 100ms;
+}
+
+.primaryCta:focus-visible,
+.secondaryCta:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 3px;
 }
 
 .secondaryCta {
@@ -152,14 +182,16 @@
   inset: 0;
   background: var(--color-black);
   transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 240ms var(--ease-out);
+  /* Entre par la gauche, se retire vers la droite : le remplissage
+     ne rembobine pas sur lui-même quand la souris quitte le bouton */
+  transform-origin: right center;
+  transition: transform 260ms var(--ease-out);
 }
 
 .secondaryCtaLabel {
   position: relative;
   z-index: 1;
-  transition: color 200ms var(--ease-out);
+  transition: color 180ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -169,6 +201,7 @@
 
   .secondaryCta:hover::before {
     transform: scaleX(1);
+    transform-origin: left center;
   }
 
   .secondaryCta:hover .secondaryCtaLabel {
@@ -178,46 +211,222 @@
 
 .secondaryCta:active {
   transform: scale(0.97);
+  transition-duration: 100ms;
 }
 
-.locations {
+/* ── Barre des quatre domaines ────────────────────────────────
+   Annonce l'offre dès le premier écran : le visiteur n'a plus
+   à faire défiler cinq sections pour savoir ce qui est proposé. */
+.pillars {
   display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0;
+  list-style: none;
+  margin-top: 52px;
+  padding-top: 32px;
+  border-top: 1px solid #ebe7e5;
+  width: 100%;
+  max-width: 660px;
+}
+
+.pillar {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+}
+
+/* Filets de séparation entre les domaines, sans bordure aux extrémités */
+.pillar + .pillar {
+  border-left: 1px solid #ebe7e5;
+}
+
+.pillarLink {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  font-size: 13.5px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  color: var(--color-grey-mid);
+  gap: 9px;
+  width: 100%;
+  padding: 6px 10px;
+  color: var(--color-black);
+  transition: color 180ms var(--ease-out);
 }
 
-.locations svg {
+.pillarLink svg {
   color: var(--color-bordeaux);
-  flex-shrink: 0;
+  transition: transform 220ms var(--ease-out);
 }
 
+.pillarLabel {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pillarLink:hover {
+    color: var(--color-bordeaux);
+  }
+
+  .pillarLink:hover svg {
+    transform: translateY(-2px);
+  }
+}
+
+.pillarLink:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 3px;
+}
+
+/* ---------- Tablette ---------- */
+@media (max-width: 980px) {
+  .hero {
+    min-height: min(88vh, 720px);
+  }
+
+  .content {
+    max-width: 680px;
+    padding: 44px 32px 56px;
+  }
+
+  .title {
+    font-size: clamp(2.2rem, 6vw, 3.4rem);
+    margin-bottom: 24px;
+  }
+
+  .subtitle {
+    margin-bottom: 36px;
+  }
+
+  .pillars {
+    margin-top: 44px;
+    padding-top: 28px;
+  }
+}
+
+@media (max-width: 720px) {
+  /* En dessous, le titre nowrap dépasse : on relâche */
+  .titleLine {
+    white-space: normal;
+    text-wrap: balance;
+  }
+}
+
+/* ---------- Mobile ---------- */
 @media (max-width: 600px) {
   .hero {
     min-height: auto;
   }
 
   .content {
-    padding: 64px 24px 80px;
+    max-width: 100%;
+    /* Gouttières resserrées : le titre gagne la largeur qui lui manquait
+       pour tenir en deux lignes équilibrées plutôt que quatre */
+    padding: 36px 16px 56px;
   }
 
   .watermark {
-    width: 380px;
+    width: 300px;
+    max-width: 78vw;
+    right: -14%;
+    bottom: -4%;
     opacity: 0.05;
+  }
+
+  /* Sur mobile, on masque le badge pour aller droit au titre */
+  .eyebrow {
+    display: none;
+  }
+
+  .title {
+    font-size: clamp(1.85rem, 7.8vw, 2.5rem);
+    line-height: 1.16;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+
+  /* À cette largeur le titre occupe quatre lignes quoi qu'il arrive :
+     balance donne la répartition la plus régulière */
+  .titleLine {
+    white-space: normal;
+    text-wrap: balance;
+  }
+
+  .subtitle {
+    line-height: 1.7;
+    margin-bottom: 30px;
   }
 
   .actions {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 14px;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  /* Quatre libellés en ligne ne tiennent pas : deux colonnes,
+     et les filets se redessinent en grille */
+  .pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 4px;
+    padding-top: 0;
+    border-top: 1px solid #ebe7e5;
+    border-left: 1px solid #ebe7e5;
+  }
+
+  .pillar {
+    border-right: 1px solid #ebe7e5;
+    border-bottom: 1px solid #ebe7e5;
+  }
+
+  .pillar + .pillar {
+    border-left: none;
+  }
+
+  .pillarLink {
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 10px;
+  }
+
+  .pillarLabel {
+    font-size: 11.5px;
+    letter-spacing: 0.07em;
   }
 
   .primaryCta,
   .secondaryCta {
     width: 100%;
     justify-content: center;
+    padding: 15px 24px;
+  }
+}
+
+/* ── Mouvement réduit ───────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .primaryCta:hover svg,
+  .pillarLink:hover svg {
+    transform: none;
+  }
+
+  .secondaryCta::before {
+    transition: opacity 200ms linear;
+    transform: scaleX(1);
+    opacity: 0;
+  }
+
+  .secondaryCta:hover::before {
+    opacity: 1;
+  }
+
+  .primaryCta:active,
+  .secondaryCta:active {
+    transform: none;
   }
 }

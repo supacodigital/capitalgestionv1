@@ -1,0 +1,289 @@
+.solutions {
+  position: relative;
+  background: var(--color-offwhite);
+  padding: 120px 0;
+}
+
+.inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.header {
+  max-width: 640px;
+  margin-bottom: 72px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+  margin-bottom: 20px;
+}
+
+.eyebrowLine {
+  width: 32px;
+  height: 1.5px;
+  background: var(--color-bordeaux);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--color-black);
+  margin-bottom: 20px;
+}
+
+.intro {
+  font-size: clamp(15.5px, 1.4vw, 17px);
+  line-height: 1.75;
+  color: #565656;
+  text-wrap: pretty;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--color-grey-light);
+  border: 1px solid var(--color-grey-light);
+}
+
+/* Points indicateurs du slider (masqués hors mobile) */
+.dots {
+  display: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  padding: 44px 36px;
+  transition: background-color 220ms var(--ease-out);
+}
+
+/* Le survol se limite au lien : la carte entière n'est pas cliquable */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    background: var(--color-offwhite);
+  }
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  /* Carré, comme dans Services et Objectifs */
+  border: 1px solid #e8e3e1;
+  background: rgba(122, 20, 32, 0.025);
+  color: var(--color-bordeaux);
+  margin-bottom: 22px;
+}
+
+.cardTitle {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  color: var(--color-black);
+  margin-bottom: 20px;
+  /* Filet de séparation : distingue l'intitulé de la liste qui suit */
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ece7e5;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  flex: 1;
+}
+
+.listItem {
+  position: relative;
+  padding-left: 20px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: #5c5c5c;
+}
+
+.listItem::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 8px;
+  height: 1.5px;
+  background: var(--color-bordeaux);
+  opacity: 0.65;
+}
+
+.cardLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+  padding-bottom: 6px;
+  transition: color 260ms var(--ease-out);
+}
+
+.cardLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 300ms var(--ease-out);
+}
+
+.cardLink:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 5px;
+  border-radius: 2px;
+}
+
+.cardLink svg {
+  transition: transform 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cardLink:hover {
+    color: var(--color-bordeaux-dark);
+  }
+
+  .cardLink:hover svg {
+    transform: translateX(4px);
+  }
+
+  .cardLink:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+/* ---------- Tablette ---------- */
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 40px 32px;
+  }
+}
+
+/* ---------- Mobile : slider swipe ---------- */
+@media (max-width: 600px) {
+  .solutions {
+    padding: 80px 0;
+  }
+
+  .header {
+    margin-bottom: 40px;
+  }
+
+  /* On sort le slider de .inner pour utiliser toute la largeur */
+  .grid {
+    display: flex;
+    grid-template-columns: none;
+    gap: 14px;
+    background: transparent;
+    border: none;
+    margin: 0 -22px;
+    padding: 4px 22px 8px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card {
+    /* 88 % : laisse voir le bord de la carte suivante, tout en donnant
+       assez de largeur pour que le lien tienne sur une ligne */
+    flex: 0 0 88%;
+    scroll-snap-align: center;
+    padding: 32px 24px;
+    border: 1px solid var(--color-grey-light);
+    border-radius: 4px;
+  }
+
+  .cardLink {
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .dots {
+    display: flex;
+    justify-content: center;
+    /* Écart suffisant pour que les zones tactiles de 44px ne se chevauchent pas */
+    gap: 44px;
+    margin-top: 22px;
+  }
+
+  .dot {
+    position: relative;
+    width: 7px;
+    height: 7px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-grey-light);
+    cursor: pointer;
+    transition: background-color 200ms var(--ease-out), width 200ms var(--ease-out);
+  }
+
+  /* Étend la zone tactile à 44px sans modifier l'aspect du point */
+  .dot::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+  }
+
+  .dotActive {
+    width: 22px;
+    border-radius: 4px;
+    background: var(--color-bordeaux);
+  }
+}
+
+/* Zone tactile confortable sur mobile (WCAG 2.5.5) */
+@media (max-width: 900px) {
+  .cardLink {
+    min-height: 44px;
+    align-items: center;
+  }
+}

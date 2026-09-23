@@ -1,11 +1,11 @@
 .method {
   position: relative;
-  background: linear-gradient(to bottom, var(--color-offwhite), var(--color-white) 220px);
+  background: var(--color-offwhite);
   padding: 120px 0;
 }
 
 .inner {
-  max-width: 1240px;
+  max-width: 1180px;
   margin: 0 auto;
   padding: 0 32px;
 }
@@ -43,140 +43,304 @@
   color: var(--color-black);
 }
 
-.grid {
+/* ---------- Deux colonnes : bloc graphique / parcours ---------- */
+.layout {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
+  grid-template-columns: 0.72fr 1fr;
+  gap: 72px;
+  align-items: stretch;
+}
+
+/* Colonne de gauche : composition maison plutôt qu'une photographie,
+   dans la lignée du verso de la carte de visite */
+.visual {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3px;
+  background:
+    radial-gradient(120% 90% at 18% 12%, rgba(122, 20, 32, 0.07), transparent 60%),
+    linear-gradient(155deg, #f7f4f3 0%, #efe9e7 55%, #e9e2df 100%);
+}
+
+/* Filets diagonaux très discrets, rappel du motif de la carte */
+.visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    118deg,
+    rgba(26, 26, 26, 0.035) 0 1px,
+    transparent 1px 22px
+  );
+  pointer-events: none;
+}
+
+/* Vidéo d'ambiance : remplit la colonne sans déformer le cadrage */
+.visualVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Voile sous la citation : le texte reste lisible quelle que soit
+   l'image de la vidéo à cet instant */
+.visual:has(.visualVideo)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26, 26, 26, 0.62) 0%, rgba(26, 26, 26, 0.12) 45%, transparent 72%);
+  pointer-events: none;
+}
+
+.visual:has(.visualVideo) .visualQuote {
+  color: var(--color-white);
+}
+
+.visualInner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 44px 40px;
+}
+
+.visualMark {
+  position: absolute;
+  /* Cadrage plus serré : la boucle du monogramme reste lisible au lieu
+     de sortir du cadre par la droite */
+  top: 6%;
+  right: -6%;
+  width: 66%;
+  opacity: 0.14;
+  pointer-events: none;
+  user-select: none;
+}
+
+.visualRule {
+  width: 44px;
+  height: 2px;
+  background: var(--color-bordeaux);
+  margin-bottom: 20px;
+}
+
+.visualQuote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+  line-height: 1.45;
+  color: #3a3a3a;
+}
+
+/* ---------- Parcours vertical ---------- */
+.steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
 }
 
 .step {
+  display: grid;
+  grid-template-columns: 52px 1fr;
+  gap: 28px;
+  padding-bottom: 44px;
+}
+
+.step:last-child {
+  padding-bottom: 0;
+}
+
+/* Colonne de gauche : pastille + segment de liaison */
+.marker {
   position: relative;
-  padding: 0 36px 0 0;
+  display: flex;
+  justify-content: center;
 }
 
-.step:first-child {
-  padding-left: 0;
-}
-
-.step:not(:first-child) {
-  padding-left: 36px;
-}
-
-.step:not(:first-child)::before {
+/* Le fil relie une pastille à la suivante, jamais au-delà de la dernière */
+.step:not(:last-child) .marker::after {
   content: "";
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
+  top: 52px;
+  bottom: -44px;
+  left: 50%;
   width: 1px;
-  background: var(--color-grey-light);
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to bottom,
+    rgba(122, 20, 32, 0.28),
+    rgba(122, 20, 32, 0.1)
+  );
 }
 
-.connector {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 100%;
-  background: var(--color-bordeaux);
-  transform-origin: top;
-  transform: scaleY(0);
+.dot {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(122, 20, 32, 0.22);
+  background: var(--color-white);
+  color: var(--color-bordeaux);
 }
 
-.step:first-child .connector {
-  display: none;
+.body {
+  padding-top: 2px;
 }
 
+/* Numéro discret, aligné sur le titre plutôt qu'en gros contour */
 .number {
-  display: inline-block;
+  display: block;
   font-family: var(--font-serif);
-  font-weight: 500;
-  font-style: italic;
-  font-size: 42px;
-  line-height: 1;
-  color: var(--color-grey-light);
-  -webkit-text-stroke: 1px var(--color-bordeaux);
-  margin-bottom: 24px;
-  transition: color 260ms var(--ease-out), -webkit-text-stroke-color 260ms var(--ease-out);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .step:hover .number {
-    color: var(--color-bordeaux);
-  }
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--color-bordeaux);
+  opacity: 0.6;
+  margin-bottom: 8px;
 }
 
 .stepTitle {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 20px;
-  letter-spacing: 0.01em;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.25;
+  letter-spacing: -0.005em;
   color: var(--color-black);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .stepText {
-  font-size: 14.5px;
-  line-height: 1.65;
-  color: #5c5c5c;
+  font-size: 15px;
+  line-height: 1.72;
+  color: #5a5a5a;
+  text-wrap: pretty;
 }
 
-@media (max-width: 980px) {
-  .grid {
-    grid-template-columns: 1fr 1fr;
-    row-gap: 48px;
+.cta {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 56px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux);
+  padding-bottom: 8px;
+  transition: color 300ms var(--ease-out);
+}
+
+.cta::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease-out);
+}
+
+.cta svg {
+  transition: transform 300ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    color: var(--color-bordeaux-dark);
+  }
+
+  .cta:hover svg {
+    transform: translateX(5px);
+  }
+
+  .cta:hover::after {
+    transform: scaleX(0);
+    transform-origin: right center;
   }
 }
 
-@media (min-width: 601px) and (max-width: 980px) {
-  .step:nth-child(3) {
-    padding-left: 0;
+.cta:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 6px;
+  border-radius: 2px;
+}
+
+/* ---------- Tablette : le bloc graphique passe au-dessus ---------- */
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 44px;
   }
 
-  .step:nth-child(3)::before,
-  .step:nth-child(3) .connector {
-    display: none;
+  .visual {
+    min-height: 200px;
+    max-width: 480px;
+  }
+
+  .visualInner {
+    padding: 36px 32px;
   }
 }
 
+/* ---------- Mobile ---------- */
 @media (max-width: 600px) {
   .method {
     padding: 80px 0;
+  }
+
+  .inner {
+    padding: 0 20px;
   }
 
   .header {
     margin-bottom: 48px;
   }
 
-  .grid {
-    grid-template-columns: 1fr;
-    row-gap: 40px;
+  .step {
+    grid-template-columns: 44px 1fr;
+    gap: 20px;
+    padding-bottom: 36px;
   }
 
-  .step,
-  .step:first-child {
-    padding: 0 0 0 24px;
+  .step:not(:last-child) .marker::after {
+    top: 44px;
+    bottom: -36px;
   }
 
-  .step::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 2px;
-    background: var(--color-grey-light);
+  .dot {
+    width: 38px;
+    height: 38px;
   }
 
-  .step .connector,
-  .step:first-child .connector {
-    display: block;
-    left: 0;
-    width: 2px;
+  .stepText {
+    font-size: 14.5px;
   }
 
-  .number {
-    font-size: 34px;
-    margin-bottom: 16px;
+  .visual {
+    max-width: none;
+    min-height: 168px;
+  }
+
+  .visualInner {
+    padding: 30px 26px;
+  }
+
+  .cta {
+    margin-top: 44px;
+    min-height: 44px;
+    align-items: center;
   }
 }

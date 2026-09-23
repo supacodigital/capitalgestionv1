@@ -29,6 +29,11 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Décale les cibles d'ancre pour qu'elles ne passent pas sous le header fixe */
+[id] {
+  scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
 body {
   font-family: var(--font-sans);
   color: var(--color-black);

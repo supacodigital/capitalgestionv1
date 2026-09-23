@@ -86,37 +86,28 @@
 
 .brand {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 18px;
-}
-
-.logoMark {
-  height: 38px;
-  width: auto;
-}
-
-.brandText {
-  display: flex;
   flex-direction: column;
   line-height: 1;
+  margin-bottom: 18px;
 }
 
 .brandCapital {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 18px;
-  letter-spacing: 0.09em;
+  font-size: 22px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--color-white);
 }
 
 .brandGestion {
   font-family: var(--font-serif);
   font-weight: 500;
-  font-size: 10.5px;
-  letter-spacing: 0.28em;
-  color: #d99aa2;
-  margin-top: 3px;
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
 }
 
 .tagline {
@@ -167,7 +158,7 @@
 }
 
 .contactLink svg {
-  color: #d99aa2;
+  color: var(--color-bordeaux-light);
   flex-shrink: 0;
 }
 
@@ -175,6 +166,48 @@
   a.contactLink:hover {
     color: var(--color-white);
   }
+}
+
+.certifications {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.certLabel {
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.certList {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.certItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  background: var(--color-white);
+  border-radius: 3px;
+}
+
+.certItem img {
+  height: 30px;
+  width: auto;
+  display: block;
 }
 
 .bottom {
@@ -191,12 +224,22 @@
   color: rgba(255, 255, 255, 0.45);
 }
 
+.bottomRight {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.credit,
 .legal {
   cursor: pointer;
+  color: rgba(255, 255, 255, 0.45);
   transition: color 160ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
+  .credit:hover,
   .legal:hover {
     color: rgba(255, 255, 255, 0.75);
   }
@@ -236,9 +279,32 @@
     gap: 36px;
   }
 
+  .certifications {
+    padding: 28px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
   .bottom {
     padding: 22px 24px 28px;
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+/* Zones tactiles confortables sur mobile (WCAG 2.5.5) */
+@media (max-width: 900px) {
+  .link,
+  .contactLink,
+  .legal,
+  .credit {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .linkList li + li {
+    margin-top: 0;
   }
 }

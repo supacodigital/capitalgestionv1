@@ -10,8 +10,8 @@ Ce projet est distinct du site "wealth-advisor-website" (client affilié Inovea,
 
 - **Société** : S Capital Gestion — gestion de patrimoine
 - **Contact** : Béatrice Sem, Conseillère en gestion de patrimoine
-- **Téléphone** : 06 95 63 60 96
-- **Email** : contact@sbc.capitalgestion.com
+- **Téléphone** : 07 43 66 91 93
+- **Email** : contact@sbc-capitalgestion.com
 - **Site actuel** : sbc-capitalgestion.com
 - **Zones d'intervention** : Pays de Gex, Lyon, Genève
 - **Domaines de service (à structurer en sections/piliers du site)** :

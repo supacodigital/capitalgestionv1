@@ -6,17 +6,43 @@
   z-index: 100;
   height: var(--header-height);
   background: transparent;
-  border-bottom: 1px solid transparent;
-  transition: background-color 240ms var(--ease-out), border-color 240ms var(--ease-out),
-    box-shadow 240ms var(--ease-out);
+  transition: height 320ms var(--ease-out), background-color 320ms var(--ease-out),
+    box-shadow 320ms var(--ease-out);
+}
+
+/* Filet de séparation en pseudo-élément : son opacité s'anime sans
+   déclencher de recalcul de layout, contrairement à une border-color.
+   Le dégradé l'éteint sur les bords, pour éviter le trait qui coupe. */
+.header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(26, 26, 26, 0.1) 12%,
+    rgba(26, 26, 26, 0.1) 88%,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 320ms var(--ease-out);
+  pointer-events: none;
 }
 
 .header.scrolled {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom-color: rgba(26, 26, 26, 0.08);
-  box-shadow: 0 4px 24px rgba(26, 26, 26, 0.04);
+  /* Se compacte au défilement : le contenu gagne en place */
+  height: 68px;
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  backdrop-filter: blur(12px) saturate(140%);
+  box-shadow: 0 1px 2px rgba(26, 26, 26, 0.03), 0 8px 24px -12px rgba(26, 26, 26, 0.12);
+}
+
+.header.scrolled::after {
+  opacity: 1;
 }
 
 .inner {
@@ -35,15 +61,10 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
   flex-shrink: 0;
 }
 
-.logoMark {
-  height: 40px;
-  width: auto;
-}
-
+/* Lettrage du menu ouvert, calé sur celui du pied de page */
 .brandText {
   display: flex;
   flex-direction: column;
@@ -53,18 +74,98 @@
 .brandCapital {
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 19px;
-  letter-spacing: 0.09em;
-  color: var(--color-black);
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
 }
 
 .brandGestion {
   font-family: var(--font-serif);
   font-weight: 500;
   font-size: 11px;
-  letter-spacing: 0.28em;
-  color: var(--color-bordeaux);
-  margin-top: 3px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
+  height: 42px;
+  width: auto;
+  display: block;
+  transform-origin: left center;
+  transition: height 320ms var(--ease-out), opacity 200ms var(--ease-out);
+}
+
+.scrolled /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
+  height: 36px;
+}
+
+.brand {
+  transition: opacity 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .brand:hover {
+    opacity: 0.72;
+  }
+}
+
+.brand:active /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
+  opacity: 0.6;
 }
 
 .nav {
@@ -75,61 +176,130 @@
 }
 
 .navLink {
+  position: relative;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--color-black);
-  position: relative;
-  padding: 4px 0;
+  color: #4a4a4a;
+  padding: 6px 0;
+  transition: color 200ms var(--ease-out);
 }
 
+/* scaleX plutôt que right : reste sur le GPU, sans recalcul de layout */
 .navLink::after {
   content: "";
   position: absolute;
   left: 0;
-  right: 100%;
+  right: 0;
   bottom: 0;
   height: 1.5px;
   background: var(--color-bordeaux);
-  transition: right 200ms var(--ease-out);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 260ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .navLink:hover::after {
-    right: 0;
+  .navLink:hover {
+    color: var(--color-black);
   }
+
+  /* Entrée par la gauche, sortie par la droite : le trait suit la lecture */
+  .navLink:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 6px;
+  border-radius: 2px;
+}
+
+/* Section en cours de lecture */
+.navLinkActive {
+  color: var(--color-black);
+}
+
+.navLinkActive::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* « Devenir conseiller » : seul lien en bordeaux, il s'adresse à une
+   autre audience que le reste de la navigation */
+.navLinkAccent {
+  color: var(--color-bordeaux);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .navLinkAccent:hover {
+    color: var(--color-bordeaux-dark);
+  }
+}
+
+.navLinkAccent.navLinkActive {
+  color: var(--color-bordeaux);
 }
 
 .cta {
   flex-shrink: 0;
   font-size: 13.5px;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--color-white);
   background: var(--color-black);
   padding: 12px 26px;
   border-radius: 2px;
-  transition: transform 160ms var(--ease-out), background-color 160ms var(--ease-out);
+  transition: transform 160ms var(--ease-out), box-shadow 240ms var(--ease-out);
   white-space: nowrap;
+}
+
+/* Remplissage bordeaux révélé par le bas plutôt qu'un simple fondu de couleur */
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--color-bordeaux);
+  transform: translateY(101%);
+  transition: transform 340ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
   .cta:hover {
-    background: var(--color-bordeaux-dark);
+    box-shadow: 0 6px 20px -8px rgba(122, 20, 32, 0.5);
+  }
+
+  .cta:hover::before {
+    transform: translateY(0);
   }
 }
 
 .cta:active {
   transform: scale(0.97);
+  /* Sortie plus rapide que l'entrée : le système répond sans traîner */
+  transition-duration: 100ms;
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 3px;
 }
 
 .menuButton {
   display: none;
   position: relative;
   z-index: 101;
-  width: 32px;
-  height: 32px;
+  /* 44px : zone tactile minimale recommandée (WCAG 2.5.5) */
+  width: 44px;
+  height: 44px;
+  margin-right: -6px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -150,20 +320,27 @@
   height: 2px;
   background: var(--color-black);
   border-radius: 1px;
-  transition: transform 320ms var(--ease-in-out), opacity 200ms var(--ease-out),
-    background-color 320ms var(--ease-in-out);
+  /* État fermé = transition de fermeture : on redresse d'abord (rotate),
+     on réécarte ensuite (translate). L'inverse de l'ouverture. */
+  transition: rotate 200ms var(--ease-out), translate 200ms 140ms var(--ease-out),
+    background-color 240ms var(--ease-out);
 }
 
 .menuButtonOpen .burgerBar {
   background: var(--color-white);
+  /* Ouverture : les barres se rejoignent, puis pivotent en croix */
+  transition: translate 200ms var(--ease-out), rotate 240ms 160ms var(--ease-out),
+    background-color 240ms var(--ease-out);
 }
 
 .menuButtonOpen .burgerBar:nth-child(1) {
-  transform: translateY(4px) rotate(45deg);
+  translate: 0 4px;
+  rotate: 45deg;
 }
 
 .menuButtonOpen .burgerBar:nth-child(2) {
-  transform: translateY(-4px) rotate(-45deg);
+  translate: 0 -4px;
+  rotate: -45deg;
 }
 
 .mobileMenu {
@@ -183,23 +360,56 @@
   .header.scrolled,
   .header {
     background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     border-bottom-color: rgba(26, 26, 26, 0.08);
   }
 
-  .header.menuOpen {
+  /* Le menu ouvert doit annuler tout backdrop-filter du header :
+     un élément qui en porte devient containing block et rognerait
+     le position:fixed de l'overlay à la hauteur du header. */
+  .header.menuOpen,
+  .header.menuOpen.scrolled {
+    height: var(--header-height);
     background: var(--color-black);
-    border-bottom-color: transparent;
-    backdrop-filter: none;
+    box-shadow: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
-  .header.menuOpen .brandCapital {
-    color: var(--color-white);
+  .header.menuOpen::after,
+  .header.menuOpen.scrolled::after {
+    opacity: 0;
   }
 
-  .header.menuOpen .brandGestion {
-    color: #d99aa2;
+  .menuOpen /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
+    height: 42px;
   }
 
   .mobileMenu {
@@ -235,12 +445,43 @@
   }
 
   .mobileNavLink {
+    position: relative;
+    display: inline-block;
     font-family: var(--font-serif);
     font-weight: 600;
     font-size: 34px;
     color: var(--color-white);
     padding: 10px 0;
     letter-spacing: 0.01em;
+    transition: opacity 200ms var(--ease-out);
+  }
+
+  /* Filet bordeaux sous le doigt, révélé depuis la gauche */
+  .mobileNavLink::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    height: 1.5px;
+    background: var(--color-bordeaux-light);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 280ms var(--ease-out);
+  }
+
+  .mobileNavLink:active {
+    opacity: 0.55;
+  }
+
+  .mobileNavLink:active::after {
+    transform: scaleX(1);
+  }
+
+  /* Sur le fond noir de l'overlay, la teinte claire reste lisible */
+  .mobileNavLinkAccent,
+  .mobileNavLinkAccent a {
+    color: var(--color-bordeaux-light);
   }
 
   .mobileCta {
@@ -253,11 +494,13 @@
     background: var(--color-white);
     padding: 16px 40px;
     border-radius: 2px;
-    transition: transform 160ms var(--ease-out);
+    transition: transform 160ms var(--ease-out), box-shadow 240ms var(--ease-out);
+    box-shadow: 0 8px 28px -12px rgba(255, 255, 255, 0.5);
   }
 
   .mobileCta:active {
     transform: scale(0.97);
+    transition-duration: 100ms;
   }
 
   .mobileContact {
@@ -277,15 +520,109 @@
     padding: 0 20px;
   }
 
-  .brandCapital {
-    font-size: 16px;
-  }
+  /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
 
-  .logoMark {
-    height: 34px;
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
+    height: 36px;
   }
 
   .mobileNavLink {
     font-size: 28px;
+  }
+}
+
+/* ── Mouvement réduit ─────────────────────────────────────────
+   On conserve les changements d'opacité et de couleur, qui portent
+   l'information, et on supprime les déplacements. */
+@media (prefers-reduced-motion: reduce) {
+  .header {
+    transition: background-color 200ms linear, box-shadow 200ms linear;
+  }
+
+  .header.scrolled {
+    height: var(--header-height);
+  }
+
+  .scrolled /* Lettrage du menu ouvert, calé sur celui du pied de page */
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.brandCapital {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.brandGestion {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-bordeaux-light);
+  margin-top: 5px;
+}
+
+.logoMark {
+    height: 42px;
+  }
+
+  .navLink::after,
+  .mobileNavLink::after {
+    transition: opacity 160ms linear;
+    transform: scaleX(1);
+    opacity: 0;
+  }
+
+  .navLink:hover::after,
+  .navLinkActive::after,
+  .mobileNavLink:active::after {
+    opacity: 1;
+  }
+
+  .cta::before {
+    transition: opacity 200ms linear;
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  .cta:hover::before {
+    opacity: 1;
+  }
+
+  .cta:active,
+  .menuButton:active,
+  .mobileCta:active {
+    transform: none;
   }
 }

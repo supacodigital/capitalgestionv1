@@ -2,8 +2,10 @@
   position: relative;
   overflow: hidden;
   background: var(--color-offwhite);
-  border-bottom: 1px solid var(--color-grey-light);
-  padding: 26px 0;
+  /* Seul le filet haut subsiste : la bande s'enchaîne directement sur la
+     section suivante, sans trait de séparation */
+  border-top: 1px solid rgba(26, 26, 26, 0.06);
+  padding: 22px 0;
 }
 
 .trustBar::before,
@@ -12,19 +14,31 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 64px;
+  width: 120px;
   z-index: 2;
   pointer-events: none;
 }
 
+/* Le fondu s'éteint progressivement : un dégradé linéaire laisse voir
+   une arête là où il atteint la transparence */
 .trustBar::before {
   left: 0;
-  background: linear-gradient(to right, var(--color-offwhite), transparent);
+  background: linear-gradient(
+    to right,
+    var(--color-offwhite) 0%,
+    rgba(250, 248, 247, 0.92) 35%,
+    rgba(250, 248, 247, 0) 100%
+  );
 }
 
 .trustBar::after {
   right: 0;
-  background: linear-gradient(to left, var(--color-offwhite), transparent);
+  background: linear-gradient(
+    to left,
+    var(--color-offwhite) 0%,
+    rgba(250, 248, 247, 0.92) 35%,
+    rgba(250, 248, 247, 0) 100%
+  );
 }
 
 .watermark {
@@ -34,14 +48,32 @@
   height: 260%;
   width: auto;
   transform: translateY(-50%);
-  opacity: 0.05;
+  opacity: 0.07;
   pointer-events: none;
+  /* Le monogramme dépasse volontairement la bande : un masque dégradé
+     l'éteint en haut et en bas plutôt que de le laisser trancher net */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 26%,
+    #000 74%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 26%,
+    #000 74%,
+    transparent 100%
+  );
 }
 
 .track {
   position: relative;
   display: flex;
   width: max-content;
+  /* will-change : la bande défile en continu, on garde la couche promue */
+  will-change: transform;
   animation-name: scroll;
   animation-duration: 36s;
   animation-timing-function: linear;
@@ -62,52 +94,43 @@
 
 .item {
   display: flex;
-  align-items: baseline;
+  /* center plutôt que baseline : le point se cale sur la hauteur d'œil
+     du texte et non sur sa ligne de base, où il paraissait trop bas */
+  align-items: center;
   gap: 12px;
   white-space: nowrap;
-  padding: 0 36px 0 0;
-}
-
-.value {
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-bordeaux);
-}
-
-.label {
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-black);
+  padding: 0 40px 0 0;
 }
 
 .plainLabel {
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--color-black);
+  color: #3d3d3d;
+  /* Les majuscules espacées gagnent un chouïa de graisse optique */
+  -webkit-font-smoothing: antialiased;
 }
 
 .dot {
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
   background: var(--color-bordeaux);
-  opacity: 0.55;
+  opacity: 0.5;
   flex-shrink: 0;
-  margin-left: 36px;
+  margin-left: 40px;
 }
 
 @keyframes scroll {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    /* Largeur d'un exemplaire, mesurée au montage : -50% du track
+       laisse un demi-pixel de dérive quand la largeur totale est impaire,
+       ce qui produit un saut à chaque cycle. */
+    transform: translate3d(calc(var(--loop-width, 50%) * -1), 0, 0);
   }
 }
 
@@ -127,16 +150,6 @@
   .trustBar::before,
   .trustBar::after {
     width: 32px;
-  }
-
-  .value {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-  }
-
-  .label {
-    font-size: 11px;
-    letter-spacing: 0.08em;
   }
 
   .plainLabel {

@@ -1,40 +1,49 @@
+import { Link } from "react-router-dom";
 import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
-import logoMonogram from "../../assets/logo-monogram.png";
+import logoMonogramLg from "../../assets/logo-monogram-lg.webp";
+import logoAmf from "../../assets/logo_amf.webp";
+import logoCncef from "../../assets/logo_cncef.webp";
+import logoOrias from "../../assets/logo_orias.webp";
 import styles from "./Footer.module.css";
 
+const CERTIFICATIONS = [
+  { src: logoAmf, label: "Autorité des marchés financiers (AMF)" },
+  { src: logoCncef, label: "CNCEF" },
+  { src: logoOrias, label: "ORIAS — Registre unique des intermédiaires" },
+];
+
 const NAV_LINKS = [
-  { label: "Accueil", href: "#accueil" },
-  { label: "Services", href: "#services" },
-  { label: "À propos", href: "#a-propos" },
-  { label: "Contact", href: "#contact" },
+  { label: "À propos", href: "/#a-propos" },
+  { label: "Services", href: "/#services" },
+  { label: "Solutions", href: "/#solutions" },
+  { label: "Méthode", href: "/#methode" },
+  { label: "FAQ", href: "/#faq" },
+  { label: "Devenir conseiller", href: "/devenir-conseiller" },
 ];
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className={styles.footer} id="contact">
-      <img src={logoMonogram} alt="" className={styles.watermark} aria-hidden="true" />
+    <footer className={styles.footer}>
+      <img src={logoMonogramLg} alt="" className={styles.watermark} aria-hidden="true" />
 
       <div className={styles.ctaBand}>
         <div className={styles.ctaInner}>
           <h2 className={styles.ctaTitle}>Prêt à planifier votre avenir ?</h2>
-          <a href="tel:+33695636096" className={styles.ctaButton}>
+          <Link to="/#contact" className={styles.ctaButton}>
             Prendre rendez-vous
             <ArrowRight size={18} />
-          </a>
+          </Link>
         </div>
       </div>
 
       <div className={styles.main}>
         <div className={styles.brandCol}>
-          <div className={styles.brand}>
-            <img src={logoMonogram} alt="" className={styles.logoMark} />
-            <span className={styles.brandText}>
-              <span className={styles.brandCapital}>Capital</span>
-              <span className={styles.brandGestion}>Gestion</span>
-            </span>
-          </div>
+          <span className={styles.brand}>
+            <span className={styles.brandCapital}>Capital</span>
+            <span className={styles.brandGestion}>Gestion</span>
+          </span>
           <p className={styles.tagline}>
             Conseil en gestion de patrimoine indépendant — confiance, discrétion, sur-mesure.
           </p>
@@ -45,9 +54,9 @@ export default function Footer() {
           <ul className={styles.linkList}>
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <a href={link.href} className={styles.link}>
+                <Link to={link.href} className={styles.link}>
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -57,15 +66,15 @@ export default function Footer() {
           <h3 className={styles.colTitle}>Contact</h3>
           <ul className={styles.linkList}>
             <li>
-              <a href="tel:+33695636096" className={styles.contactLink}>
+              <a href="tel:+33743669193" className={styles.contactLink}>
                 <Phone size={15} />
-                <span>06 95 63 60 96</span>
+                <span>07 43 66 91 93</span>
               </a>
             </li>
             <li>
-              <a href="mailto:contact@sbc.capitalgestion.com" className={styles.contactLink}>
+              <a href="mailto:contact@sbc-capitalgestion.com" className={styles.contactLink}>
                 <Mail size={15} />
-                <span>contact@sbc.capitalgestion.com</span>
+                <span>contact@sbc-capitalgestion.com</span>
               </a>
             </li>
             <li>
@@ -78,9 +87,38 @@ export default function Footer() {
         </div>
       </div>
 
+      <div className={styles.certifications}>
+        <span className={styles.certLabel}>Agréments &amp; enregistrements</span>
+        <ul className={styles.certList}>
+          {CERTIFICATIONS.map(({ src, label }) => (
+            <li key={label} className={styles.certItem}>
+              <img src={src} alt={label} loading="lazy" />
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <div className={styles.bottom}>
-        <p>© {year} S Capital Gestion — Béatrice Sem. Tous droits réservés.</p>
-        <p className={styles.legal}>Mentions légales</p>
+        <p>© {year} S Capital Gestion. Tous droits réservés.</p>
+        <div className={styles.bottomRight}>
+          <a
+            href="https://supaco-digital.com/"
+            className={styles.credit}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Site réalisé par SupacoDigital
+          </a>
+          <Link to="/mentions-legales" className={styles.legal}>
+            Mentions légales
+          </Link>
+          <Link to="/mentions-legales#confidentialite" className={styles.legal}>
+            Confidentialité
+          </Link>
+          <Link to="/mentions-legales#cookies" className={styles.legal}>
+            Cookies
+          </Link>
+        </div>
       </div>
     </footer>
   );
