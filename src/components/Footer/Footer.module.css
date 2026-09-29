@@ -25,7 +25,7 @@
   position: relative;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 72px 32px;
+  padding: 72px var(--gutter);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,7 +78,7 @@
   position: relative;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 64px 32px 56px;
+  padding: 64px var(--gutter) 56px;
   display: grid;
   grid-template-columns: 1.6fr 1fr 1.2fr;
   gap: 48px;
@@ -106,7 +106,7 @@
   font-size: 12px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--color-bordeaux-light);
+  color: var(--color-bordeaux-on-dark);
   margin-top: 5px;
 }
 
@@ -122,7 +122,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.55);
   margin-bottom: 22px;
 }
 
@@ -158,7 +158,7 @@
 }
 
 .contactLink svg {
-  color: var(--color-bordeaux-light);
+  color: var(--color-bordeaux-on-dark);
   flex-shrink: 0;
 }
 
@@ -172,7 +172,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   max-width: 1240px;
   margin: 0 auto;
-  padding: 32px;
+  padding: 32px var(--gutter);
   display: flex;
   align-items: center;
   gap: 28px;
@@ -184,7 +184,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .certList {
@@ -205,7 +205,7 @@
 }
 
 .certItem img {
-  height: 30px;
+  height: 24px;
   width: auto;
   display: block;
 }
@@ -214,14 +214,14 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   max-width: 1240px;
   margin: 0 auto;
-  padding: 26px 32px 32px;
+  padding: 26px var(--gutter) 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .bottomRight {
@@ -234,7 +234,7 @@
 .credit,
 .legal {
   cursor: pointer;
-  color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.55);
   transition: color 160ms var(--ease-out);
 }
 
@@ -256,7 +256,7 @@
   }
 
   .ctaInner {
-    padding: 56px 32px;
+    padding: 56px var(--gutter);
   }
 }
 
@@ -264,7 +264,7 @@
   .ctaInner {
     flex-direction: column;
     align-items: flex-start;
-    padding: 48px 24px;
+    padding: 48px var(--gutter);
     gap: 24px;
   }
 
@@ -275,19 +275,19 @@
 
   .main {
     grid-template-columns: 1fr;
-    padding: 48px 24px 40px;
+    padding: 48px var(--gutter) 40px;
     gap: 36px;
   }
 
   .certifications {
-    padding: 28px 24px;
+    padding: 28px var(--gutter);
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
   }
 
   .bottom {
-    padding: 22px 24px 28px;
+    padding: 22px var(--gutter) 28px;
     flex-direction: column;
     align-items: flex-start;
   }
@@ -307,4 +307,19 @@
   .linkList li + li {
     margin-top: 0;
   }
+}
+
+/* Focus clavier visible sur le fond noir */
+.ctaButton:focus-visible,
+.link:focus-visible,
+.contactLink:focus-visible,
+.credit:focus-visible,
+.legal:focus-visible {
+  outline: 2px solid var(--color-white);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.ctaButton:active {
+  transition-duration: 100ms;
 }

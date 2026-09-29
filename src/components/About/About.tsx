@@ -1,12 +1,9 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ArrowRight } from "lucide-react";
 import portrait from "../../assets/beatrice-portrait.webp";
+import { reveal } from "../../lib/reveal";
 import styles from "./About.module.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const MILESTONES = [
   { label: "Expérience", value: "10 ans en banque" },
@@ -34,28 +31,22 @@ export default function About() {
 
   useGSAP(
     () => {
-      gsap.from(`.${styles.figure}`, {
-        opacity: 0,
+      reveal(`.${styles.figure}`, {
         y: 24,
         duration: 0.9,
-        ease: "power3.out",
         scrollTrigger: { trigger: containerRef.current, start: "top 78%" },
       });
 
-      gsap.from(`.${styles.body} > *`, {
-        opacity: 0,
+      reveal(`.${styles.body} > *`, {
         y: 22,
         duration: 0.7,
-        ease: "power3.out",
         stagger: 0.07,
         scrollTrigger: { trigger: containerRef.current, start: "top 76%" },
       });
 
-      gsap.from(`.${styles.conviction}`, {
-        opacity: 0,
+      reveal(`.${styles.conviction}`, {
         y: 20,
         duration: 0.6,
-        ease: "power3.out",
         stagger: 0.09,
         scrollTrigger: { trigger: `.${styles.convictions}`, start: "top 86%" },
       });
@@ -105,7 +96,7 @@ export default function About() {
 
             <p className={styles.text}>
               Dix années en banque m'ont fait voir passer des centaines de
-              situations patrimoniales — celles de particuliers d'abord, de
+              situations patrimoniales : celles de particuliers d'abord, de
               chefs d'entreprise et d'indépendants ensuite. On y apprend à lire
               un bilan autant qu'une histoire de famille, à repérer ce qui
               coince dans un montage, et à distinguer un placement réellement

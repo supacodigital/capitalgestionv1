@@ -7,7 +7,7 @@
 .inner {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 var(--gutter);
 }
 
 .header {
@@ -47,7 +47,7 @@
 .intro {
   font-size: clamp(15.5px, 1.4vw, 17px);
   line-height: 1.75;
-  color: #565656;
+  color: var(--color-text-soft);
   text-wrap: pretty;
 }
 
@@ -75,10 +75,10 @@
 .infoNote {
   margin-top: 32px;
   padding-top: 26px;
-  border-top: 1px solid #e8e1de;
+  border-top: 1px solid var(--color-line);
   font-size: 13.5px;
   line-height: 1.7;
-  color: #6a6a6a;
+  color: var(--color-grey-mid);
   text-wrap: pretty;
 }
 
@@ -142,8 +142,10 @@
   transition: color 160ms var(--ease-out);
 }
 
-a.infoValue:hover {
-  color: var(--color-bordeaux);
+@media (hover: hover) and (pointer: fine) {
+  a.infoValue:hover {
+    color: var(--color-bordeaux);
+  }
 }
 
 a.infoValue:focus-visible {
@@ -175,7 +177,7 @@ a.infoValue:focus-visible {
   width: 44px;
   height: 44px;
   background: var(--color-white);
-  border: 1px solid #e8e3e1;
+  border: 1px solid var(--color-line);
   color: #3d3d3d;
   transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out),
     border-color 180ms var(--ease-out);
@@ -228,7 +230,7 @@ a.infoValue:focus-visible {
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #4a4a4a;
+  color: var(--color-text-strong);
 }
 
 .requiredMark {
@@ -241,7 +243,7 @@ a.infoValue:focus-visible {
   font-size: 15px;
   color: var(--color-black);
   background: var(--color-white);
-  border: 1px solid #d8d5d3;
+  border: 1px solid var(--color-line-strong);
   border-radius: 2px;
   padding: 13px 14px;
   transition: border-color 160ms var(--ease-out), box-shadow 160ms var(--ease-out);
@@ -287,7 +289,7 @@ a.infoValue:focus-visible {
   gap: 10px;
   font-size: 13px;
   line-height: 1.6;
-  color: #6a6a6a;
+  color: var(--color-grey-mid);
 }
 
 .consentBox {
@@ -303,7 +305,7 @@ a.infoValue:focus-visible {
   outline-offset: 2px;
 }
 
-/* Région d'état (envoi / succès) — invisible tant qu'elle est vide */
+/* Région d'état (envoi / succès), invisible tant qu'elle est vide */
 .statusRegion:empty,
 .statusRegion:not(:has(*)) {
   display: none;
@@ -315,22 +317,7 @@ a.infoValue:focus-visible {
 
 .statusSending {
   font-size: 14px;
-  color: #565656;
-}
-
-.errorBanner {
-  font-size: 13.5px;
-  line-height: 1.6;
-  color: var(--color-bordeaux-dark);
-  background: rgba(122, 20, 32, 0.06);
-  border-left: 3px solid var(--color-bordeaux);
-  padding: 12px 14px;
-  border-radius: 2px;
-}
-
-.errorBanner a {
-  color: var(--color-bordeaux-dark);
-  text-decoration: underline;
+  color: var(--color-text-soft);
 }
 
 .submit {
@@ -366,7 +353,8 @@ a.infoValue:focus-visible {
 }
 
 .submit:active:not(:disabled) {
-  transform: scale(0.98);
+  transform: scale(0.97);
+  transition-duration: 100ms;
 }
 
 .submit:focus-visible {
@@ -410,7 +398,7 @@ a.infoValue:focus-visible {
 .successText {
   font-size: 15px;
   line-height: 1.7;
-  color: #565656;
+  color: var(--color-text-soft);
   max-width: 420px;
 }
 
@@ -519,17 +507,19 @@ fieldset.field {
   align-items: center;
   min-height: 46px;
   padding: 12px 16px;
-  border: 1px solid #ddd6d3;
+  border: 1px solid var(--color-line-strong);
   font-size: 14px;
   line-height: 1.4;
-  color: #4d4d4d;
+  color: var(--color-text-strong);
   transition: border-color 0.25s var(--ease-out), background-color 0.25s var(--ease-out),
     color 0.25s var(--ease-out);
 }
 
-.subjectOption:hover .subjectLabel {
-  border-color: var(--color-bordeaux);
-  color: var(--color-black);
+@media (hover: hover) and (pointer: fine) {
+  .subjectOption:hover .subjectLabel {
+    border-color: var(--color-bordeaux);
+    color: var(--color-black);
+  }
 }
 
 .subjectInput:checked + .subjectLabel {
@@ -559,7 +549,7 @@ fieldset.field {
   gap: 10px 26px;
   margin-top: 24px;
   padding-top: 22px;
-  border-top: 1px solid #e5e0de;
+  border-top: 1px solid var(--color-line);
 }
 
 .expectation {
@@ -567,7 +557,7 @@ fieldset.field {
   align-items: center;
   gap: 9px;
   font-size: 13.5px;
-  color: #4d4d4d;
+  color: var(--color-text-strong);
 }
 
 .expectationIcon {
@@ -608,7 +598,7 @@ fieldset.field {
 .errorText {
   font-size: 14px;
   line-height: 1.65;
-  color: #4d4d4d;
+  color: var(--color-text-strong);
   text-wrap: pretty;
 }
 

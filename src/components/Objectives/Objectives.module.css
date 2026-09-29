@@ -7,7 +7,7 @@
 .inner {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 var(--gutter);
 }
 
 .header {
@@ -47,7 +47,7 @@
 .intro {
   font-size: clamp(15.5px, 1.4vw, 17px);
   line-height: 1.75;
-  color: #565656;
+  color: var(--color-text-soft);
   text-wrap: pretty;
 }
 
@@ -82,7 +82,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 1px solid #e8e3e1;
+  border: 1px solid var(--color-line);
   color: var(--color-bordeaux);
   /* Le fond très légèrement teinté détache l'icône du blanc de la carte */
   background: rgba(122, 20, 32, 0.025);
@@ -103,7 +103,7 @@
 .cardText {
   font-size: 14.5px;
   line-height: 1.7;
-  color: #5a5a5a;
+  color: var(--color-text-soft);
   margin: 0;
   text-wrap: pretty;
 }
@@ -117,7 +117,9 @@
 }
 
 .framingHeader {
-  max-width: 560px;
+  /* Assez large pour que le sous-titre tienne sur une ligne ;
+     l'introduction garde sa propre mesure de lecture */
+  max-width: 680px;
   margin-bottom: 56px;
 }
 
@@ -129,7 +131,15 @@
   margin-bottom: 16px;
 }
 
+/* Seconde ligne du titre, en retrait pour garder la hiérarchie */
+.framingSubtitle {
+  display: block;
+  text-wrap: balance;
+  color: rgba(255, 255, 255, 0.55);
+}
+
 .framingIntro {
+  max-width: 560px;
   font-size: 15.5px;
   line-height: 1.75;
   color: rgba(255, 255, 255, 0.68);
@@ -173,7 +183,8 @@
   font-size: 1.05rem;
   font-weight: 500;
   letter-spacing: 0.08em;
-  color: var(--color-bordeaux-light);
+  /* Le bordeaux de marque tombe à 1,9:1 sur le noir */
+  color: var(--color-bordeaux-on-dark);
   margin-bottom: 14px;
 }
 
@@ -233,7 +244,7 @@
 }
 
 .cta:focus-visible {
-  outline: 2px solid var(--color-bordeaux-light);
+  outline: 2px solid var(--color-bordeaux-on-dark);
   outline-offset: 6px;
   border-radius: 2px;
 }
@@ -282,10 +293,6 @@
 @media (max-width: 768px) {
   .objectives {
     padding: 80px 0;
-  }
-
-  .inner {
-    padding: 0 20px;
   }
 
   .header {

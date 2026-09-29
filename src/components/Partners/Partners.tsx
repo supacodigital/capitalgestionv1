@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ChevronDown } from "lucide-react";
+import { reveal } from "../../lib/reveal";
 import styles from "./Partners.module.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 // Import automatique de tous les logos partenaires
 const LOGO_MODULES = import.meta.glob("../../assets/partners/*.webp", {
@@ -84,23 +81,45 @@ function MarqueeRow({ items, reverse }: { items: Partner[]; reverse?: boolean })
 
 export default function Partners() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLUListElement>(null);
   const [expanded, setExpanded] = useState(false);
+
+  // Hauteur réelle de la grille dépliée : une max-height arbitraire
+  // (2400px) faussait la courbe, le repli semblant démarrer en retard
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const measure = () => grid.style.setProperty("--grid-full", `${grid.scrollHeight}px`);
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(grid);
+    return () => observer.disconnect();
+  }, []);
+
+  function toggle() {
+    const grid = gridRef.current;
+    // Au repli, si le haut de la grille est sorti de l'écran, on y revient :
+    // sinon le visiteur se retrouve plus bas, dans la section suivante
+    if (expanded && grid && grid.getBoundingClientRect().top < 0) {
+      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      grid.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    }
+    setExpanded((v) => !v);
+  }
 
   useGSAP(
     () => {
-      gsap.from(`.${styles.header}`, {
-        opacity: 0,
+      reveal(`.${styles.header}`, {
         y: 20,
         duration: 0.7,
-        ease: "power3.out",
         scrollTrigger: { trigger: containerRef.current, start: "top 78%" },
       });
 
-      gsap.from(`.${styles.logo}`, {
-        opacity: 0,
+      reveal(`.${styles.logo}`, {
         y: 16,
         duration: 0.5,
-        ease: "power3.out",
         stagger: 0.04,
         scrollTrigger: { trigger: `.${styles.grid}`, start: "top 85%" },
       });
@@ -126,6 +145,7 @@ export default function Partners() {
         {/* Desktop / tablette : grille repliable */}
         <div className={styles.gridWrap}>
           <ul
+            ref={gridRef}
             id="partners-grid"
             className={`${styles.grid} ${expanded ? styles.gridExpanded : ""}`}
           >
@@ -143,7 +163,7 @@ export default function Partners() {
           className={styles.toggle}
           aria-expanded={expanded}
           aria-controls="partners-grid"
-          onClick={() => setExpanded((v) => !v)}
+          onClick={toggle}
         >
           {expanded ? "Réduire" : `Voir les ${PARTNERS.length} partenaires`}
           <ChevronDown
@@ -154,7 +174,7 @@ export default function Partners() {
         </button>
 
         {/* Mobile : bandeau défilant sur deux rangées */}
-        <div className={styles.marquee} aria-label="Nos partenaires">
+        <div className={styles.marquee} role="group" aria-label="Nos partenaires">
           <MarqueeRow items={ROW_ONE} />
           <MarqueeRow items={ROW_TWO} reverse />
         </div>

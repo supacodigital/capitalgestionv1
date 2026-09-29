@@ -51,7 +51,7 @@
   height: 100%;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 var(--gutter);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -62,6 +62,19 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  transition: opacity 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .brand:hover {
+    opacity: 0.72;
+  }
+}
+
+.brand:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 6px;
+  border-radius: 2px;
 }
 
 /* Lettrage du menu ouvert, calé sur celui du pied de page */
@@ -86,7 +99,7 @@
   font-size: 11px;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: var(--color-bordeaux-light);
+  color: var(--color-bordeaux-on-dark);
   margin-top: 5px;
 }
 
@@ -98,73 +111,11 @@
   transition: height 320ms var(--ease-out), opacity 200ms var(--ease-out);
 }
 
-.scrolled /* Lettrage du menu ouvert, calé sur celui du pied de page */
-.brandText {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.brandCapital {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 21px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-white);
-}
-
-.brandGestion {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--color-bordeaux-light);
-  margin-top: 5px;
-}
-
-.logoMark {
+.scrolled .logoMark {
   height: 36px;
 }
 
-.brand {
-  transition: opacity 200ms var(--ease-out);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .brand:hover {
-    opacity: 0.72;
-  }
-}
-
-.brand:active /* Lettrage du menu ouvert, calé sur celui du pied de page */
-.brandText {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.brandCapital {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 21px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-white);
-}
-
-.brandGestion {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--color-bordeaux-light);
-  margin-top: 5px;
-}
-
-.logoMark {
+.brand:active .logoMark {
   opacity: 0.6;
 }
 
@@ -181,7 +132,9 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #4a4a4a;
+  /* Un libellé sur deux lignes cassait l'alignement de la barre */
+  white-space: nowrap;
+  color: var(--color-text-strong);
   padding: 6px 0;
   transition: color 200ms var(--ease-out);
 }
@@ -256,7 +209,8 @@
   background: var(--color-black);
   padding: 12px 26px;
   border-radius: 2px;
-  transition: transform 160ms var(--ease-out), box-shadow 240ms var(--ease-out);
+  transition: transform 160ms var(--ease-out), box-shadow 240ms var(--ease-out),
+    opacity 200ms var(--ease-out);
   white-space: nowrap;
 }
 
@@ -314,6 +268,12 @@
   transform: scale(0.92);
 }
 
+.menuButton:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 .burgerBar {
   display: block;
   width: 22px;
@@ -347,22 +307,43 @@
   display: none;
 }
 
-@media (max-width: 900px) {
-  .nav,
-  .cta {
+/* ── Navigation resserrée ─────────────────────────────────────
+   Six liens et le bouton demandent ~1 170px : en dessous, on resserre
+   avant de passer au menu. */
+@media (max-width: 1200px) {
+  .nav {
+    gap: 26px;
+  }
+
+  .navLink {
+    letter-spacing: 0.06em;
+  }
+}
+
+/* ── Menu plein écran ─────────────────────────────────────────
+   Dès que la barre ne tient plus, les liens passent dans le menu.
+   Le bouton de rendez-vous reste visible tant qu'il y a la place. */
+@media (max-width: 1120px) {
+  .nav {
     display: none;
+  }
+
+  .inner {
+    justify-content: flex-start;
+  }
+
+  .cta {
+    margin-left: auto;
   }
 
   .menuButton {
     display: flex;
   }
 
-  .header.scrolled,
-  .header {
-    background: rgba(255, 255, 255, 0.96);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    border-bottom-color: rgba(26, 26, 26, 0.08);
+  /* Sur l'overlay noir, le bouton noir disparaîtrait : on le retire */
+  .menuOpen .cta {
+    opacity: 0;
+    pointer-events: none;
   }
 
   /* Le menu ouvert doit annuler tout backdrop-filter du header :
@@ -380,36 +361,6 @@
   .header.menuOpen::after,
   .header.menuOpen.scrolled::after {
     opacity: 0;
-  }
-
-  .menuOpen /* Lettrage du menu ouvert, calé sur celui du pied de page */
-.brandText {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.brandCapital {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 21px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-white);
-}
-
-.brandGestion {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--color-bordeaux-light);
-  margin-top: 5px;
-}
-
-.logoMark {
-    height: 42px;
   }
 
   .mobileMenu {
@@ -464,7 +415,7 @@
     right: 0;
     bottom: 6px;
     height: 1.5px;
-    background: var(--color-bordeaux-light);
+    background: var(--color-bordeaux-on-dark);
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 280ms var(--ease-out);
@@ -478,10 +429,19 @@
     transform: scaleX(1);
   }
 
-  /* Sur le fond noir de l'overlay, la teinte claire reste lisible */
+  .mobileNavLink:focus-visible,
+  .mobileNavLink a:focus-visible,
+  .mobileCta:focus-visible,
+  .mobileContact a:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  /* Le bordeaux de marque tombe à 1,9:1 sur le noir : teinte éclaircie */
   .mobileNavLinkAccent,
   .mobileNavLinkAccent a {
-    color: var(--color-bordeaux-light);
+    color: var(--color-bordeaux-on-dark);
   }
 
   .mobileCta {
@@ -511,47 +471,30 @@
     text-align: center;
     font-size: 12.5px;
     letter-spacing: 0.03em;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Le numéro s'appelle d'un geste depuis le menu */
+  .mobileContact a {
+    color: var(--color-white);
+    padding: 12px 0;
   }
 }
 
-@media (max-width: 480px) {
-  .inner {
-    padding: 0 20px;
+@media (max-width: 900px) {
+  .cta {
+    display: none;
   }
 
-  /* Lettrage du menu ouvert, calé sur celui du pied de page */
-.brandText {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.brandCapital {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 21px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-white);
-}
-
-.brandGestion {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--color-bordeaux-light);
-  margin-top: 5px;
-}
-
-.logoMark {
-    height: 36px;
+  .menuButton {
+    margin-left: auto;
   }
 
-  .mobileNavLink {
-    font-size: 28px;
+  .header.scrolled,
+  .header {
+    background: rgba(255, 255, 255, 0.96);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 }
 
@@ -567,33 +510,7 @@
     height: var(--header-height);
   }
 
-  .scrolled /* Lettrage du menu ouvert, calé sur celui du pied de page */
-.brandText {
-  display: flex;
-  flex-direction: column;
-  line-height: 1;
-}
-
-.brandCapital {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 21px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-white);
-}
-
-.brandGestion {
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 11px;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: var(--color-bordeaux-light);
-  margin-top: 5px;
-}
-
-.logoMark {
+  .scrolled .logoMark {
     height: 42px;
   }
 
@@ -624,5 +541,17 @@
   .menuButton:active,
   .mobileCta:active {
     transform: none;
+  }
+}
+
+/* Placé après le mouvement réduit : la taille mobile du logo prime */
+@media (max-width: 480px) {
+  .logoMark,
+  .scrolled .logoMark {
+    height: 36px;
+  }
+
+  .mobileNavLink {
+    font-size: 28px;
   }
 }

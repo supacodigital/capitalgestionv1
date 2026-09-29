@@ -41,7 +41,7 @@
   text-align: center;
   width: 100%;
   max-width: 760px;
-  padding: 48px 32px 64px;
+  padding: 48px var(--gutter) 64px;
 }
 
 .eyebrow {
@@ -89,7 +89,7 @@
 
 .titleLine:first-child {
   font-weight: 400;
-  color: #4a4a4a;
+  color: var(--color-text-strong);
 }
 
 .title em {
@@ -101,7 +101,7 @@
 .subtitle {
   font-size: clamp(15.5px, 1.4vw, 17px);
   line-height: 1.75;
-  color: #565656;
+  color: var(--color-text-soft);
   max-width: 54ch;
   margin-bottom: 40px;
   text-wrap: pretty;
@@ -170,7 +170,7 @@
   letter-spacing: 0.02em;
   color: var(--color-black);
   padding: 16px 30px;
-  border: 1.5px solid #d8d5d3;
+  border: 1.5px solid var(--color-line-strong);
   border-radius: 2px;
   overflow: hidden;
   transition: border-color 200ms var(--ease-out), transform 160ms var(--ease-out);
@@ -226,7 +226,7 @@
   list-style: none;
   margin-top: 52px;
   padding-top: 32px;
-  border-top: 1px solid #ebe7e5;
+  border-top: 1px solid var(--color-line);
   width: 100%;
   max-width: 660px;
 }
@@ -239,7 +239,7 @@
 
 /* Filets de séparation entre les domaines, sans bordure aux extrémités */
 .pillar + .pillar {
-  border-left: 1px solid #ebe7e5;
+  border-left: 1px solid var(--color-line);
 }
 
 .pillarLink {
@@ -289,7 +289,7 @@
 
   .content {
     max-width: 680px;
-    padding: 44px 32px 56px;
+    padding: 44px var(--gutter) 56px;
   }
 
   .title {
@@ -375,13 +375,13 @@
     grid-template-columns: 1fr 1fr;
     margin-top: 4px;
     padding-top: 0;
-    border-top: 1px solid #ebe7e5;
-    border-left: 1px solid #ebe7e5;
+    border-top: 1px solid var(--color-line);
+    border-left: 1px solid var(--color-line);
   }
 
   .pillar {
-    border-right: 1px solid #ebe7e5;
-    border-bottom: 1px solid #ebe7e5;
+    border-right: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
   }
 
   .pillar + .pillar {

@@ -8,7 +8,7 @@ import LegalNotice from "./pages/LegalNotice";
 import Recruitment from "./pages/Recruitment";
 
 /**
- * Arbre applicatif sans routeur — partagé entre le rendu client
+ * Arbre applicatif sans routeur, partagé entre le rendu client
  * (BrowserRouter dans App) et le prérendu statique (StaticRouter).
  */
 export default function AppRoutes() {

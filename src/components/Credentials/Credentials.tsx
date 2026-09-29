@@ -1,14 +1,11 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ShieldCheck, FileCheck, Scale, Lock } from "lucide-react";
 import logoAmf from "../../assets/logo_amf.webp";
 import logoCncef from "../../assets/logo_cncef.webp";
 import logoOrias from "../../assets/logo_orias.webp";
+import { reveal } from "../../lib/reveal";
 import styles from "./Credentials.module.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const CREDENTIALS = [
   {
@@ -64,28 +61,22 @@ export default function Credentials() {
 
   useGSAP(
     () => {
-      gsap.from(`.${styles.header}`, {
-        opacity: 0,
+      reveal(`.${styles.header}`, {
         y: 20,
         duration: 0.7,
-        ease: "power3.out",
         scrollTrigger: { trigger: containerRef.current, start: "top 78%" },
       });
 
-      gsap.from(`.${styles.card}`, {
-        opacity: 0,
+      reveal(`.${styles.card}`, {
         y: 24,
         duration: 0.7,
-        ease: "power3.out",
         stagger: 0.1,
         scrollTrigger: { trigger: `.${styles.grid}`, start: "top 84%" },
       });
 
-      gsap.from(`.${styles.guarantee}`, {
-        opacity: 0,
+      reveal(`.${styles.guarantee}`, {
         y: 20,
         duration: 0.6,
-        ease: "power3.out",
         stagger: 0.08,
         scrollTrigger: { trigger: `.${styles.guarantees}`, start: "top 85%" },
       });
@@ -113,7 +104,7 @@ export default function Credentials() {
           {CREDENTIALS.map(({ logo, name, title, text, reference }) => (
             <article className={styles.card} key={name}>
               <div className={styles.logoWrap}>
-                <img src={logo} alt={name} loading="lazy" />
+                <img src={logo} alt={name} loading="lazy" decoding="async" />
               </div>
               <h3 className={styles.cardTitle}>{title}</h3>
               <p className={styles.cardText}>{text}</p>
@@ -140,6 +131,7 @@ export default function Credentials() {
           Vous pouvez vérifier l'immatriculation de tout intermédiaire sur{" "}
           <a href="https://www.orias.fr/" target="_blank" rel="noopener noreferrer">
             orias.fr
+            <span className={styles.srOnly}> (nouvel onglet)</span>
           </a>
           .
         </p>

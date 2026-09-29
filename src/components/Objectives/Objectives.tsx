@@ -1,7 +1,5 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Coins,
   Building2,
@@ -13,9 +11,8 @@ import {
   Leaf,
   ArrowRight,
 } from "lucide-react";
+import { reveal } from "../../lib/reveal";
 import styles from "./Objectives.module.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const OBJECTIVES = [
   {
@@ -71,28 +68,22 @@ export default function Objectives() {
 
   useGSAP(
     () => {
-      gsap.from(`.${styles.header}`, {
-        opacity: 0,
+      reveal(`.${styles.header}`, {
         y: 20,
         duration: 0.7,
-        ease: "power3.out",
         scrollTrigger: { trigger: containerRef.current, start: "top 78%" },
       });
 
-      gsap.from(`.${styles.card}`, {
-        opacity: 0,
+      reveal(`.${styles.card}`, {
         y: 24,
         duration: 0.6,
-        ease: "power3.out",
         stagger: 0.06,
         scrollTrigger: { trigger: `.${styles.grid}`, start: "top 84%" },
       });
 
-      gsap.from(`.${styles.step}`, {
-        opacity: 0,
+      reveal(`.${styles.step}`, {
         y: 20,
         duration: 0.6,
-        ease: "power3.out",
         stagger: 0.1,
         scrollTrigger: { trigger: `.${styles.framing}`, start: "top 85%" },
       });
@@ -111,7 +102,7 @@ export default function Objectives() {
           <h2 className={styles.title}>Quels sont vos projets ?</h2>
           <p className={styles.intro}>
             Chaque situation a son histoire, ses contraintes et ses échéances. La stratégie se
-            construit à partir de vos objectifs — jamais l'inverse.
+            construit à partir de vos objectifs, jamais l'inverse.
           </p>
         </div>
 
@@ -129,7 +120,10 @@ export default function Objectives() {
 
         <div className={styles.framing}>
           <div className={styles.framingHeader}>
-            <h3 className={styles.framingTitle}>Cadrer avant d'investir</h3>
+            <h3 className={styles.framingTitle}>
+              Cadrer avant d'investir
+              <span className={styles.framingSubtitle}>un accompagnement patrimonial complet</span>
+            </h3>
             <p className={styles.framingIntro}>
               Avant toute recommandation, trois questions structurent l'échange. Elles déterminent
               tout le reste.

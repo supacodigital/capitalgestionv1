@@ -55,7 +55,7 @@ export default function Hero() {
       <div className={styles.content}>
         <p className={styles.eyebrow}>
           <span className={styles.eyebrowLine} aria-hidden="true" />
-          Gestion de patrimoine indépendante — Pays de Gex, Lyon, Genève
+          Gestion de patrimoine indépendante · Pays de Gex, Lyon, Genève
         </p>
 
         <h1 className={styles.title}>

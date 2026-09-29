@@ -7,7 +7,7 @@
 .inner {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 var(--gutter);
 }
 
 .header {
@@ -47,7 +47,7 @@
 .intro {
   font-size: clamp(15.5px, 1.4vw, 17px);
   line-height: 1.75;
-  color: #565656;
+  color: var(--color-text-soft);
   text-wrap: pretty;
 }
 
@@ -69,15 +69,10 @@
   flex-direction: column;
   background: var(--color-white);
   padding: 44px 36px;
-  transition: background-color 220ms var(--ease-out);
 }
 
-/* Le survol se limite au lien : la carte entière n'est pas cliquable */
-@media (hover: hover) and (pointer: fine) {
-  .card:hover {
-    background: var(--color-offwhite);
-  }
-}
+/* Pas de survol sur la carte : elle n'est pas cliquable, seul son lien
+   l'est. Un changement de fond promettait une action inexistante. */
 
 .iconWrap {
   display: inline-flex;
@@ -86,7 +81,7 @@
   width: 40px;
   height: 40px;
   /* Carré, comme dans Services et Objectifs */
-  border: 1px solid #e8e3e1;
+  border: 1px solid var(--color-line);
   background: rgba(122, 20, 32, 0.025);
   color: var(--color-bordeaux);
   margin-bottom: 22px;
@@ -102,7 +97,7 @@
   margin-bottom: 20px;
   /* Filet de séparation : distingue l'intitulé de la liste qui suit */
   padding-bottom: 20px;
-  border-bottom: 1px solid #ece7e5;
+  border-bottom: 1px solid var(--color-line);
 }
 
 .list {
@@ -119,7 +114,7 @@
   padding-left: 20px;
   font-size: 14.5px;
   line-height: 1.5;
-  color: #5c5c5c;
+  color: var(--color-text-soft);
 }
 
 .listItem::before {
@@ -207,16 +202,21 @@
     margin-bottom: 40px;
   }
 
-  /* On sort le slider de .inner pour utiliser toute la largeur */
+  /* Le slider sort de .inner pour aller bord à bord ; les cartes
+     s'accrochent sur la gouttière, alignées avec le titre */
   .grid {
     display: flex;
     grid-template-columns: none;
     gap: 14px;
     background: transparent;
     border: none;
-    margin: 0 -22px;
-    padding: 4px 22px 8px;
+    /* Référence des offsetLeft lus par le suivi de carte active */
+    position: relative;
+    margin: 0 calc(var(--gutter) * -1);
+    padding: 4px var(--gutter) 8px;
+    scroll-padding-inline: var(--gutter);
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -230,7 +230,7 @@
     /* 88 % : laisse voir le bord de la carte suivante, tout en donnant
        assez de largeur pour que le lien tienne sur une ligne */
     flex: 0 0 88%;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     padding: 32px 24px;
     border: 1px solid var(--color-grey-light);
     border-radius: 4px;
@@ -271,6 +271,11 @@
     width: 44px;
     height: 44px;
     transform: translate(-50%, -50%);
+  }
+
+  .dot:focus-visible {
+    outline: 2px solid var(--color-bordeaux);
+    outline-offset: 4px;
   }
 
   .dotActive {

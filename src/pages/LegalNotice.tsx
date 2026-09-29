@@ -7,8 +7,8 @@ const EDITOR_PHONE = "07 43 66 91 93";
 export default function LegalNotice() {
   useEffect(() => {
     const DEFAULT_TITLE =
-      "Capital Gestion — Conseil en gestion de patrimoine indépendant | Pays de Gex, Lyon, Genève";
-    document.title = "Mentions légales — Capital Gestion";
+      "Capital Gestion | Conseil en gestion de patrimoine indépendant | Pays de Gex, Lyon, Genève";
+    document.title = "Mentions légales | Capital Gestion";
 
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     const previousHref = canonical?.href;
@@ -45,7 +45,7 @@ export default function LegalNotice() {
               <li>N° TVA intracommunautaire : [À COMPLÉTER]</li>
               <li>
                 Contact :{" "}
-                <a href={`mailto:${EDITOR_EMAIL}`}>{EDITOR_EMAIL}</a> — {EDITOR_PHONE}
+                <a href={`mailto:${EDITOR_EMAIL}`}>{EDITOR_EMAIL}</a>, {EDITOR_PHONE}
               </li>
               <li>Directeur de la publication : [À COMPLÉTER]</li>
             </ul>
@@ -61,7 +61,7 @@ export default function LegalNotice() {
               </li>
               <li>
                 Courtier en assurance et/ou intermédiaire en opérations de banque, enregistré à
-                l'ORIAS sous le n° [À COMPLÉTER] — registre consultable sur{" "}
+                l'ORIAS sous le n° [À COMPLÉTER], registre consultable sur{" "}
                 <a href="https://www.orias.fr" target="_blank" rel="noopener noreferrer">
                   orias.fr
                 </a>
@@ -80,11 +80,11 @@ export default function LegalNotice() {
             <h2>3. Hébergement</h2>
             <p>
               Le site est hébergé par <strong>Hostinger International Ltd.</strong>, 61 Lordou
-              Vironos Street, 6023 Larnaca, Chypre —{" "}
+              Vironos Street, 6023 Larnaca, Chypre (
               <a href="https://www.hostinger.fr" target="_blank" rel="noopener noreferrer">
                 hostinger.fr
               </a>
-              .
+              ).
             </p>
           </section>
 
@@ -106,7 +106,7 @@ export default function LegalNotice() {
               point 1).
             </p>
             <p>
-              <strong>Données collectées :</strong> via le formulaire de contact — nom, prénom,
+              <strong>Données collectées :</strong> via le formulaire de contact : nom, prénom,
               adresse e-mail, numéro de téléphone, objet de la demande (retraite, investissement,
               fiscalité, transmission, situation de frontalier…) et contenu du message. Aucune
               donnée n'est collectée à votre insu ni cédée à des tiers à des fins commerciales.

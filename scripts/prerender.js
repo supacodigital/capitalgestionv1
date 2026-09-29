@@ -11,7 +11,7 @@ const root = path.dirname(fileURLToPath(new URL("../package.json", import.meta.u
 const distDir = path.join(root, "dist");
 const ssrDir = path.join(root, "node_modules/.prerender");
 
-// Routes à prérendre — à compléter si de nouvelles pages sont ajoutées
+// Routes à prérendre, à compléter si de nouvelles pages sont ajoutées
 const ROUTES = ["/", "/devenir-conseiller", "/mentions-legales"];
 
 async function main() {

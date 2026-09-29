@@ -1,7 +1,5 @@
 import { useId, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Phone,
   Mail,
@@ -14,6 +12,7 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { sendContact } from "../../lib/sendContact";
+import { reveal } from "../../lib/reveal";
 import styles from "./Contact.module.css";
 
 // Logos de marque (non fournis par cette version de lucide-react)
@@ -41,8 +40,6 @@ function LinkedinIcon() {
     </svg>
   );
 }
-
-gsap.registerPlugin(ScrollTrigger);
 
 const CONTACT_EMAIL = "contact@sbc-capitalgestion.com";
 
@@ -109,19 +106,15 @@ export default function Contact() {
 
   useGSAP(
     () => {
-      gsap.from(`.${styles.header}`, {
-        opacity: 0,
+      reveal(`.${styles.header}`, {
         y: 20,
         duration: 0.7,
-        ease: "power3.out",
         scrollTrigger: { trigger: containerRef.current, start: "top 78%" },
       });
 
-      gsap.from(`.${styles.panel}`, {
-        opacity: 0,
+      reveal(`.${styles.panel}`, {
         y: 28,
         duration: 0.8,
-        ease: "power3.out",
         stagger: 0.12,
         scrollTrigger: { trigger: `.${styles.layout}`, start: "top 80%" },
       });
@@ -242,7 +235,7 @@ export default function Contact() {
         <div className={styles.layout}>
           <aside className={`${styles.panel} ${styles.infoPanel}`} aria-label="Coordonnées">
             <p className={styles.infoIntro}>
-              Votre patrimoine mérite un regard indépendant — et une écoute attentive.
+              Votre patrimoine mérite un regard indépendant et une écoute attentive.
             </p>
 
             <ul className={styles.infoList}>
@@ -280,10 +273,12 @@ export default function Contact() {
             </ul>
 
             {/* Rappel du format, à l'endroit où la colonne restait vide */}
+            {/* Durée, format et gratuité sont déjà listés sous le titre :
+                la note ne garde que ce qu'elle ajoute */}
             <p className={styles.infoNote}>
               <strong>Le premier rendez-vous</strong>
-              Environ 30 minutes, en visioconférence ou par téléphone. Gratuit et sans engagement :
-              il sert à comprendre votre situation, pas à vous vendre quoi que ce soit.
+              Il sert à comprendre votre situation et vos objectifs, pas à vous vendre quoi que ce
+              soit.
             </p>
 
             <div className={styles.social}>
@@ -362,13 +357,6 @@ export default function Contact() {
                 <p className={styles.requiredHint} id={id("required-hint")}>
                   Les champs suivis d'un <span aria-hidden="true">*</span> sont obligatoires.
                 </p>
-
-                {status === "error" && (
-                  <p className={styles.errorBanner} role="alert">
-                    L'envoi a échoué. Merci de réessayer, ou d'écrire directement à{" "}
-                    <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-                  </p>
-                )}
 
                 <div className={styles.row}>
                   <div className={styles.field}>
@@ -456,7 +444,7 @@ export default function Contact() {
                   )}
                 </div>
 
-                <fieldset className={styles.field}>
+                <fieldset className={styles.field} aria-describedby={describedBy("subject")}>
                   <legend className={styles.label}>
                     Votre demande porte sur{" "}
                     <span className={styles.requiredMark} aria-hidden="true">
@@ -468,7 +456,6 @@ export default function Contact() {
                     ref={(el) => {
                       fieldRefs.current.subject = el?.querySelector("input") ?? null;
                     }}
-                    aria-describedby={describedBy("subject")}
                   >
                     {SUBJECTS.map((subject) => (
                       <label key={subject} className={styles.subjectOption}>

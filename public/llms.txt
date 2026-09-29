@@ -50,12 +50,12 @@ carrières mixtes pour la préparation de la retraite.
 
 ## Méthode d'accompagnement
 
-1. **Échange** — comprendre la situation, les objectifs et les projets, lors d'un
+1. **Échange** : comprendre la situation, les objectifs et les projets, lors d'un
    premier rendez-vous sans engagement
-2. **Analyse** — étudier le patrimoine dans son ensemble (actifs, fiscalité,
+2. **Analyse** : étudier le patrimoine dans son ensemble (actifs, fiscalité,
    protection) et identifier les leviers d'optimisation
-3. **Stratégie** — construire une feuille de route personnalisée et hiérarchisée
-4. **Suivi** — accompagner la mise en œuvre et faire évoluer la stratégie dans le
+3. **Stratégie** : construire une feuille de route personnalisée et hiérarchisée
+4. **Suivi** : accompagner la mise en œuvre et faire évoluer la stratégie dans le
    temps
 
 Avant toute recommandation, trois questions structurent l'échange : nommer
@@ -71,4 +71,5 @@ l'objectif, fixer une échéance, définir un budget.
 ## Contact
 
 Premier échange sans engagement. Réponse sous 48 heures.
-Téléphone : 07 43 66 91 93 — Email : contact@sbc-capitalgestion.com
+Téléphone : 07 43 66 91 93
+Email : contact@sbc-capitalgestion.com

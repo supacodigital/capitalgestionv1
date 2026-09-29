@@ -1,36 +1,30 @@
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus, Phone, Mail, ArrowRight } from "lucide-react";
 import { FAQ_ENTRIES } from "../../data/faq";
+import { reveal } from "../../lib/reveal";
 import styles from "./Faq.module.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Faq() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const uid = useId();
 
   useGSAP(
     () => {
-      gsap.from(`.${styles.header}`, {
-        opacity: 0,
+      reveal(`.${styles.header}`, {
         y: 20,
         duration: 0.7,
-        ease: "power3.out",
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 78%",
         },
       });
 
-      gsap.from(`.${styles.item}`, {
-        opacity: 0,
+      reveal(`.${styles.item}`, {
         y: 20,
         duration: 0.6,
-        ease: "power3.out",
         stagger: 0.08,
         scrollTrigger: {
           trigger: `.${styles.list}`,
@@ -38,11 +32,9 @@ export default function Faq() {
         },
       });
 
-      gsap.from(`.${styles.aside}`, {
-        opacity: 0,
+      reveal(`.${styles.aside}`, {
         y: 24,
         duration: 0.8,
-        ease: "power3.out",
         scrollTrigger: {
           trigger: `.${styles.layout}`,
           start: "top 78%",
@@ -67,13 +59,17 @@ export default function Faq() {
           <div className={styles.list}>
             {FAQ_ENTRIES.map(({ question, answer }, index) => {
               const isOpen = openIndex === index;
+              const questionId = `${uid}-q${index}`;
+              const answerId = `${uid}-a${index}`;
               return (
                 <div className={`${styles.item} ${isOpen ? styles.itemOpen : ""}`} key={question}>
                   <h3 className={styles.questionHeading}>
                     <button
                       type="button"
+                      id={questionId}
                       className={styles.question}
                       aria-expanded={isOpen}
+                      aria-controls={isOpen ? answerId : undefined}
                       onClick={() => setOpenIndex(isOpen ? null : index)}
                     >
                       <span>{question}</span>
@@ -86,6 +82,9 @@ export default function Faq() {
                   <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
+                        id={answerId}
+                        role="region"
+                        aria-labelledby={questionId}
                         className={styles.answerWrap}
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}

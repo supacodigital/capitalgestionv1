@@ -7,7 +7,7 @@
 .inner {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 var(--gutter);
 }
 
 .header {
@@ -47,7 +47,7 @@
 .intro {
   font-size: clamp(15.5px, 1.4vw, 17px);
   line-height: 1.75;
-  color: #565656;
+  color: var(--color-text-soft);
   text-wrap: pretty;
 }
 
@@ -69,8 +69,9 @@
   transition: max-height 420ms var(--ease-out);
 }
 
+/* Hauteur mesurée au montage ; 2400px en secours avant la mesure */
 .gridExpanded {
-  max-height: 2400px;
+  max-height: var(--grid-full, 2400px);
 }
 
 /* Dégradé de fondu en bas quand la grille est repliée */
@@ -82,11 +83,9 @@
   /* 40px : le fondu signale qu'il y a une suite sans voiler les logos
      de la dernière rangée visible */
   height: 40px;
-  background: linear-gradient(
-    to bottom,
-    rgba(250, 248, 247, 0),
-    rgba(250, 248, 247, 0.85)
-  );
+  /* Blanc, comme les cellules qu'il recouvre : l'offwhite y laissait
+     une bande grisée */
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.85));
   pointer-events: none;
 }
 
@@ -104,7 +103,7 @@
   text-transform: uppercase;
   color: var(--color-black);
   background: var(--color-white);
-  border: 1.5px solid #d8d5d3;
+  border: 1.5px solid var(--color-line-strong);
   border-radius: 2px;
   cursor: pointer;
   transition: border-color 180ms var(--ease-out), color 180ms var(--ease-out),
@@ -168,12 +167,6 @@
   }
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .logo:hover img {
-    filter: grayscale(0) opacity(1);
-  }
-}
-
 /* ---------- Tablette ---------- */
 @media (max-width: 980px) {
   .grid {
@@ -213,7 +206,7 @@
     flex-direction: column;
     gap: 12px;
     /* déborde de .inner pour aller bord à bord */
-    margin: 0 -22px;
+    margin: 0 calc(var(--gutter) * -1);
   }
 
   .marqueeRow {
@@ -286,10 +279,17 @@
     animation: none;
   }
 
-  /* Sans animation, on revient à une grille compacte scrollable */
+  /* Sans animation, on revient à une rangée défilable au doigt */
   .marqueeRow {
     -webkit-mask-image: none;
     mask-image: none;
     overflow-x: auto;
+    padding: 0 var(--gutter);
+  }
+
+  /* Le second exemplaire ne sert qu'à boucler : sans boucle, il ferait
+     défiler chaque logo deux fois */
+  .marqueeLogo[aria-hidden="true"] {
+    display: none;
   }
 }

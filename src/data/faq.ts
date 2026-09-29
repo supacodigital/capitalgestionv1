@@ -5,7 +5,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: "Qu'est-ce qu'un conseiller en gestion de patrimoine indépendant ?",
     answer:
-      "C'est un professionnel qui vous accompagne dans l'ensemble de vos décisions patrimoniales — placements, immobilier, retraite, prévoyance, fiscalité et transmission — sans être lié à un réseau bancaire. Les recommandations reposent uniquement sur votre intérêt, avec un large choix de solutions du marché.",
+      "C'est un professionnel qui vous accompagne dans l'ensemble de vos décisions patrimoniales (placements, immobilier, retraite, prévoyance, fiscalité et transmission), sans être lié à un réseau bancaire. Les recommandations reposent uniquement sur votre intérêt, avec un large choix de solutions du marché.",
   },
   {
     question: "En quoi votre conseil diffère-t-il de celui de ma banque ?",
@@ -20,7 +20,7 @@ export const FAQ_ENTRIES: FaqEntry[] = [
   {
     question: "Accompagnez-vous les frontaliers et les résidents suisses ?",
     answer:
-      "Oui. J'interviens dans tout le bassin franco-genevois — Pays de Gex, Lyon, Genève — et je connais les problématiques propres aux frontaliers : fiscalité transfrontalière, prévoyance, épargne dans les deux pays et préparation de la retraite.",
+      "Oui. J'interviens dans tout le bassin franco-genevois (Pays de Gex, Lyon, Genève) et je connais les problématiques propres aux frontaliers : fiscalité transfrontalière, prévoyance, épargne dans les deux pays et préparation de la retraite.",
   },
   {
     question: "Comment se déroule un premier rendez-vous ?",

@@ -30,6 +30,7 @@ export default function MobileCta() {
 
   return (
     <div
+      data-mobile-cta
       className={`${styles.bar} ${isVisible ? styles.barVisible : ""}`}
       aria-hidden={!isVisible}
     >

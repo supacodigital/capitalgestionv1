@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Compass,
   GraduationCap,
@@ -12,9 +11,8 @@ import {
   Check,
 } from "lucide-react";
 import logoMonogram from "../assets/logo-monogram-lg.webp";
+import { reveal } from "../lib/reveal";
 import styles from "./Recruitment.module.css";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const MOTIVATIONS = [
   "Exercer une activité utile, au contact direct des personnes que vous conseillez",
@@ -75,7 +73,7 @@ const STEPS = [
   {
     number: "02",
     title: "Validation du projet",
-    text: "Nous examinons ensemble votre situation, vos prérequis réglementaires et le modèle d'activité qui vous correspond — à temps plein ou en complément.",
+    text: "Nous examinons ensemble votre situation, vos prérequis réglementaires et le modèle d'activité qui vous correspond, à temps plein ou en complément.",
   },
   {
     number: "03",
@@ -95,9 +93,9 @@ export default function Recruitment() {
   // Titre et canonical propres à la page (restaurés au démontage)
   useEffect(() => {
     const DEFAULT_TITLE =
-      "Capital Gestion — Conseil en gestion de patrimoine indépendant | Pays de Gex, Lyon, Genève";
+      "Capital Gestion | Conseil en gestion de patrimoine indépendant | Pays de Gex, Lyon, Genève";
     document.title =
-      "Devenir conseiller en gestion de patrimoine — Capital Gestion";
+      "Devenir conseiller en gestion de patrimoine | Capital Gestion";
 
     const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     const previousHref = canonical?.href;
@@ -111,20 +109,16 @@ export default function Recruitment() {
 
   useGSAP(
     () => {
-      gsap.from(`.${styles.heroContent} > *`, {
-        opacity: 0,
+      reveal(`.${styles.heroContent} > *`, {
         y: 18,
         duration: 0.7,
-        ease: "power3.out",
         stagger: 0.08,
       });
 
       gsap.utils.toArray<HTMLElement>(`.${styles.reveal}`).forEach((el) => {
-        gsap.from(el, {
-          opacity: 0,
+        reveal(el, {
           y: 24,
           duration: 0.7,
-          ease: "power3.out",
           scrollTrigger: { trigger: el, start: "top 85%" },
         });
       });
@@ -172,7 +166,7 @@ export default function Recruitment() {
             </p>
             <h2 className={styles.title}>Ce qui amène à ce métier</h2>
             <p className={styles.intro}>
-              Les parcours sont variés — reconversion, évolution depuis la banque ou l'assurance,
+              Les parcours sont variés : reconversion, évolution depuis la banque ou l'assurance,
               recherche d'une activité complémentaire. Les motivations, elles, se recoupent souvent.
             </p>
           </div>
@@ -198,7 +192,7 @@ export default function Recruitment() {
             <p className={styles.marketText}>
               La fiscalité se complexifie, les réformes des retraites se succèdent et l'offre de
               placements s'élargit sans cesse. Face à cela, peu de particuliers disposent des
-              repères nécessaires pour arbitrer seuls — et les réseaux bancaires traditionnels
+              repères nécessaires pour arbitrer seuls, et les réseaux bancaires traditionnels
               répondent mal à cette demande d'accompagnement personnalisé.
             </p>
             <p className={styles.marketText}>
@@ -221,8 +215,8 @@ export default function Recruitment() {
             <h2 className={styles.title}>Ne pas démarrer seul</h2>
             <p className={styles.intro}>
               S'installer comme conseiller indépendant ne signifie pas tout construire soi-même.
-              L'adossement au réseau Inovea apporte le cadre, les outils et l'accès aux partenaires —
-              vous gardez la maîtrise de votre activité et de votre organisation.
+              L'adossement au réseau Inovea apporte le cadre, les outils et l'accès aux partenaires.
+              Vous gardez la maîtrise de votre activité et de votre organisation.
             </p>
           </div>
 
@@ -256,7 +250,7 @@ export default function Recruitment() {
             <h2 className={styles.titleLight}>Une profession encadrée</h2>
             <p className={styles.introLight}>
               Le conseil en investissements financiers est une activité réglementée, contrôlée par
-              l'Autorité des marchés financiers. Cet encadrement protège les clients — et constitue
+              l'Autorité des marchés financiers. Cet encadrement protège les clients et constitue
               la contrepartie de la confiance qui vous sera accordée.
             </p>
           </div>

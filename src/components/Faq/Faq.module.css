@@ -7,7 +7,7 @@
 .inner {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 var(--gutter);
 }
 
 .header {
@@ -28,7 +28,7 @@
   top: calc(var(--header-height) + 32px);
   padding: 36px 32px 34px;
   background: var(--color-white);
-  border: 1px solid #ece7e5;
+  border: 1px solid var(--color-line);
   border-radius: 3px;
 }
 
@@ -53,7 +53,7 @@
 .asideText {
   font-size: 14.5px;
   line-height: 1.7;
-  color: #5a5a5a;
+  color: var(--color-text-soft);
   margin-bottom: 26px;
   text-wrap: pretty;
 }
@@ -65,7 +65,7 @@
   gap: 4px;
   margin-bottom: 26px;
   padding-top: 22px;
-  border-top: 1px solid #f0ebe9;
+  border-top: 1px solid var(--color-line);
 }
 
 .asideLink {
@@ -177,7 +177,7 @@
 
 .item {
   position: relative;
-  border-bottom: 1px solid #ece7e5;
+  border-bottom: 1px solid var(--color-line);
 }
 
 /* Filet bordeaux à gauche de la question ouverte : repère discret,
@@ -228,6 +228,12 @@
   }
 }
 
+.question:focus-visible {
+  outline: 2px solid var(--color-bordeaux);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
 .iconWrap {
   flex-shrink: 0;
   display: inline-flex;
@@ -237,7 +243,7 @@
   height: 30px;
   border-radius: 50%;
   background: transparent;
-  border: 1px solid #e3ddda;
+  border: 1px solid var(--color-line);
   color: var(--color-bordeaux);
   transition: transform 300ms var(--ease-out), border-color 220ms var(--ease-out);
 }
@@ -262,7 +268,7 @@
   padding: 0 52px 30px 0;
   font-size: 15px;
   line-height: 1.75;
-  color: #565656;
+  color: var(--color-text-soft);
   text-wrap: pretty;
 }
 

@@ -2,7 +2,7 @@
 User-agent: *
 Allow: /
 
-# Robots des moteurs de réponse / IA — autorisés explicitement
+# Robots des moteurs de réponse / IA : autorisés explicitement
 # (le site a vocation à être cité dans les réponses générées)
 User-agent: GPTBot
 Allow: /

@@ -9,12 +9,12 @@
 .inner {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 32px;
+  padding: 0 var(--gutter);
 }
 
 .header {
   max-width: 640px;
-  margin-bottom: 72px;
+  margin-bottom: 56px;
 }
 
 .eyebrow {
@@ -43,115 +43,126 @@
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: var(--color-black);
+  text-wrap: balance;
 }
 
-.layout {
+/* ── Quatre cartes illustrées ─────────────────────────────── */
+
+/* Chaque carte occupe quatre rangées partagées (espace d'image, icône,
+   titre, texte) via subgrid : les titres restent alignés d'une carte à
+   l'autre même quand un texte compte une ligne de plus. */
+.grid {
+  --card-gap: 16px;
+  /* Hauteur réservée à l'image au-dessus du texte. Elle est portée par
+     la rangée : une carte en subgrid ignore sa propre min-height. */
+  --image-zone: 230px;
+  list-style: none;
   display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: 56px;
-  /* L'image s'étire sur la hauteur des cartes ; celles-ci gardent une
-     hauteur dictée par leur contenu, sans vide sous les textes. */
-  align-items: stretch;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(var(--image-zone), 1fr) auto auto auto;
+  column-gap: var(--card-gap);
+  row-gap: 0;
 }
 
-.image {
+/* Le texte se pose en bas de la carte ; l'image occupe tout le fond.
+   Pas d'effet de survol : la carte n'est pas cliquable, un zoom ou un
+   changement de teinte promettrait une action qui n'existe pas. */
+.card {
   position: relative;
-  border-radius: 2px;
+  isolation: isolate;
+  grid-row: span 4;
+  display: grid;
+  grid-template-rows: subgrid;
+  row-gap: 0;
+  padding: 28px 26px 30px;
   overflow: hidden;
-  min-height: 100%;
-  background: var(--color-grey-light);
+  border-radius: 2px;
+  /* Fond sombre tant que l'image charge : pas d'éclair blanc sous le texte */
+  background: var(--color-black);
+  color: var(--color-white);
 }
 
-/* Voile bordeaux très léger : rattache la photo à la charte plutôt que
-   de la laisser flotter comme une illustration rapportée */
-.image::after {
+.cardImage {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Sujets placés dans la moitié haute des images : on les garde
+     dans le cadre quand la carte devient plus large que haute */
+  object-position: 50% 25%;
+}
+
+/* Sujet décentré vers la gauche (fauteuil) */
+.card[data-pillar="retraite"] .cardImage {
+  object-position: 30% 25%;
+}
+
+/* Voile : transparent sur le sujet, dense sous le texte, qui garde
+   ainsi un contraste suffisant quelle que soit l'image */
+.card::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: -1;
   background: linear-gradient(
-    160deg,
-    rgba(122, 20, 32, 0.06),
-    rgba(26, 26, 26, 0.1)
+    to bottom,
+    rgba(26, 26, 26, 0) 26%,
+    rgba(26, 26, 26, 0.55) 50%,
+    rgba(26, 26, 26, 0.88) 74%,
+    rgba(26, 26, 26, 0.94) 100%
   );
   pointer-events: none;
 }
 
-.image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(160deg, rgba(26, 26, 26, 0.12) 0%, rgba(26, 26, 26, 0.02) 55%);
-  pointer-events: none;
-}
-
-.imagePhoto {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* Désaturation plus marquée : la photo devient un fond de section et
-     cesse de concurrencer le texte en couleur */
-  filter: saturate(0.5) contrast(1.04) brightness(1.02);
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--color-grey-light);
-  border: 1px solid var(--color-grey-light);
-}
-
-.card {
-  /* Même structure que la section Objectifs : rangée de titre figée à
-     deux lignes pour que toutes les descriptions démarrent à hauteur égale */
-  display: grid;
-  grid-template-rows: auto 1.6rem auto 1fr;
-  gap: 20px 0;
-  background: var(--color-white);
-  padding: 38px 32px;
-}
-
 .iconWrap {
+  grid-row: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  justify-self: start;
   width: 40px;
   height: 40px;
-  /* Carré, comme dans la section Objectifs : le rond introduisait deux
-     vocabulaires d'icône sur la même page */
-  border: 1px solid #e8e3e1;
-  background: rgba(122, 20, 32, 0.025);
-  color: var(--color-bordeaux);
+  margin-bottom: 18px;
+  /* Même carré que les icônes du reste de la page, décliné sur fond sombre */
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-white);
 }
 
 .cardTitle {
-  align-self: end;
+  grid-row: 3;
   font-family: var(--font-serif);
   font-weight: 600;
-  font-size: 1.16rem;
-  line-height: 1.32;
+  font-size: 1.3rem;
+  line-height: 1.25;
   letter-spacing: -0.005em;
-  color: var(--color-black);
-  margin: 0;
+  color: var(--color-white);
+  margin-bottom: 10px;
 }
 
 .cardText {
+  grid-row: 4;
   font-size: 14.5px;
-  line-height: 1.7;
-  color: #5a5a5a;
-  margin: 0;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
   text-wrap: pretty;
 }
 
-@media (max-width: 980px) {
-  .layout {
-    grid-template-columns: 1fr;
-    gap: 40px;
+/* ── Responsive ───────────────────────────────────────────── */
+
+/* Quatre colonnes deviennent trop étroites pour le texte : 2 × 2 */
+@media (max-width: 1100px) {
+  .grid {
+    --image-zone: 190px;
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .image,
-  .imagePhoto {
-    min-height: 320px;
+  /* row-gap reste à 0 pour ne pas écarter les rangées internes :
+     l'espace entre les deux lignes de cartes passe par une marge */
+  .card:nth-child(n + 3) {
+    margin-top: var(--card-gap);
   }
 }
 
@@ -161,14 +172,34 @@
   }
 
   .header {
-    margin-bottom: 48px;
+    margin-bottom: 40px;
   }
 
   .grid {
+    --card-gap: 12px;
+    --image-zone: 170px;
     grid-template-columns: 1fr;
   }
 
+  .card:nth-child(n + 2) {
+    margin-top: var(--card-gap);
+  }
+
   .card {
-    padding: 32px 28px;
+    padding: 24px 22px 26px;
+  }
+}
+
+/* Navigateurs sans subgrid : colonne simple, texte calé en bas */
+@supports not (grid-template-rows: subgrid) {
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 460px;
+  }
+
+  .iconWrap {
+    align-self: flex-start;
   }
 }

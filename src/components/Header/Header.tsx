@@ -15,6 +15,9 @@ const NAV_LINKS: { label: string; href: string; accent?: boolean }[] = [
   { label: "Devenir conseiller", href: "/devenir-conseiller", accent: true },
 ];
 
+// Largeur sous laquelle les liens passent dans le menu (cf. Header.module.css)
+const MENU_BREAKPOINT = 1120;
+
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -93,12 +96,29 @@ export default function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [isMenuOpen]);
 
+  // Menu ouvert : la page dessous ne défile plus et sort du parcours
+  // clavier et des lecteurs d'écran, sinon Tab y part sous l'overlay
   useEffect(() => {
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    if (!isMenuOpen) return;
+    const background = [...document.querySelectorAll("main, footer, [data-mobile-cta]")];
+    document.body.style.overflow = "hidden";
+    background.forEach((el) => el.setAttribute("inert", ""));
     return () => {
       document.body.style.overflow = "";
+      background.forEach((el) => el.removeAttribute("inert"));
     };
   }, [isMenuOpen]);
+
+  // Fenêtre agrandie au-delà du point de bascule : l'overlay disparaît
+  // en CSS, il faut aussi lever le verrou de défilement
+  useEffect(() => {
+    const query = window.matchMedia(`(min-width: ${MENU_BREAKPOINT + 1}px)`);
+    const onChange = () => {
+      if (query.matches) setIsMenuOpen(false);
+    };
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
 
   return (
     <header
@@ -124,7 +144,7 @@ export default function Header() {
           )}
         </a>
 
-        <nav className={styles.nav}>
+        <nav className={styles.nav} aria-label="Navigation principale">
           {NAV_LINKS.map((link) => {
             const sectionId = link.href.split("#")[1];
             const isActive = sectionId
@@ -170,6 +190,7 @@ export default function Header() {
           className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ""}`}
           aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={isMenuOpen}
+          aria-controls="mobile-menu"
           onClick={() => setIsMenuOpen((open) => !open)}
         >
           <span className={styles.burgerBar} />
@@ -180,6 +201,7 @@ export default function Header() {
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
+            id="mobile-menu"
             className={styles.mobileMenu}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -188,7 +210,7 @@ export default function Header() {
           >
             <img src={logoMonogramLg} alt="" className={styles.mobileWatermark} aria-hidden="true" />
 
-            <nav className={styles.mobileNav}>
+            <nav className={styles.mobileNav} aria-label="Menu">
               {NAV_LINKS.map((link, i) => {
                 const motionProps = {
                   initial: { opacity: 0, transform: "translateY(16px)" },
@@ -244,7 +266,7 @@ export default function Header() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.35 }}
             >
-              07 43 66 91 93 · Pays de Gex · Lyon · Genève
+              <a href="tel:+33743669193">07 43 66 91 93</a> · Pays de Gex · Lyon · Genève
             </motion.p>
           </motion.div>
         )}

@@ -1,17 +1,14 @@
 import { useEffect, useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MessageCircle, Search, Compass, LineChart, ArrowRight } from "lucide-react";
 import logoMonogram from "../../assets/logo-monogram-lg.webp";
+import { reveal } from "../../lib/reveal";
 import styles from "./Method.module.css";
 
 // Vidéo d'ambiance de la colonne de gauche. Déposer le fichier dans
 // src/assets/video/ puis décommenter l'import et l'affectation ci-dessous.
 // import methodVideo from "../../assets/video/methode.mp4";
 const METHOD_VIDEO: string | null = null;
-
-gsap.registerPlugin(ScrollTrigger);
 
 const STEPS = [
   {
@@ -26,7 +23,7 @@ const STEPS = [
     icon: Search,
     title: "Analyse",
     description:
-      "Étudier votre patrimoine dans son ensemble — actifs, fiscalité, protection — et identifier les leviers d'optimisation.",
+      "Étudier votre patrimoine dans son ensemble (actifs, fiscalité, protection) et identifier les leviers d'optimisation.",
   },
   {
     number: "03",
@@ -67,19 +64,15 @@ export default function Method() {
 
   useGSAP(
     () => {
-      gsap.from(`.${styles.header}`, {
-        opacity: 0,
+      reveal(`.${styles.header}`, {
         y: 20,
         duration: 0.7,
-        ease: "power3.out",
         scrollTrigger: { trigger: containerRef.current, start: "top 80%" },
       });
 
-      gsap.from(`.${styles.step}`, {
-        opacity: 0,
+      reveal(`.${styles.step}`, {
         y: 32,
         duration: 0.7,
-        ease: "power3.out",
         stagger: 0.15,
         scrollTrigger: { trigger: `.${styles.steps}`, start: "top 78%" },
       });

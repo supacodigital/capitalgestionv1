@@ -6,7 +6,24 @@
   --color-white: #ffffff;
   --color-offwhite: #faf8f7;
   --color-grey-light: #f4f1f0;
-  --color-grey-mid: #8a8683;
+  /* Mentions et petites capitales : 4,8:1 sur fond offwhite (AA) ;
+     l'ancien #8a8683 plafonnait à 3,4:1 */
+  --color-grey-mid: #716e6b;
+
+  /* Bordeaux éclairci pour le texte sur fond noir : le bordeaux de
+     la marque n'y atteint que 1,9:1 */
+  --color-bordeaux-on-dark: #c96b76;
+
+  /* Texte courant et libellés */
+  --color-text-soft: #565656;
+  --color-text-strong: #4a4a4a;
+
+  /* Filets, bordures de cartes et de champs */
+  --color-line: #e9e4e2;
+  --color-line-strong: #d8d5d3;
+
+  /* Gouttière latérale commune à toutes les sections */
+  --gutter: 32px;
 
   --font-serif: "Playfair Display", "Times New Roman", serif;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -17,6 +34,12 @@
   --header-height: 84px;
 
   color-scheme: light;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --gutter: 20px;
+  }
 }
 
 * {

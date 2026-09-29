@@ -9,7 +9,7 @@ import styles from "./Footer.module.css";
 const CERTIFICATIONS = [
   { src: logoAmf, label: "Autorité des marchés financiers (AMF)" },
   { src: logoCncef, label: "CNCEF" },
-  { src: logoOrias, label: "ORIAS — Registre unique des intermédiaires" },
+  { src: logoOrias, label: "ORIAS, registre unique des intermédiaires" },
 ];
 
 const NAV_LINKS = [
@@ -45,7 +45,7 @@ export default function Footer() {
             <span className={styles.brandGestion}>Gestion</span>
           </span>
           <p className={styles.tagline}>
-            Conseil en gestion de patrimoine indépendant — confiance, discrétion, sur-mesure.
+            Conseil en gestion de patrimoine indépendant : confiance, discrétion, sur-mesure.
           </p>
         </div>
 

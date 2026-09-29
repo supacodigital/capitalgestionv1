@@ -14,7 +14,7 @@ import Contact from "../components/Contact/Contact";
 import StructuredData from "../components/StructuredData/StructuredData";
 import { FAQ_ENTRIES } from "../data/faq";
 
-// Données structurées FAQ — générées depuis la même source que la section
+// Données structurées FAQ, générées depuis la même source que la section
 const FAQ_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
