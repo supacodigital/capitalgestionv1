@@ -1,13 +1,21 @@
 # Vidéo de la section Méthode
 
-Déposer ici le fichier `methode.mp4`, puis dans
-`src/components/Method/Method.tsx` décommenter l'import et remplacer
-l'affectation :
+`methode.mp4` est une boucle de 12 s en motion design (monogramme S et
+triangles de la carte de visite sur fond blanc), importée par
+`src/components/Method/Method.tsx`. `methode-poster.webp` est sa première
+image, utilisée comme affiche.
 
-```ts
-import methodVideo from "../../assets/video/methode.mp4";
-const METHOD_VIDEO: string | null = methodVideo;
+La source est le projet HyperFrames `motion/methode-loop/` (brief,
+storyboard, composition `index.html`). Pour régénérer après une retouche :
+
+```sh
+cd motion/methode-loop
+npx hyperframes check
+npx hyperframes render --quality delivery --fps 30 --output renders/methode-master.mp4
+cp renders/methode-master.mp4 ../../src/assets/video/methode.mp4
 ```
+
+Puis réextraire l'affiche depuis la première image du MP4.
 
 ## Contraintes du fichier
 
@@ -25,5 +33,5 @@ const METHOD_VIDEO: string | null = methodVideo;
 Le bas de l'image est assombri par un dégradé pour que la citation reste
 lisible : éviter d'y placer un élément important.
 
-Sans fichier, la colonne conserve son motif graphique (monogramme sur
-dégradé) : le site reste donc valide en l'état.
+Si `METHOD_VIDEO` repasse à `null`, la colonne retrouve son motif graphique
+(monogramme sur dégradé).

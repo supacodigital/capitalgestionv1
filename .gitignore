@@ -32,3 +32,10 @@ photo/
 *.pdf
 docs/
 logocapitalgestion-removebg-preview.png
+
+# Projets HyperFrames : rendus, captures et état local de l'outil
+motion/*/renders/
+motion/*/snapshots/
+motion/*/.thumbnails/
+motion/*/.hyperframes/
+motion/*/.media/

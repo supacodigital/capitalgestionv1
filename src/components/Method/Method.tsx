@@ -5,10 +5,12 @@ import logoMonogram from "../../assets/logo-monogram-lg.webp";
 import { reveal } from "../../lib/reveal";
 import styles from "./Method.module.css";
 
-// Vidéo d'ambiance de la colonne de gauche. Déposer le fichier dans
-// src/assets/video/ puis décommenter l'import et l'affectation ci-dessous.
-// import methodVideo from "../../assets/video/methode.mp4";
-const METHOD_VIDEO: string | null = null;
+// Vidéo d'ambiance de la colonne de gauche (sources HyperFrames dans
+// motion/methode-loop/). L'affiche est sa première image : elle s'affiche
+// pendant le chargement et reste en place quand les animations sont réduites.
+import methodVideo from "../../assets/video/methode.mp4";
+import methodPoster from "../../assets/video/methode-poster.webp";
+const METHOD_VIDEO: string | null = methodVideo;
 
 const STEPS = [
   {
@@ -100,6 +102,7 @@ export default function Method() {
                 ref={videoRef}
                 className={styles.visualVideo}
                 src={METHOD_VIDEO}
+                poster={methodPoster}
                 autoPlay
                 muted
                 loop
